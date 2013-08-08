@@ -28,3 +28,10 @@ pip-log.txt
 
 # vim
 *.swp
+
+# virtualenv
+lib/
+include/
+local/
+manage.py
+
