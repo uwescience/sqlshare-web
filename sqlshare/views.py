@@ -12,13 +12,14 @@ from sqlshare.utils import _send_request, get_or_create_user
 import urllib
 import math
 import re
+from userservice.user import UserService
 
 import httplib
 
 @login_required
 @csrf_protect
 def home(request):
-   user = request.user
+   user = UserService().get_user()
    c = { "user":user }
    c.update(csrf(request))
    return render_to_response('home.html', c, RequestContext(request))
@@ -26,10 +27,8 @@ def home(request):
 @login_required
 @csrf_protect
 def user(request):
+    content, code = get_or_create_user(UserService().get_user())
 
-    content, code = get_or_create_user(request.user.username)
-
-    user = request.user
     user_response = HttpResponse(content)
     user_response.status_code = code
 
@@ -44,7 +43,7 @@ def proxy(request, path):
                 {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
-                }, body=body, user=request.user)
+                }, body=body, user=UserService().get_user())
 
 
     headers = ss_response.getheaders()
@@ -88,7 +87,7 @@ def upload(request):
                 {
                     "Accept": "application/json",
                     "Content-Type": _getMultipartContentType(),
-                }, body=content, user=request.user)
+                }, body=content, user=UserService().get_user())
 
     headers = ss_response.getheaders()
     response = ss_response.read()
@@ -99,7 +98,7 @@ def upload(request):
     parser_response = _send_request('GET', '/REST.svc/v3/file/%s/parser' % ss_id,
                 {
                     "Accept": "application/json",
-                }, user=request.user)
+                }, user=UserService().get_user())
 
     parser_data = parser_response.read()
     json_values = json.loads(parser_data)
@@ -113,7 +112,7 @@ def upload(request):
 @login_required
 @csrf_protect
 def dataset_permissions(request, schema, table_name):
-    response = _send_request('GET', '/REST.svc/v1/user/%s' % (request.user),
+    response = _send_request('GET', '/REST.svc/v1/user/%s' % (UserService().get_user()),
                 { "Accept": "application/json" })
 
     code = response.status
@@ -134,7 +133,8 @@ def dataset_permissions(request, schema, table_name):
         accounts = json_data["accounts"]
         emails = json_data["emails"]
 
-        dataset.set_access(accounts, emails, request.user)
+        user_model = User.objects.get(username = UserService().get_user())
+        dataset.set_access(accounts, emails, user_model)
 
         return HttpResponse("")
 
@@ -147,17 +147,17 @@ def dataset_permissions(request, schema, table_name):
 def accept_dataset(request, token):
     email_access = DatasetEmailAccess.get_email_access_for_token(token)
 
-    get_or_create_user(request.user.username)
+    get_or_create_user(UserService().get_user())
 
     accounts = email_access.dataset.get_server_access()
 
     existing_account = False
     for login in accounts['authorized_viewers']:
-        if login == request.user.username:
+        if login == UserService().get_user():
             existing_account = True
 
     if not existing_account:
-        accounts['authorized_viewers'].append(request.user.username)
+        accounts['authorized_viewers'].append(UserService().get_user())
         email_access.dataset.set_server_access(accounts)
 
     return redirect(email_access.dataset.get_url())
@@ -199,7 +199,7 @@ def stream_upload(request):
                 {
                     "Accept": "application/json",
                     "Content-Type": _getMultipartContentType(),
-                }, body=content, user=request.user)
+                }, body=content, user=UserService().get_user())
 
         headers = ss_response.getheaders()
         response = ss_response.read()
@@ -244,7 +244,7 @@ def stream_upload(request):
                     {
                         "Accept": "application/json",
                         "Content-Type": "application/json",
-                    }, body=json.dumps(put_json), user=request.user)
+                    }, body=json.dumps(put_json), user=UserService().get_user())
 
         if put_response.status != 202:
             body = put_response.read()

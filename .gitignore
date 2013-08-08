@@ -35,3 +35,6 @@ include/
 local/
 manage.py
 
+# Eggs from github
+src/
+

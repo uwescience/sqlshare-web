@@ -1,2 +1,5 @@
 Django==1.4
 pycrypto
+-e git://github.com/vegitron/django-userservice#egg=Django-UserService
+-e git://github.com/vegitron/authz_group#egg=AuthZ-Group
+
