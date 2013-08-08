@@ -41,3 +41,22 @@ def _send_request(method, url, headers, body=None, user=None):
     return response
 
 
+def get_or_create_user(username):
+    response = _send_request('GET', '/REST.svc/v1/user/%s' % (username),
+                { "Accept": "application/json" })
+
+    code = response.status
+    content = response.read()
+
+    if code == 404:
+        response = _send_request('PUT', '/REST.svc/v1/user/%s' % (username),
+                {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                    "Content-Length": "0"
+                })
+        code = response.status
+        content = response.read()
+
+    return content, code
+

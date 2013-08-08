@@ -171,88 +171,30 @@
 
   <body id="solstice_document_body" class="yui-skin-sam" onload="initApplication();">
 
-      <!-- BEGIN BOILERPLATE WORKSPACE -->
-      <form action="/sqlshare" method="post" accept-charset="UTF-8" id="solstice_app_form" onsubmit="return Solstice.Button.performClientAction();">
-      {% csrf_token %}
-<input type="hidden" id="solstice_selected_button" name="solstice_selected_button" value=""/>
-<div class="ss-boilerplate">
 
-<iframe id="yui-history-iframe" src="{{STATIC_URL}}javascript/yui/build/history/assets/blank.html"></iframe>
-<input id="yui-history-field" type="hidden">
-
-<div id="ss_app" class="ss-app-container">
-
-    <div class="ss-sidebar" id="ss_sidebar">
-
-            <h3 class="ss-sidebar-logo"><a title="Welcome to SQLShare" href="#s=home"><img src="{{STATIC_URL}}images/ss-logo.png" /></a></h3>
-
-            <div id="ss_sidebar_content" class="ss-sidebar-content">
-                <ul class="ss-sidebar-items">
-                    <li id="your_queries_li"><a href="sqlshare#s=home" title="View datasets owned by you" rel="home">Your datasets</a></li>
-                    <li id="all_queries_li"><a href="sqlshare#s=all_queries" title="View all datasets" rel="all_queries">All datasets</a></li>
-                    <li id="shared_queries_li"><a href="sqlshare#s=shared" title="View datasets shared with you" rel="shared_queries">Shared datasets</a></li>
-                    <li id="query_list_li"><a href="sqlshare#s=querylist" title="View recent query activity" rel="querylist"><span style="display:block; float:left; width:100px; padding:0;">Recent&nbsp;activity...</span><span id="nav_finished_query_count" style="display:block;float:right;padding:0; color:green;font-size:92%;padding-top:1px;"></span><span class="clear" style="height:0;padding:0;"></span>
-                    </a></li>
-                    <li><span id="recent_queries" style="cursor:pointer;">Recently viewed&nbsp;&nbsp;<span style="font-size:110%;display:inline;padding:0;">&raquo;</span></span></li>
-                </ul>
-                <ul class="ss-sidebar-items">
-                    <li id="new_upload_li"><a href="sqlshare#s=file" title="Upload a new dataset" rel="file">Upload dataset</a></li>
-                    <li id="new_query_li"><a href="sqlshare#s=query" title="Start a new query" rel="query">New query</a></li>
-                </ul>
-                <div id="tagging_sidebar"></div>
-            </div>
-
-    </div>
+    <div class="ss-wayf-content">
 
 
-    <div class="ss-content" id="ss_content">
+        <div class="ss-accept-container" style="border-left: solid 20px #255478;">
 
-        <div id="menu_container"></div>
-        <div id="hidden_test_container" style="visibility: hidden; position: absolute; top: -900px;"></div>
+             <img src="{{STATIC_URL}}/images/ss-wayf-logo.png" style="width:240px;"/>
+             <p style="margin-bottom: 20px; color:#333;">SQLShare is an easier way to store and share your data.</p>
 
-        <div class="ss-app-navigation">
-
-            <div id="tab_nav_tables" class="nav-container">
-                <ul class="ss-tables-list" id="table_tab_list" style="margin-right:530px;">
-                    <li id="table_tab_overflow_li" class="tab_overflow"><div id="table_tab_overflow_div"></div></li>
-                </ul>
-            </div>
-
-            <div class="ss-account-info">
-                <p><span style="color:#275877;font-weight:normal;">Logged in:</span>&nbsp;&nbsp;<span style="display:inline-block;">{{user}}</span></p>
-            </div>
-
-            <div class="clear"></div>
+            {% if not_found %}
+                <h1>Dataset not found</h1>
+            {% else %}
+<h3 style="color:green;">{{ name }} ({{ login }}) is sharing a dataset with you!</h3>
 
 
+<p style="margin:30px 0;"><strong>Dataset</strong><br/>
+{{dataset_name}} -         <a href="{{ accept_url }}">Accept</a></p>
+
+<p style="color:#777;">You will be required to log in using a Google Account or your UW NetID.</p>
+            {% endif %}
 
         </div>
 
-        <div id="ss_application_wrapper">
-
-            <div class="ss-app-workspace-wrapper">
-                <div id="ss_app_workspace" style="padding-right:10px;"></div>
-            </div>
-
-            <div class="ss-editor" id="ss_editor_col">
-                <div id="edit_query_container" style="overflow-y: auto; margin-left:10px; padding-right:10px; width:480px; "></div>
-            </div>
-
-            <div class="clear"></div>
-
-        </div>
-        <div class="clear"></div>
-
     </div>
-
-
-    <div class="clear"></div>
-
-</div>
-
-</div>
-</form>
-      <!-- END BOILERPLATE WORKSPACE -->
 
   </body>
 </html>
