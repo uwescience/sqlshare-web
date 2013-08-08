@@ -1,12 +1,14 @@
 from django.http import HttpResponse
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.conf import settings
 from django.utils import simplejson as json
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from django.core.context_processors import csrf
+from django.template import RequestContext
 from sqlshare.models import UserFile, Dataset, DatasetEmailAccess
-from sqlshare.utils import _send_request
+from sqlshare.utils import _send_request, get_or_create_user
 import urllib
 import math
 import re
@@ -19,26 +21,13 @@ def home(request):
    user = request.user
    c = { "user":user }
    c.update(csrf(request))
-   return render_to_response('home.html', c)
+   return render_to_response('home.html', c, RequestContext(request))
 
 @login_required
 @csrf_protect
 def user(request):
-    response = _send_request('GET', '/REST.svc/v1/user/%s' % (request.user),
-                { "Accept": "application/json" })
 
-    code = response.status
-    content = response.read()
-
-    if code == 404:
-        response = _send_request('PUT', '/REST.svc/v1/user/%s' % (request.user),
-                {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json",
-                    "Content-Length": "0"
-                })
-        code = response.status
-        content = response.read()
+    content, code = get_or_create_user(request.user.username)
 
     user = request.user
     user_response = HttpResponse(content)
@@ -145,7 +134,7 @@ def dataset_permissions(request, schema, table_name):
         accounts = json_data["accounts"]
         emails = json_data["emails"]
 
-        dataset.set_access(accounts, emails)
+        dataset.set_access(accounts, emails, request.user)
 
         return HttpResponse("")
 
@@ -155,8 +144,36 @@ def dataset_permissions(request, schema, table_name):
     return HttpResponse(json.dumps(access))
 
 @login_required
-@csrf_protect
+def accept_dataset(request, token):
+    email_access = DatasetEmailAccess.get_email_access_for_token(token)
+
+    get_or_create_user(request.user.username)
+
+    accounts = email_access.dataset.get_server_access()
+
+    existing_account = False
+    for login in accounts['authorized_viewers']:
+        if login == request.user.username:
+            existing_account = True
+
+    if not existing_account:
+        accounts['authorized_viewers'].append(request.user.username)
+        email_access.dataset.set_server_access(accounts)
+
+    return redirect(email_access.dataset.get_url())
+
+
 def email_access(request, token):
+    email_access = DatasetEmailAccess.get_email_access_for_token(token)
+
+    person = User.objects.get_or_create(username = email_access.dataset.schema)[0]
+
+    return render_to_response('accept_dataset.html', {
+        'dataset_name': email_access.dataset.name,
+        'name': person.get_full_name(),
+        'login': person.username,
+        'accept_url': email_access.get_accept_url(),
+    }, RequestContext(request))
     return HttpResponse("")
 
 @login_required
