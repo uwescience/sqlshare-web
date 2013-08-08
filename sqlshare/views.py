@@ -5,7 +5,8 @@ from django.utils import simplejson as json
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from django.core.context_processors import csrf
-from sqlshare.models import UserFile
+from sqlshare.models import UserFile, Dataset, DatasetEmailAccess
+from sqlshare.utils import _send_request
 import urllib
 import math
 import re
@@ -122,6 +123,44 @@ def upload(request):
 
 @login_required
 @csrf_protect
+def dataset_permissions(request, schema, table_name):
+    response = _send_request('GET', '/REST.svc/v1/user/%s' % (request.user),
+                { "Accept": "application/json" })
+
+    code = response.status
+    content = response.read()
+
+    person_data = json.loads(content)
+
+    person_schema = person_data['schema']
+
+    if (person_schema != schema):
+        return HttpResponse(status = 403)
+
+    dataset = Dataset(schema=schema, name=table_name)
+
+    if request.method == "PUT":
+        json_data = json.loads(request.raw_post_data)
+
+        accounts = json_data["accounts"]
+        emails = json_data["emails"]
+
+        dataset.set_access(accounts, emails)
+
+        return HttpResponse("")
+
+
+    access = dataset.get_all_access()
+
+    return HttpResponse(json.dumps(access))
+
+@login_required
+@csrf_protect
+def email_access(request, token):
+    return HttpResponse("")
+
+@login_required
+@csrf_protect
 def send_file(request):
     return HttpResponse(stream_upload(request))
 
@@ -223,45 +262,6 @@ def _getMultipartData(file_name, position, append_new_line=False):
     ])
 
     return multipart_data
-
-def _send_request(method, url, headers, body=None, user=None):
-    host = 'sqlshare-rest.cloudapp.net'
-    if hasattr(settings, "SQLSHARE_REST_HOST"):
-        host = settings.SQLSHARE_REST_HOST
-
-    conn = httplib.HTTPSConnection(host)
-    conn.connect()
-
-    conn.putrequest(method, url)
-
-    for header in headers:
-        conn.putheader(header, headers[header])
-
-    if user is not None:
-        auth_type = "secret"
-        if hasattr(settings, "SQLSHARE_AUTH_TYPE"):
-            auth_type = settings.SQLSHARE_AUTH_TYPE
-
-        if auth_type == "secret":
-            sqlshare_secret = settings.SQLSHARE_SECRET
-            conn.putheader('Authorization', 'ss_trust %s : %s' % (user, sqlshare_secret))
-
-        if auth_type == "apikey":
-            if settings.SQLSHARE_API_USER != user.username:
-                raise Exception("Logged in user doesn't match the SQLSHARE user in settings")
-            conn.putheader('Authorization', 'ss_apikey %s : %s' % (settings.SQLSHARE_API_USER, settings.SQLSHARE_API_KEY))
-
-    if body and len(body) > 0:
-        conn.putheader('Content-Length', len(body))
-
-    conn.endheaders()
-
-    if body and len(body) > 0:
-        conn.send(body)
-
-    response = conn.getresponse()
-
-    return response
 
 def _getChunkCount(user_file):
     file_size = user_file.user_file.size
