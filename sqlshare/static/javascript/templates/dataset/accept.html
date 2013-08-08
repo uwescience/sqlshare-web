@@ -8,9 +8,15 @@
              <p style="margin-bottom: 20px; color:#333;">SQLShare is an easier way to store and share your data.</p>
              
             {{if not_found}}
-                <!-- sol_include dataset/not_found.html -->
+                <h1>Dataset not found</h1>
             {{else}}
-                <!-- sol_include dataset/details.html -->
+<h3 style="color:green;">${name} ${surname} (${login}) is sharing a dataset with you!</h3>
+
+
+<p style="margin:30px 0;"><strong>Dataset</strong><br/>
+${dataset_name} - ${accept_link}</p>
+
+<p style="color:#777;">You will be required to log in using a Google Account or your UW NetID.</p>
             {{/if}}
                                 
         </div>
