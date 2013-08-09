@@ -1,14 +1,19 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, redirect
 from django.conf import settings
+from django.core.urlresolvers import reverse
 from django.utils import simplejson as json
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from django.core.context_processors import csrf
 from django.template import RequestContext
-from sqlshare.models import UserFile, Dataset, DatasetEmailAccess
+from sqlshare.models import UserFile, Dataset, DatasetEmailAccess, CredentialsModel, FlowModel
 from sqlshare.utils import _send_request, get_or_create_user
+from oauth2client.django_orm import Storage
+from oauth2client.client import OAuth2WebServerFlow
+from apiclient.discovery import build
+import httplib2
 import urllib
 import math
 import re
@@ -180,6 +185,50 @@ def email_access(request, token):
 @csrf_protect
 def send_file(request):
     return HttpResponse(stream_upload(request))
+
+
+def require_google_login(request):
+    storage = Storage(CredentialsModel, 'id', request.session.session_key, 'credential')
+    credential = storage.get()
+    if credential is None or credential.invalid == True:
+        flow = OAuth2WebServerFlow(client_id=settings.GOOGLE_OAUTH_KEY,
+                                   client_secret=settings.GOOGLE_OAUTH_SECRET,
+                                   scope='https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email',
+                                   user_agent='plus-django-sample/1.0')
+
+        authorize_url = flow.step1_get_authorize_url(settings.STEP2_URI)
+        f = FlowModel(id=request.session.session_key, flow=flow)
+        f.save()
+
+        return redirect(authorize_url)
+
+    http = httplib2.Http()
+    plus = build('plus', 'v1', http=http)
+    credential.authorize(http)
+    name_data = plus.people().get(userId='me').execute()
+
+    name = name_data["name"]["givenName"]
+    last_name = name_data["name"]["familyName"]
+
+    plus = build('oauth2', 'v2', http=http)
+    credential.authorize(http)
+    email_data = plus.userinfo().get().execute()
+
+
+    email = email_data["email"]
+
+    print "E: ", email, " F: ", name, " L: ", last_name
+
+    return HttpResponse("")
+
+
+def google_return(request):
+    f = FlowModel.objects.get(id=request.session.session_key)
+    credential = f.flow.step2_exchange(request.REQUEST)
+    storage = Storage(CredentialsModel, 'id', request.session.session_key, 'credential')
+    storage.put(credential)
+
+    return redirect(reverse('sqlshare.views.require_google_login'))
 
 def stream_upload(request):
     body = request.read()

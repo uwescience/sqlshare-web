@@ -1,5 +1,7 @@
 Django==1.4
 pycrypto
+oauth2client
+google-api-python-client
 -e git://github.com/vegitron/django-userservice#egg=Django-UserService
 -e git://github.com/vegitron/authz_group#egg=AuthZ-Group
 

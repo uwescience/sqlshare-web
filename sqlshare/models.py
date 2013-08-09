@@ -6,6 +6,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.template.loader import render_to_string
+from oauth2client.django_orm import CredentialsField, FlowField
 import re
 import urllib
 import binascii
@@ -189,5 +190,11 @@ class DatasetEmailAccess(models.Model):
         return DatasetEmailAccess.objects.get(pk = test_id)
 
 
+class CredentialsModel(models.Model):
+  id = models.CharField(max_length=50, primary_key=True)
+  credential = CredentialsField()
 
+class FlowModel(models.Model):
+    id = models.CharField(max_length=50, primary_key=True)
+    flow = FlowField()
 
