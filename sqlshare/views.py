@@ -3,6 +3,7 @@ from django.shortcuts import render_to_response, redirect
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils import simplejson as json
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
@@ -186,6 +187,8 @@ def email_access(request, token):
 def send_file(request):
     return HttpResponse(stream_upload(request))
 
+def require_uw_login(request):
+    pass
 
 def require_google_login(request):
     storage = Storage(CredentialsModel, 'id', request.session.session_key, 'credential')
@@ -194,9 +197,11 @@ def require_google_login(request):
         flow = OAuth2WebServerFlow(client_id=settings.GOOGLE_OAUTH_KEY,
                                    client_secret=settings.GOOGLE_OAUTH_SECRET,
                                    scope='https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email',
-                                   user_agent='plus-django-sample/1.0')
+                                   user_agent='plus-django-sample/1.0',
+                                   state=request.GET['next'])
 
-        authorize_url = flow.step1_get_authorize_url(settings.STEP2_URI)
+        authorize_url = flow.step1_get_authorize_url(settings.GOOGLE_RETURN_URL)
+
         f = FlowModel(id=request.session.session_key, flow=flow)
         f.save()
 
@@ -217,9 +222,15 @@ def require_google_login(request):
 
     email = email_data["email"]
 
-    print "E: ", email, " F: ", name, " L: ", last_name
+    user = authenticate(username=email, password=None)
+    user.first_name = name
+    user.last_name = last_name
+    user.email = email
+    user.save()
 
-    return HttpResponse("")
+    login(request, user)
+
+    return redirect(request.GET['next'])
 
 
 def google_return(request):
@@ -228,7 +239,10 @@ def google_return(request):
     storage = Storage(CredentialsModel, 'id', request.session.session_key, 'credential')
     storage.put(credential)
 
-    return redirect(reverse('sqlshare.views.require_google_login'))
+    google_login_url = reverse('sqlshare.views.require_google_login')
+    google_login_url = "%s?next=%s" % (google_login_url, request.GET['state'])
+
+    return redirect(google_login_url)
 
 def stream_upload(request):
     body = request.read()
