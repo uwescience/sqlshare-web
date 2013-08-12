@@ -244,6 +244,21 @@ def google_return(request):
 
     return redirect(google_login_url)
 
+def user_search(request):
+    users = User.objects.filter(username__icontains=request.GET['q'])
+
+    data = { "users": [] }
+
+    for user in users:
+        data["users"].append({
+            "login": user.username,
+            "name": user.first_name,
+            "surname": user.last_name,
+            "email": user.email,
+        })
+
+    return HttpResponse(json.dumps(data))
+
 def stream_upload(request):
     body = request.read()
     body_json = json.loads(body)

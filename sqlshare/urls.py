@@ -8,6 +8,7 @@ urlpatterns = patterns('',
     # Examples:
     url(r'^/*$', 'sqlshare.views.home', name='home'),
     url(r'^/*user/?$', 'sqlshare.views.user'),
+    url(r'^/*users', 'sqlshare.views.user_search'),
     url(r'^/*proxy/?(?P<path>.*)$', 'sqlshare.views.proxy'),
     url(r'^upload/?$', 'sqlshare.views.upload'),
     url(r'^/file/upload?$', 'sqlshare.views.send_file'),
