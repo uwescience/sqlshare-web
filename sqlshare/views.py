@@ -188,7 +188,12 @@ def send_file(request):
     return HttpResponse(stream_upload(request))
 
 def require_uw_login(request):
-    pass
+    login = request.META['REMOTE_USER']
+    name = request.META['givenName']
+    last_name = request.META['sn']
+    email = request.META['mail']
+
+    return _login_user(request, login, name, last_name, email)
 
 def require_google_login(request):
     storage = Storage(CredentialsModel, 'id', request.session.session_key, 'credential')
@@ -218,11 +223,12 @@ def require_google_login(request):
     plus = build('oauth2', 'v2', http=http)
     credential.authorize(http)
     email_data = plus.userinfo().get().execute()
-
-
     email = email_data["email"]
 
-    user = authenticate(username=email, password=None)
+    return _login_user(request, email, name, last_name, email)
+
+def _login_user(request, login_name, name, last_name, email):
+    user = authenticate(username=login_name, password=None)
     user.first_name = name
     user.last_name = last_name
     user.email = email
@@ -231,7 +237,6 @@ def require_google_login(request):
     login(request, user)
 
     return redirect(request.GET['next'])
-
 
 def google_return(request):
     f = FlowModel.objects.get(id=request.session.session_key)
