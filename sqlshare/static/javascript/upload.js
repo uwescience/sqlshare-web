@@ -335,7 +335,7 @@ Uploader.prototype._postGetFileStatus = function(o) {
         }
 
         window.setTimeout(function() {
-            uploader.AsyncGET(uploader._getRestRoot()+"/proxy/REST.svc/v3/file/"+uploader._ss_id+"/database/", uploader._postGetFileStatus);
+            uploader.AsyncGET(uploader._getRestRoot()+"/proxy/REST.svc/v3/file/"+uploader._ss_id+"/database", uploader._postGetFileStatus);
         }, 2000);
         return;
     }

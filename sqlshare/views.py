@@ -185,7 +185,9 @@ def email_access(request, token):
 @login_required
 @csrf_protect
 def send_file(request):
-    return HttpResponse(stream_upload(request))
+    # The user needs to be pulled here, because the middleware that
+    # handles the response is called before stream_upload finishes
+    return HttpResponse(stream_upload(request, UserService().get_user()))
 
 def require_uw_login(request):
     login = request.META['REMOTE_USER']
@@ -264,7 +266,7 @@ def user_search(request):
 
     return HttpResponse(json.dumps(data))
 
-def stream_upload(request):
+def stream_upload(request, user):
     body = request.read()
     body_json = json.loads(body)
 
@@ -327,7 +329,7 @@ def stream_upload(request):
                     {
                         "Accept": "application/json",
                         "Content-Type": "application/json",
-                    }, body=json.dumps(put_json), user=UserService().get_user())
+                    }, body=json.dumps(put_json), user=user)
 
         if put_response.status != 202:
             body = put_response.read()
