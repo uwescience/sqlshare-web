@@ -353,6 +353,7 @@ def _getMultipartData(file_name, position, append_new_line=False):
 
     boundary = _getMultipartBoundary()
     name = re.match(".*/([^/]+)$", file_name).group(1)
+    name = name.encode('ascii', 'ignore')
 
     multipart_data = "\r\n".join([
         "--%s" % boundary,
