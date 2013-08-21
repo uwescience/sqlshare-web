@@ -212,7 +212,10 @@ Uploader.prototype._updatePreview = function() {
     this._parser_options.delimiter = delimiter;
     this._parser_options.has_header = has_header;
 
-    this.AsyncPUT(this._getRestRoot()+"/file/parser", this._parser_options, this._postReParse);
+    var sol_id = this._parser_options.sol_id;
+    var ss_id = this._parser_options.ss_id;
+
+    this.AsyncPUT(this._getRestRoot()+"parser/"+ss_id+"/"+sol_id, this._parser_options, this._postReParse);
 };
 
 Uploader.prototype._postReParse = function(o) {

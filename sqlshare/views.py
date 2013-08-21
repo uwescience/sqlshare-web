@@ -111,8 +111,27 @@ def upload(request):
 @login_required
 @csrf_protect
 def parser(request, ss_id, sol_id):
-    ## This is the old File::Parser bit
-    parser_response = _send_request('GET', '/REST.svc/v3/file/%s/parser' % ss_id,
+    if request.method == "PUT":
+        json_data = json.loads(request.raw_post_data)
+
+        if json_data["delimiter"] == "\\t":
+            json_data["delimiter"] = "\t"
+
+        json_data["parser"]["delimiter"] = json_data["delimiter"]
+        json_data["parser"]["has_column_headers"] = json_data["has_header"]
+
+        if not json_data["has_header"]:
+            json_data["columns"] = []
+
+        parser_response = _send_request('PUT', '/REST.svc/v3/file/%s/parser' % ss_id,
+            {
+                    "Accept": "application/json",
+                    "Content-type": "application/json",
+            }, body=json.dumps(json_data), user=UserService().get_user())
+
+    else:
+        ## This is the old File::Parser bit
+        parser_response = _send_request('GET', '/REST.svc/v3/file/%s/parser' % ss_id,
                 {
                     "Accept": "application/json",
                 }, user=UserService().get_user())
