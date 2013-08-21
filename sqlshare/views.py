@@ -81,7 +81,6 @@ def proxy(request, path):
 
     return response
 
-@login_required
 @csrf_exempt
 def upload(request):
     user_file = UserFile(user_file=request.FILES["file"])
@@ -89,11 +88,13 @@ def upload(request):
 
     content = _getMultipartData(user_file.user_file.path, 0, append_new_line=True)
 
+    # Javerage is just here until we get off yui - the cookies for auth
+    # aren't reliable behind the flash uploader
     ss_response = _send_request('POST', '/REST.svc/v3/file',
                 {
                     "Accept": "application/json",
                     "Content-Type": _getMultipartContentType(),
-                }, body=content, user=UserService().get_user())
+                }, body=content, user="javerage")
 
     headers = ss_response.getheaders()
     response = ss_response.read()
