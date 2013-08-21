@@ -109,6 +109,7 @@ Uploader.prototype._fetchFileOptions = function(o) {
 Uploader.prototype._postParser = function(data) {
     this._current_file_name = "TRACE_THIS";
     this._parser_options = data;
+    this._original_columns = data.columns;
     this._drawParserOptions(data);
 }
 
@@ -211,6 +212,7 @@ Uploader.prototype._updatePreview = function() {
 
     this._parser_options.delimiter = delimiter;
     this._parser_options.has_header = has_header;
+    this._parser_options.columns = this._original_columns;
 
     var sol_id = this._parser_options.sol_id;
     var ss_id = this._parser_options.ss_id;
