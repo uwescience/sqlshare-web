@@ -42,7 +42,7 @@ SQLShare.View.SidebarLists.prototype._generateFavoriteParams = function() {
         if (item.popularity > 0) {
             this.addParam('popular_datasets', {
                 name: unescape(item.name).encodeHTML(),
-                url: "sqlshare#s=query/"+item.owner.encodeHTML()+"/"+item.name.encodeHTML(),
+                url: "sqlshare/#s=query/"+item.owner.encodeHTML()+"/"+item.name.encodeHTML(),
                 popularity: item.popularity
             });
         }

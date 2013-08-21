@@ -22,7 +22,7 @@ RecentQueries.prototype.draw = function(ev, queries) {
         try {
         menu.addItem({
             text: unescape(item.name).encodeHTML(),
-            url: "sqlshare#s=query/"+item.owner.encodeHTML()+"/"+item.name.encodeHTML(),
+            url: "sqlshare/#s=query/"+item.owner.encodeHTML()+"/"+item.name.encodeHTML(),
             onclick: {
                 fn: this._loadQuery,
                 obj: item,
@@ -40,7 +40,7 @@ RecentQueries.prototype.draw = function(ev, queries) {
 RecentQueries.prototype._loadQuery = function(type, args, item) {
     var ev = args[0];
 
-    window.location.href = solstice_document_base + "sqlshare#s=query/"+item.owner.encodeHTML()+"/"+item.name.encodeHTML();
+    window.location.href = solstice_document_base + "sqlshare/#s=query/"+item.owner.encodeHTML()+"/"+item.name.encodeHTML();
 };
 
 

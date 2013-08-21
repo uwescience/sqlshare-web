@@ -93,7 +93,7 @@ QueryQueue.prototype._handleListClick = function(ev) {
          }
         else if (el.className == 'view_queue_entry') {
             var id = el.id.replace(/^js-query-/, '');
-            window.location.href = 'sqlshare#s=query/'+id;
+            window.location.href = 'sqlshare/#s=query/'+id;
             return;
         }
         if (el.children) {

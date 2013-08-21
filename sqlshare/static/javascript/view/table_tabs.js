@@ -54,7 +54,7 @@ SQLShare.View.TableTabs.prototype.postRender = function() {
 
         submenu.push({
             text: display_name,
-            url: "sqlshare#s="+type+"/"+name.encodeHTML()
+            url: "sqlshare/#s="+type+"/"+name.encodeHTML()
             });
     }
 

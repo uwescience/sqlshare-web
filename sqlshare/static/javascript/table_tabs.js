@@ -53,7 +53,7 @@ SQLShare.TableTabs.prototype._postHideAnimation = function(ev, what) {
     var tab = this_actual._tabs[id];
 
     if (tab.highlighted) {
-        window.location.href = solstice_document_base+"sqlshare#s=home";
+        window.location.href = solstice_document_base+"sqlshare/#s=home";
     }
     this_actual._redrawMenu();
 };
@@ -202,7 +202,7 @@ SQLShare.TableTabs.prototype._redrawMenu = function() {
             }
 
             this._menu.addItem({
-                text: "<span class='go' name='sqlshare#s=query/"+visible_tabs[i].tab.id.encodeHTML()+"'>"+unescape(visible_tabs[i].tab.display).encodeHTML()+"</span> <span class='remove' name='"+visible_tabs[i].tab.id.encodeHTML()+"'>x</span>",
+                text: "<span class='go' name='sqlshare/#s=query/"+visible_tabs[i].tab.id.encodeHTML()+"'>"+unescape(visible_tabs[i].tab.display).encodeHTML()+"</span> <span class='remove' name='"+visible_tabs[i].tab.id.encodeHTML()+"'>x</span>",
                 onclick: { fn: this._handleMenuClick, obj: this, scope: this },
                 checked: visible_tabs[i].tab.highlighted,
                 classname: classname

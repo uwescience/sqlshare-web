@@ -186,7 +186,7 @@ SQLShare.View.QueryListBase.prototype._drawTable = function(id, list) {
     data_table.subscribe('postRenderEvent', function() {
         YAHOO.util.Event.addListener(YAHOO.util.Dom.getElementsByClassName('js-table-tag'), 'click', function(ev) {
             YAHOO.util.Event.stopEvent(ev);
-            window.location.href = "sqlshare#s=tag/"+this.getAttribute('rel');
+            window.location.href = "sqlshare/#s=tag/"+this.getAttribute('rel');
         });
 
     });

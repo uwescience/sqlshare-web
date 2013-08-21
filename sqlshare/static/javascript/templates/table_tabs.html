@@ -10,7 +10,7 @@
         </div>
     </li>
     {{each tabs}}
-    <li{{if highlighted}} class="active"{{/if}}><a href="sqlshare#s=${type}/${name}">${display_name}</a> <a class="tab_close" title="Close this tab" name="tab_${position}">x</a></li>
+    <li{{if highlighted}} class="active"{{/if}}><a href="sqlshare/#s=${type}/${name}">${display_name}</a> <a class="tab_close" title="Close this tab" name="tab_${position}">x</a></li>
     {{/each}}
 </ul>
 </div>

@@ -15,7 +15,7 @@
 </h3>
 <ul class="ss-sidebar-items" id='js-sidebar-tag-list' style="padding-top:10px; border-bottom: none;">
     {{each tags}}
-        <li id='popular_tag_${name}'><a href="sqlshare#s=tag/${url_name}" title="View datasets tagged as ${name}"><span class="ss-tag-name">${name}</span><span class="ss-tag-count">${count}</span><span class="clear" style="height:0;padding:0;"></span></a></li>
+        <li id='popular_tag_${name}'><a href="sqlshare/#s=tag/${url_name}" title="View datasets tagged as ${name}"><span class="ss-tag-name">${name}</span><span class="ss-tag-count">${count}</span><span class="clear" style="height:0;padding:0;"></span></a></li>
     {{/each}}
 </ul>
 {{/if}}

@@ -369,6 +369,6 @@ Uploader.prototype._postSaveTags = function(o, destination) {
 };
 
 Uploader.prototype._cancel = function() {
-    window.location.href = "sqlshare#s=home";
+    window.location.href = "sqlshare/#s=home";
 };
 

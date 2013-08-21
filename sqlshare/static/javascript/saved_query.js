@@ -308,7 +308,7 @@ SavedQuery.prototype._startDelete = function() {
 
 SavedQuery.prototype._postDelete = function(o) {
     Solstice.Message.setSuccess(Solstice.Lang.getMessage('SQLShare', 'query_deleted'));
-    window.location.href = 'sqlshare#s=home';
+    window.location.href = 'sqlshare/#s=home';
     Solstice.YahooUI.PopIn.lower('confirm_delete');
 
     this._model.query_id = this.query_id;
