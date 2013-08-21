@@ -6,7 +6,7 @@ from django.utils import simplejson as json
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from django.core.context_processors import csrf
 from django.template import RequestContext
 from sqlshare.models import UserFile, Dataset, DatasetEmailAccess, CredentialsModel, FlowModel
@@ -82,7 +82,7 @@ def proxy(request, path):
     return response
 
 @login_required
-@csrf_protect
+@csrf_exempt
 def upload(request):
     user_file = UserFile(user_file=request.FILES["file"])
     user_file.save()
