@@ -74,7 +74,11 @@ Uploader.prototype._onUploadProgress = function(ev) {
 
 Uploader.prototype._onSuccess = function(ev) {
     var data = ev.data;
-    this._postParser(data);
+
+    this.AsyncGET(this._getRestRoot()+"parser/"+data.ss_id+"/"+data.sol_id, function(ev) {
+        var data = ev.data;
+        this._postParser(data);
+    });
 };
 
 Uploader.prototype._onAllFinished = function(ev) {

@@ -100,6 +100,16 @@ def upload(request):
 
     ss_id = json.loads(response)
 
+    json_response = json.dumps({
+        "sol_id": user_file.id,
+        "ss_id": ss_id
+    })
+
+    return HttpResponse(json_response)
+
+@login_required
+@csrf_protect
+def parser(request, ss_id, sol_id):
     ## This is the old File::Parser bit
     parser_response = _send_request('GET', '/REST.svc/v3/file/%s/parser' % ss_id,
                 {
@@ -108,12 +118,12 @@ def upload(request):
 
     parser_data = parser_response.read()
     json_values = json.loads(parser_data)
-    json_values["sol_id"] = user_file.id
+    json_values["sol_id"] = sol_id
     json_values["ss_id"] = ss_id
 
     json_response = json.dumps(json_values)
 
-    return HttpResponse(json_response)
+    return HttpResponse(json_response, content_type="application/json; charset=utf-8")
 
 @login_required
 @csrf_protect
