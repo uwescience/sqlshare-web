@@ -314,7 +314,7 @@ def stream_upload(request, user):
                 {
                     "Accept": "application/json",
                     "Content-Type": _getMultipartContentType(),
-                }, body=content, user=UserService().get_user())
+                }, body=content, user=user)
 
         headers = ss_response.getheaders()
         response = ss_response.read()
