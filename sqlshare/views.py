@@ -44,8 +44,17 @@ def user(request):
 @csrf_protect
 def proxy(request, path):
 
+
+    request_url = '/'+urllib.quote(path)
+
+    if request.GET:
+        request_url = request_url + "?"
+
+    for arg in request.GET:
+        request_url = request_url + "%s=%s&" % (urllib.quote(arg), urllib.quote(request.GET[arg]))
+
     body = request.read()
-    ss_response = _send_request(request.META['REQUEST_METHOD'], '/'+urllib.quote(path),
+    ss_response = _send_request(request.META['REQUEST_METHOD'], request_url,
                 {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
