@@ -1,6 +1,6 @@
 var TaggedQueries = function(div_id, tag) {
     this.id = div_id;
-    this.tag = tag;
+    this.tag = tag.toLowerCase();
 };
 
 TaggedQueries.prototype = new SSBase();
@@ -36,7 +36,7 @@ TaggedQueries.prototype._drawQueries = function(data) {
             var person_tags = tags[p].tags;
             for (var t = 0; t < person_tags.length; t++) {
                 var tag = person_tags[t];
-                if (tag == this.tag) {
+                if (tag.toLowerCase() == this.tag) {
                     my_data.push(data[i]);
                     found = true;
                     break;
