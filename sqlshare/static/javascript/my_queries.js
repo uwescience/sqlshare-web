@@ -10,7 +10,7 @@ MyQueries.prototype.draw = function() {
 };
 
 MyQueries.prototype._fetchQueries = function() {
-    this.setCurrentRequest(this.AsyncGET(this._getRestRoot()+"/proxy/REST.svc/v2/db/dataset", this._postFetch));
+    this.setCurrentRequest(this.AsyncGET(this._getRestRoot()+"/proxy/REST.svc/v2/db/dataset/"+solstice_user.login_name, this._postFetch));
 };
 
 MyQueries.prototype._postFetch = function(o) {
@@ -26,9 +26,7 @@ MyQueries.prototype._drawQueries = function(data) {
     var my_data = [];
     my_data.container_id = this.id;
     for (var i = 0; i < data.length; i++) {
-        if (data[i].owner == solstice_user.login_name) {
-            my_data.push(data[i]);
-        }
+        my_data.push(data[i]);
     }
     this._renderTo(this.id, new SQLShare.View.MyQueries.List(my_data));
     SQLShare.onChangeContent.fire();
