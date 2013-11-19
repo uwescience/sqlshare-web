@@ -15,8 +15,13 @@ from oauth2client.django_orm import Storage
 from oauth2client.client import OAuth2WebServerFlow
 from apiclient.discovery import build
 import httplib2
+import hashlib
+import random
 import urllib
+import time
 import math
+import sys
+import os
 import re
 from userservice.user import UserService
 
@@ -116,6 +121,42 @@ def upload(request):
     })
 
     return HttpResponse(json_response)
+
+@login_required
+def credentials(request):
+
+    user = UserService().get_user()
+
+    if request.META['REQUEST_METHOD'] == 'GET':
+        ss_response = _send_request('GET','/REST.svc/v1/api_key/%s' % (user),
+                {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                }, user=user)
+
+        if ss_response.status == 404:
+            return _generate_credentials()
+
+        response = HttpResponse(ss_response.read())
+        return response
+    else:
+        return _generate_credentials()
+
+
+def _generate_credentials():
+    api_key = hashlib.md5("%s%s%s" % (time.time(), random.randint(0, sys.maxint), os.getpid())).hexdigest()
+
+    user = UserService().get_user()
+    data = json.dumps({ 'key': api_key })
+    ss_response = _send_request('PUT','/REST.svc/v1/api_key/%s' % (user),
+            {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+            }, body=data, user=user)
+
+    response = HttpResponse(ss_response.read())
+    response.status_code = ss_response.status
+    return response
 
 @login_required
 @csrf_protect
