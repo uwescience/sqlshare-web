@@ -1,0 +1,29 @@
+{% load templatetag_handlebars %}
+{% tplhandlebars all_tables_list %}
+<h3>All Tables</h3>
+
+<div style="overflow:auto;">
+    <table border="0" cellpadding="0" cellspacing="0" style="width:2200px;">
+        <thead>
+            <tr>
+                <td><strong>Name</strong></td>
+                <td><strong>Owner</strong></td>
+                <td><strong>Is Public</strong></td>
+                <td><strong>URL</strong></td>
+            </tr>
+    
+        </thead>
+        <tbody>
+        {{ #each  tables }}
+        <tr>
+            <td><a href="./sqlshare/#s=table/{{owner}}/{{name}}">{{name}}</a></td>
+            <td>{{owner}}</td>
+            <td>{{is_public}}</td>
+            <td>{{url}}</td>
+        </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</div>
+
+{% endtplhandlebars %}

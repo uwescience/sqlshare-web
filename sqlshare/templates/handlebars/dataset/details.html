@@ -1,0 +1,9 @@
+{% load templatetag_handlebars %}
+{% tplhandlebars dataset_details %}
+<h3 style="color:green;">{{name}} {{surname}} ({{login}}) is sharing a dataset with you!</h3>
+
+
+<p style="margin:30px 0;"><strong>Dataset</strong><br/>
+{{dataset_name}} - {{accept_link}}</p>
+
+<p style="color:#777;">You will be required to log in using a Google Account or your UW NetID.</p>{% endtplhandlebars %}

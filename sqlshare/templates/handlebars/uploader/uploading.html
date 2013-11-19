@@ -1,0 +1,16 @@
+{% load templatetag_handlebars %}
+{% tplhandlebars uploader_uploading %}
+<div class="ss-content-header">
+    <h3>Saving...
+</h3>
+</div>
+
+<div class="ss-processing-container" style="margin-left: -120px;">
+    <div id="upload_progress_wrapper" style="border: 1px solid #aaa; height: 30px; width: 200px"></div>
+    <div id="upload_progress_meter" style="background-color: aqua; height: 30px; width: 0px; position:absolute; top:1px; left:1px;"></div>
+    <p style="color:#999; margin-top:8px;">Please wait while we save your dataset...</p>
+</div>
+
+
+
+{% endtplhandlebars %}

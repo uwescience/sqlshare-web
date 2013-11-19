@@ -1,0 +1,46 @@
+{% load templatetag_handlebars %}
+{% tplhandlebars query_sharing_panel_public %}
+    <h4>{{dataset_name}}</h4>
+
+    <div id="js-dataset-sharing-info-public">
+    <span class="ss-access-public"><strong>Everyone</strong> can view this dataset</span><a style="margin-left:15px;font-size:82%;" class="js-make_dataset_private" href="javascript:void(0);">Make dataset private</a>
+    </div>
+    <div id="js-dataset-sharing-changed-public" style="display: none;">
+    <span style="color:orange;" >Dataset will be set to public upon saving.</span>
+    </div>
+    {{ #if  has_users }}
+    <div class="ss-sharing-container" style="opacity: .60;">
+        <h5>Dataset was previously shared with the following users...</h5>
+        <div id="permissions_wrapper_public" style="height: 175px; overflow-y: auto; border: solid 1px #7F7F7F;">
+            <table id="sharing_list_public">
+                <thead>
+                    <tr><th>Name</th></th></tr>
+                </thead>
+                <tbody>
+                    {{ #each  accounts }}
+                    {{ #if  is_user }}
+                        <tr><td><span class="permission-user">{{name}} {{surname}} ({{login}})</span> {{ #if  email }}shared by {{email}}{{ /if }}</td>
+                        <td></td></tr>
+                    {{else}}
+                        <tr><td><span class="permission-user">{{email}}</span></td>
+                        <td></td></tr>
+                    {{ /if }}
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    {{else}}
+    <div class="ss-sharing-container">
+        <p class="public-message">This dataset is viewable by everyone. You can <a class="js-make_dataset_private" href="javascript:void(0);">make the dataset private</a> or <a class="js-make_dataset_private" href="javascript:void(0);">share with other users</a> if you want to add more viewing restrictions.</p>
+    </div>
+    {{ /if }}
+    
+    <div style="margin-top:10px; text-align:right;">
+        <a href="javascript:void(0)" class="js-close-sharing-panel ss-link-cancel" style="margin-right:10px;">Cancel
+</a>
+        <button class="ss-actions-button" id="js-sharing-save-public">Save
+</button>
+    </div>
+{% endtplhandlebars %}

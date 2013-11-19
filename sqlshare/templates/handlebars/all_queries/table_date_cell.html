@@ -1,0 +1,4 @@
+{% load templatetag_handlebars %}
+{% tplhandlebars all_queries_table_date_cell %}
+<div class="ss-dataset-date">{{month}} {{date}}, {{year}} {{hour}}:{{min}} {{ #if  pm }}PM{{else}}AM{{ /if }}</div>
+{% endtplhandlebars %}

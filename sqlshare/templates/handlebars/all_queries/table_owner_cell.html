@@ -1,0 +1,33 @@
+{% load templatetag_handlebars %}
+{% tplhandlebars all_queries_table_owner_cell %}
+{{ #if  is_owner }}
+<div class="ss-dataset-shared-owner">
+    {{ #if  is_public }}
+        <span class="ss-access-public">Public
+</span>
+    {{else}}
+        {{ #if  is_shared }}
+            <span class="ss-access-shared-owner">Sharing with others
+</span>
+        {{else}}
+            <span class="ss-access-private">Only you can view this
+</span>
+        {{ /if }}
+    {{ /if }}
+
+    {{owner}}
+</div>
+{{else}}
+<div class="ss-dataset-shared-owner">
+    {{ #if  is_public }}
+        <span class="ss-access-public">Public
+</span>
+    {{else}}
+        <span class="ss-access-shared-viewer">Shared with you
+</span>
+    {{ /if }}
+
+    {{owner}}
+</div>
+{{ /if }}
+{% endtplhandlebars %}

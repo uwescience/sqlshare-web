@@ -1,0 +1,19 @@
+{% load templatetag_handlebars %}
+{% tplhandlebars table_tabs %}
+<div style="height:30px; background-color:lime;">
+<ul class="ss-tables-list" id="table_tab_list">
+    <li style="display: none;">
+        <div id="table_tab_overflow" class="yuimenubar">
+            <div class="bd">
+                <ul>
+                    <li class="yuimenubaritem"><a class="yuimenubaritemlabel" href="#overflow">{{overflow}}</a></li>
+                </ul>
+            </div>
+        </div>
+    </li>
+    {{ #each  tabs }}
+    <li{{ #if  highlighted }} class="active"{{ /if }}><a href="sqlshare/#s={{type}}/{{name}}">{{display_name}}</a> <a class="tab_close" title="Close this tab" name="tab_{{position}}">x</a></li>
+    {{/each}}
+</ul>
+</div>
+{% endtplhandlebars %}

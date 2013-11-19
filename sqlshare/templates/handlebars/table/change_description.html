@@ -1,0 +1,6 @@
+{% load templatetag_handlebars %}
+{% tplhandlebars table_change_description %}
+<textarea id="{{id}}_description">{{description}}</textarea>
+<button id="{{id}}_save_description">Save</button>
+<button id="{{id}}_cancel_description">Cancel</button>
+{% endtplhandlebars %}

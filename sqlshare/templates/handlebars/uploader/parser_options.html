@@ -1,0 +1,72 @@
+{% load templatetag_handlebars %}
+{% tplhandlebars uploader_parser_options %}
+<div class="ss-content-header">
+    <h3>Upload Dataset
+</h3>
+</div>
+
+
+
+<div class="ss-upload-container">
+    
+    <div class="ss-upload-header">
+        <span>1. Choose File
+</span> 
+        <span class="current">2. Import Settings
+</span>
+        <span class="last">3. Save
+</span>
+    </div>
+    
+    <div class="ss-upload-body">
+                
+        <div class="ss-upload-parser-options">
+        
+            <div class="parser-header">
+                <h4>Dataset was imported with the following settings:</h4>
+                <p id='{{id}}_parser_info'>You can change the parser options if your data was not properly imported.</p>
+                <p style="color: orange; display:none;" id='{{id}}_parser_changed'>Your parser options have been changed.</p>
+            </div>
+            
+            <div class="parser-options">
+                 <div class="parser-options-text">Values are separated by <select id="{{id}}_delimiter">
+                    {{ #each  delimiters }}
+                    <option value="{{value}}" {{ #if  selected }}selected="selected"{{ /if }}>{{display}}</option>
+                    {{/each}}
+                </select></div>
+            </div>        
+            
+            <div class="parser-options">
+                <div class="parser-options-text" style="border-right:1px solid #ddd; padding-right:24px;"><input type="checkbox" id="{{id}}_has_column_header" value="1" {{ #if  has_column_headers }}checked="checked"{{ /if }} />&nbsp;Contains column header</div>
+            </div>
+            
+            <div class="clear">&nbsp;</div>
+        </div>
+        
+        <div class="ss-dataset-preview" id="dataset_preview_container">
+            <h5>DATASET PREVIEW
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="import-message">(Imported table with <span class="column-count">{{col_count}} columns</span>)</span></h5>
+            
+            <div class="ss-table-container">
+                <div id="upload_results"></div>
+            </div>
+        </div>
+        <div id="dataset_preview_error_container" style="display:none;">
+            Unable to show a preview of your dataset with the options provided.
+        </div>
+    </div>
+    
+    <div class="ss-upload-actions">
+        <div class="upload-cancel"><a id="{{id}}_cancel" class="ss-link-cancel">Cancel
+</a></div>
+        <div class="upload-proceed">
+            <button class="ss-actions-button" id="{{id}}_step_1">Back
+</button>
+            <button class="ss-actions-button" id="{{id}}_step_3">Next
+</button>
+        </div>
+        <div class="clear">&nbsp;</div>
+    </div>
+       
+</div>
+{% endtplhandlebars %}

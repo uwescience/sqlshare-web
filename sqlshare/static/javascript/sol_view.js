@@ -36,22 +36,8 @@ SolView.prototype.paint = function() {
 SolView.prototype.toString = function() {
     this.generateParams();
 
-    var content;
-    try {
-        var compiled = Solstice.CompiledTemplates.get(this._getApplication(), this.template);
-        if (!compiled) {
-            Solstice.CompiledTemplates.init(this._getApplication(), this.template);
-            compiled = Solstice.CompiledTemplates.get(this._getApplication(), this.template);
-        }
+    return HandlebarsUtils.to_string(this.template, this.params);
 
-        var content = $("<div />").append($.tmpl(this._getApplication()+"/"+this.template, this.params)).html();
-        return content;
-    }
-    catch (e) {
-        Solstice.log(e);
-    }
-    
-    return content;
 };
 
 SolView.prototype.setParam = function(key, value) {

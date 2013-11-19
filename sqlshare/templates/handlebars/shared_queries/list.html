@@ -1,0 +1,17 @@
+{% load templatetag_handlebars %}
+{% tplhandlebars shared_queries_list %}
+<div class="ss-content-header">
+    <h3>Shared Datasets
+</h3>
+    <div id='js-filter-wrapper' class="ss-dataset-filter"><span class="ss-filter-label">Filter dataset by keyword:
+</span>&nbsp;&nbsp;<input type="text" id="query_filter" /> <a href="javascript:void(0)" id="clear_query_filter" role="button">x</a></div>
+</div>
+
+{{ #if  no_queries }}
+<div class="ss-no-datasets-exist">
+	No datasets have been shared with you yet.
+
+</div>{{else}}
+<div id="{{id}}_table" class="ss-dataset-list"></div>
+{{ /if }}
+{% endtplhandlebars %}

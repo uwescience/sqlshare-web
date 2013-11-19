@@ -1,0 +1,10 @@
+{% load templatetag_handlebars %}
+{% tplhandlebars email_urls_user_list %}
+<h1>Users:</h1>
+
+{{ #each  users }}
+    <a href="{{url}}">{{name}} {{surname}} ({{login_name}})</a>
+    <br />
+{{/each}}
+
+{% endtplhandlebars %}

@@ -1,0 +1,39 @@
+{% load templatetag_handlebars %}
+{% tplhandlebars saved_query_in_process %}
+<div id="{{id}}_name_required" style="display: none;">A name is required</div>
+
+<div id="ss_content_header" class="ss-content-header">
+    <h3>Recent Query</h3>
+</div>
+
+<div id="ss_content_body_main" class="ss-content-body">
+    
+
+    <div id="{{id}}_query_wrapper" style="border: 1px solid black; display: none;">
+        <textarea id="{{id}}_sql_display" style="height:170px;">{{statement}}</textarea>
+    </div>
+    
+    <div style="margin: 15px 0; text-align:right;">
+        <button class="ss-actions-button" id="{{id}}_run_query" type="button" >Run query</button>
+        <button class="ss-actions-button save_query_button" id="{{id}}_save_query" type="button" >Save query</button>
+        <button class="ss-actions-button" id="{{id}}_snapshot">Create snapshot
+</button>
+        <button class="ss-actions-button" id="{{id}}_download_query">Download results</button>
+        <div id="{{id}}_download_error" style="display: none;"></div>
+    </div>
+   
+
+</div>
+
+<div id="new_query_preview_panel" class="ss-content-table">
+
+    <h5 id="initial_preview_header" style="display: none;">DATASET PREVIEW
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-weight:normal;">Rows <span style="color:#000;font-weight:bold;">1 - <span id="initial_max_rows"></span> </span> of <span style="color:#000;font-weight:bold;"><span id="initial_total_rows"></span></span>&nbsp;&nbsp;|&nbsp;&nbsp;Columns <span id="initial_max_cols" style="color:#000;font-weight:bold;"></span> of <span id="initial_total_cols" style="color:#000;font-weight:bold;"></span></span></h5>
+    
+    <div id="ss_table_container_main" class="ss-table-container" style="height: 200px;">
+        <div id="{{id}}_saved_results"></div>
+    </div>
+        
+
+</div>
+{% endtplhandlebars %}

@@ -1,0 +1,33 @@
+{% load templatetag_handlebars %}
+{% tplhandlebars query_save_panel %}
+<div class="ss-dialog-save">
+
+	<label for="{{id}}_query_name" class="ss-text-input-label">Name</label>
+	<input type="text" value="{{name}}" id="{{id}}_query_name" class="ss-text-input"/> 
+    <div style="display: none;" id="{{id}}_query_name_error" class="ss-error-text">Name can't include ?, #, /, \, [ or ]</div>
+	
+	<br />
+		
+	<label for="{{id}}_query_desc" class="ss-text-input-label">Description</label>
+	<textarea id="{{id}}_query_desc" class="ss-text-input">{{description}}</textarea>
+
+	<br />
+	
+	<input type="checkbox" id="{{id}}_is_public_check" {{ #if  is_public }}checked="checked"{{ /if }}>
+	<label class="share-checkbox" for="{{id}}_is_public_check">Share this dataset with everyone.
+</label>
+	
+	<br /><br />
+	
+    <h5>Tags</h5>
+    <div id="new_query_tag_container"></div>
+    
+    <div style="margin-top:10px; text-align:right;">
+        <a id="{{id}}_cancel" href="sqlshare#blank" class="ss-link-cancel">Cancel
+</a>
+	   <button class="ss-actions-button" id="{{id}}_save">Save
+</button> 
+    </div>
+    
+</div>
+{% endtplhandlebars %}

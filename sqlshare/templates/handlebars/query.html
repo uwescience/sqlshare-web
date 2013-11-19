@@ -1,0 +1,15 @@
+{% load templatetag_handlebars %}
+{% tplhandlebars query %}
+<div class="ss-query">
+    <label for="{{id}}_query">Query:</label>  <span class="ss-text-example">(E.g. select * from table)</span>
+    <br />
+    <div id="{{id}}_query_wrapper" style="border: 1px solid black; display: none;">
+    <textarea id="{{id}}_query" style="width: 700px; height: 170px;">
+    </textarea>
+    </div>
+    <br />
+    <button id="{{id}}_run_query">Run Query</button>
+    <button id="{{id}}_save_query">Save Query</button>
+</div>
+<div id="{{id}}_results" class="ss-queryresults"></div>
+{% endtplhandlebars %}

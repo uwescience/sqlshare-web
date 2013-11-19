@@ -1,0 +1,5 @@
+{% load templatetag_handlebars %}
+{% tplhandlebars table_tab %}
+<a title="{{display_name}}" href="sqlshare/#s={{type}}/{{name}}">{{display_name}}</a> <a class="tab_close" title="Close this tab" name="tab_{{position}}">x</a>
+
+{% endtplhandlebars %}

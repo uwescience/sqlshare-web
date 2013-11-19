@@ -1,0 +1,18 @@
+{% load templatetag_handlebars %}
+{% tplhandlebars email_urls_email_list %}
+<h1>Emails:</h1>
+
+{{ #each  emails }}
+    {{email}}: {{url}} {{ #if  is_active }}Active{{else}}Inactive{{ /if }}<br />
+    <ul>
+    {{ #if  users }}
+        {{ #each  users }}
+            <li>{{name}} {{surname}} ({{login_name}}) </li>
+        {{/each}}
+    {{else}}
+        <li>No users yet.</li>
+    {{ /if }}
+    </ul>
+    <br />
+{{/each}}
+{% endtplhandlebars %}

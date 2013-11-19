@@ -1,0 +1,18 @@
+{% load templatetag_handlebars %}
+{% tplhandlebars tagged_queries_list %}
+<div class="ss-content-header">
+    <h3>Tagged Datasets
+<span class="ss-tag-header-pipe">|</span><span class="ss-tag-header">{{tag}}</span></h3>
+    <div id='js-filter-wrapper' class="ss-dataset-filter"><span class="ss-filter-label">Filter dataset by keyword:
+</span>&nbsp;&nbsp;<input type="text" id="query_filter" /> <a href="javascript:void(0)" id="clear_query_filter" role="button">x</a></div>
+</div>
+{{ #if  no_queries }}
+<div class="ss-no-datasets-exist">
+	It looks like there are no datasets with that tag.
+
+</div>
+{{else}}
+<div id="{{id}}_table" class="ss-dataset-list"></div>
+{{ /if }}
+
+{% endtplhandlebars %}

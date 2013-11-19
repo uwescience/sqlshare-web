@@ -149,13 +149,7 @@ SolBase.prototype._renderTo = function() {
         var template = arguments[1];
         var params = arguments[2];
         try {
-            var compiled = Solstice.CompiledTemplates.get(this._getApplication(), template);
-            if (!compiled) {
-                Solstice.CompiledTemplates.init(this._getApplication(), template);
-                compiled = Solstice.CompiledTemplates.get(this._getApplication(), template);
-            }
-
-            var content = $("<div />").append($.tmpl(this._getApplication()+"/"+template, params)).html();
+            var content = HandlebarsUtils.to_string(template, params);
             $(div).html(content);
         }
         catch (e) {

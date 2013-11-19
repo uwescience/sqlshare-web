@@ -1,4 +1,5 @@
 Django==1.4
+django-templatetag-handlebars
 pycrypto
 oauth2client
 google-api-python-client

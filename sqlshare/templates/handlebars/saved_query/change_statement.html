@@ -1,0 +1,12 @@
+{% load templatetag_handlebars %}
+{% tplhandlebars saved_query_change_statement %}
+<div style="color: #666; margin-bottom:10px;">{{statement}}</div>
+
+<div id="{{id}}_query_wrapper" style="border: 1px solid black; display: none; background-color: white">
+<textarea id="{{id}}_statement" style="width: 700px; height: 70px;">{{statement}}</textarea>
+</div>
+<br />
+<button id="{{id}}_run_query">Run Edited Query</button>
+<button id="{{id}}_save_statement">Save</button>
+<button id="{{id}}_cancel_statement">Cancel</button>
+{% endtplhandlebars %}

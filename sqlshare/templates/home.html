@@ -27,7 +27,7 @@
     </script>
 
     <script type="text/javascript" src="{{STATIC_URL}}javascript/jquery.min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/jquery.tmpl.min.js"></script>
+<!--     <script type="text/javascript" src="{{STATIC_URL}}javascript/jquery.tmpl.min.js"></script> -->
     <script type="text/javascript" src="{{STATIC_URL}}javascript/yui_config.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/3.3.0/build/yui/yui-min.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/3.3.0/build/base/base-min.js"></script>
@@ -136,6 +136,8 @@
     <script type="text/javascript" src="{{STATIC_URL}}javascript/manage_credentials.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}javascript/tagging.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}javascript/view/sidebar_lists.js"></script>
+    <script src="{{STATIC_URL}}javascript/handlebars.js"></script>
+    <script src="{{STATIC_URL}}javascript/handlebars_util.js"></script>
 
     <script type="text/javascript">
       function initApplication() {
@@ -255,4 +257,81 @@
       <!-- END BOILERPLATE WORKSPACE -->
 
   </body>
+
+{% include "handlebars/table_tab.html" %}
+{% include "handlebars/uploader/parser_options.html" %}
+{% include "handlebars/uploader/uploading.html" %}
+{% include "handlebars/uploader/file_list.html" %}
+{% include "handlebars/uploader/step1.html" %}
+{% include "handlebars/uploader/table_options.html" %}
+{% include "handlebars/uploader/error.html" %}
+{% include "handlebars/table/change_description.html" %}
+{% include "handlebars/table/rename.html" %}
+{% include "handlebars/table/toggling_public.html" %}
+{% include "handlebars/table/display.html" %}
+{% include "handlebars/table/loading.html" %}
+{% include "handlebars/table/error.html" %}
+{% include "handlebars/open_id/google.html" %}
+{% include "handlebars/admin_override.html" %}
+{% include "handlebars/wayf/chooser.html" %}
+{% include "handlebars/email_urls/user_list.html" %}
+{% include "handlebars/email_urls/email_list.html" %}
+{% include "handlebars/email_urls/dataset_list.html" %}
+{% include "handlebars/shared_queries/loading.html" %}
+{% include "handlebars/shared_queries/list.html" %}
+{% include "handlebars/shared_queries/error.html" %}
+{% include "handlebars/default_home_screen.html" %}
+{% include "handlebars/load_error/bad_host.html" %}
+{% include "handlebars/boilerplate.html" %}
+{% include "handlebars/query_queue/display.html" %}
+{% include "handlebars/query_queue/loading.html" %}
+{% include "handlebars/query/interface.html" %}
+{% include "handlebars/query/sharing_panel_public.html" %}
+{% include "handlebars/query/sharing_panel_private.html" %}
+{% include "handlebars/query/running.html" %}
+{% include "handlebars/query/save_panel.html" %}
+{% include "handlebars/query/error.html" %}
+{% include "handlebars/query/sharing_panel.html" %}
+{% include "handlebars/all_tables/loading.html" %}
+{% include "handlebars/all_tables/list.html" %}
+{% include "handlebars/all_tables/error.html" %}
+{% include "handlebars/query.html" %}
+{% include "handlebars/tagged_queries/loading.html" %}
+{% include "handlebars/tagged_queries/list.html" %}
+{% include "handlebars/tagged_queries/error.html" %}
+{% include "handlebars/favorite_sidebar.html" %}
+{% include "handlebars/all_queries/table_name_cell.html" %}
+{% include "handlebars/all_queries/loading.html" %}
+{% include "handlebars/all_queries/table_date_cell.html" %}
+{% include "handlebars/all_queries/list.html" %}
+{% include "handlebars/all_queries/table_owner_cell.html" %}
+{% include "handlebars/all_queries/error.html" %}
+{% include "handlebars/table_tabs.html" %}
+{% include "handlebars/home.html" %}
+{% include "handlebars/saved_query/change_description.html" %}
+{% include "handlebars/saved_query/rename.html" %}
+{% include "handlebars/saved_query/deleting.html" %}
+{% include "handlebars/saved_query/display.html" %}
+{% include "handlebars/saved_query/loading.html" %}
+{% include "handlebars/saved_query/overwrite_panel.html" %}
+{% include "handlebars/saved_query/in_process.html" %}
+{% include "handlebars/saved_query/loading_preview.html" %}
+{% include "handlebars/saved_query/building_snapshot.html" %}
+{% include "handlebars/saved_query/edit.html" %}
+{% include "handlebars/saved_query/not_found.html" %}
+{% include "handlebars/saved_query/preview_error.html" %}
+{% include "handlebars/saved_query/error.html" %}
+{% include "handlebars/saved_query/description_area.html" %}
+{% include "handlebars/saved_query/confirm_delete.html" %}
+{% include "handlebars/saved_query/change_statement.html" %}
+{% include "handlebars/dataset/accept.html" %}
+{% include "handlebars/dataset/details.html" %}
+{% include "handlebars/dataset/not_found.html" %}
+{% include "handlebars/manage_credentials/interface.html" %}
+{% include "handlebars/manage_credentials/loading.html" %}
+{% include "handlebars/manage_credentials/error.html" %}
+{% include "handlebars/sidebar_lists.html" %}
+{% include "handlebars/my_queries/loading.html" %}
+{% include "handlebars/my_queries/list.html" %}
+{% include "handlebars/my_queries/error.html" %}
 </html>

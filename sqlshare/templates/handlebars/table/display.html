@@ -1,0 +1,37 @@
+{% load templatetag_handlebars %}
+{% tplhandlebars table_display %}
+<div style="background-color: #fff; padding: 5px 2px;height:21px;">
+    <div id="{{id}}_name_required" style="display: none;">A name is required</div>
+    <h3 style="float:left;"><div id="{{id}}_name_container">{{tablename}}</div></h3>
+    <div style="float:left;margin-left:20px;">Last modified: {{date_modified}}</div>
+    <div id="{{id}}_is_public" style="float:right;margin-right:10px;">Availability: {{ #if  is_public }}<span class="ss-availability-public">Public</span>{{else}}<span class="ss-availability-private">Private</span>{{ /if }}</div>
+    <div class="clear"></div>
+
+</div>
+
+<div style="background-color: #ddd; padding: 8px 4px; height:21px; text-align:right;">
+     <button id="{{id}}_download_query">Download</button>
+     <button type="button" disabled="disabled">Visualize</button>
+     <button type="button" disabled="disabled">Copy</button>
+     <button type="button" disabled="disabled">Delete</button>
+     <div id="{{id}}_download_error" style="display: none;"></div>
+</div>
+
+<div style="margin:10px;">
+
+    {{ #if  description }}
+    <div id="{{id}}_description_container">{{description}}</div>
+    {{else}}
+    <div id="{{id}}_description_container"><span class="ss-click-to-edit">Click here to add a description</span>
+</div>
+    {{ /if }}
+
+    Rows: {{row_count}}
+
+</div>  
+  
+<div style="overflow:auto; height: 400px; padding-left: 10px;">
+    <div id="{{id}}_table_preview"></div>
+</div>
+
+{% endtplhandlebars %}

@@ -1,0 +1,94 @@
+{% load templatetag_handlebars %}
+{% tplhandlebars uploader_step1 %}
+<div class="ss-content-header">
+    <h3>Upload Dataset
+</h3>
+</div>
+
+
+<div class="ss-upload-container">
+    
+    <div class="ss-upload-header">
+        <span class="current">1. Choose File
+</span> 
+        <span>2. Import Settings
+</span>
+        <span class="last">3. Save
+</span>
+    </div>
+    
+    {{ #if  is_back }}
+    <div style="width: 500px; margin:20px auto;">
+
+        <h2 style="margin:0;">File:
+</h2>
+
+        <div id="{{id}}_files_list" style="position:relative;">
+            <div style="line-height: 30px; background:aqua; border:solid 1px #aaa; margin:8px 0;">
+                <span style="display:inline-block; float:left; margin-left:4px;font-weight:bold;">{{file_name}}</span> 
+                <span style="float:right;display:inline-block;margin-right:4px; color: #888;">{{size}}</span>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div id="{{id}}_upload" style="display:block; position:absolute; z-index:2; height: 1.4em; cursor:pointer;"></div>
+        <div id="{{id}}_selectFilesLink" style="display: none; z-index:1;"><a id="selectLink" href="#">Select a different file</a></div>
+
+        <div style="display:none; text-align:center;" id="{{id}}_analyzing_display">
+            <img src="static/images/ss-loading.gif" />
+            <p style="color:#999;">Analysing your file...</p>
+        </div>
+
+        <!-- hide unless there is an error with the file -->
+        <div style="display: none;" id="ss_upload_error" class="ss-upload-error">
+            <p>We ran into a problem with this file. Please try uploading a different file or email us directly at <a href="mailto:sqlshare@uw.edu">sqlshare@uw.edu</a> for additional support.</p>    
+        </div>
+
+    </div>
+
+    <div>
+        <div style="width:40%; float:left;"><a id="{{id}}_cancel" class="ss-link-cancel">Cancel</a></div>
+
+        <div id="{{id}}_step1_next_wrapper" style="width:40%; float:right; text-align:right;">
+            <button class="ss-actions-button" id="{{id}}_step1">Next</button>
+        </div>
+        <div class="clear">&nbsp;</div>
+    </div>
+
+
+    {{else}}
+    <div style="width: 500px; margin: 30px auto;">
+
+        <h2 style="margin:0;">File:
+</h2>            
+        <div id="{{id}}_files_list" style="position:relative;"></div>
+        <div id="{{id}}_upload" style="display:block; position:absolute; z-index:2; height: 1.4em; cursor:pointer;">            
+            <p style="color:red; margin-top:.7em;">Adobe Flash is not installed. You need to <a href="http://get.adobe.com/flashplayer/">download</a> it to use this feature.</p>
+        </div>
+
+
+        <div id="{{id}}_selectFilesLink" style="display: none; z-index:1">
+            <h2><span id="selectLink" style="color:blue; text-decoration:underline; cursor:pointer;">Select file</span></h2>
+            <p style="color:#666;"><strong>Accepted file types:</strong> Comma-separated values (.csv) and Plain text (.txt)</p>
+        </div> 
+
+        <div style="display: none; text-align:center;" id="{{id}}_analyzing_display">
+            <img src="static/images/ss-loading.gif" />
+            <p>Analysing your file...</p>
+        </div>
+
+        <!-- hide unless there is an error with the file -->
+        <div style="display: none;" id="ss_upload_error" class="ss-upload-error">
+            <p>We ran into a problem with this file. Please try uploading a different file or email us directly at <a href="mailto:sqlshare@uw.edu">sqlshare@uw.edu</a> for additional support.</p>
+        </div>
+
+    </div>
+
+    <p><a id="{{id}}_cancel" class="ss-link-cancel">Cancel
+</a></p>
+
+    {{ /if }}
+
+</div>
+
+
+{% endtplhandlebars %}

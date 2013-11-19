@@ -1,0 +1,93 @@
+{% load templatetag_handlebars %}
+{% tplhandlebars home %}
+<script>
+   $(document).ready(function() {
+    console.log($('#templates_query_error.html'));
+     $('#templates/query/error.html').tmpl().appendTo('#destination');
+   });
+</script>
+
+<div style="width: 400px; height: 400px; border: 1px solid red;" id="destination"></div>
+
+<iframe id="yui-history-iframe" src="javascript/yui/build/history/assets/blank.html"></iframe>
+<input id="yui-history-field" type="hidden">
+
+<div id="ss_app" class="ss-app-container">
+    
+    <div class="ss-sidebar" id="ss_sidebar">
+             
+            <h3 class="ss-sidebar-logo"><a title="Welcome to SQLShare" href="sqlshare/#s=home"><img src="static/images/ss-logo.png" /></a></h3>
+            
+            <div id="ss_sidebar_content" class="ss-sidebar-content">
+                <ul class="ss-sidebar-items">
+                    <li id="your_queries_li"><a href="sqlshare/#s=home" title="View datasets owned by you" rel="home">Your datasets
+</a></li>
+                    <li id="all_queries_li"><a href="sqlshare/#s=all_queries" title="View all datasets" rel="all_queries">All datasets
+</a></li>
+                    <li id="shared_queries_li"><a href="sqlshare/#s=shared" title="View datasets shared with you" rel="shared_queries">Shared datasets
+</a></li>
+                    <li id="query_list_li"><a href="sqlshare/#s=querylist" title="View recent query activity" rel="querylist"><span style="display:block; float:left; width:100px; padding:0;">Recent&nbsp;activity...
+</span><span id="nav_finished_query_count" style="display:block;float:right;padding:0; color:green;font-size:92%;padding-top:1px;"></span><span class="clear" style="height:0;padding:0;"></span>
+                    </a></li>
+                    <li><span id="recent_queries" style="cursor:pointer;">Recently viewed
+&nbsp;&nbsp;<span style="font-size:110%;display:inline;padding:0;">&raquo;</span></span></li>
+                </ul>
+                <ul class="ss-sidebar-items">  
+                    <li id="new_upload_li"><a href="sqlshare/#s=file" title="Upload a new dataset" rel="file">Upload dataset
+</a></li>
+                    <li id="new_query_li"><a href="sqlshare/#s=query" title="Start a new query" rel="query">New query
+</a></li>
+                </ul>
+                <div id="tagging_sidebar"></div>
+            </div>
+            
+    </div>
+    
+    
+    <div class="ss-content" id="ss_content">
+    
+        <div id="menu_container"></div>
+        <div id="hidden_test_container" style="visibility: hidden; position: absolute; top: -900px;"></div>
+        
+        <div class="ss-app-navigation">
+            
+            <div id="tab_nav_tables" class="nav-container">           
+                <ul class="ss-tables-list" id="table_tab_list" style="margin-right:530px;">
+                    <li id="table_tab_overflow_li" class="tab_overflow"><div id="table_tab_overflow_div"></div></li>
+                </ul>
+            </div>
+            
+            <div class="ss-account-info">
+                <p><span style="color:#275877;font-weight:normal;">Logged in:
+</span>&nbsp;&nbsp;<span style="display:inline-block;">{{login_name}}</span></p>
+            </div>
+            
+            <div class="clear"></div>
+            
+            
+            
+        </div>
+        
+        <div id="ss_application_wrapper">
+            
+            <div class="ss-app-workspace-wrapper">
+                <div id="ss_app_workspace" style="padding-right:10px;"></div>
+            </div>
+            
+            <div class="ss-editor" id="ss_editor_col">
+                <div id="edit_query_container" style="overflow-y: auto; margin-left:10px; padding-right:10px; width:480px; "></div>
+            </div>
+            
+            <div class="clear"></div>
+             
+        </div>
+        <div class="clear"></div>
+        
+    </div>
+    
+
+    <div class="clear"></div>
+
+</div>
+
+{% endtplhandlebars %}

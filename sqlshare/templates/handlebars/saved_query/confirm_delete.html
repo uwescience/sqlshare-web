@@ -1,0 +1,12 @@
+{% load templatetag_handlebars %}
+{% tplhandlebars saved_query_confirm_delete %}
+<div class="ss-dialog-delete">
+	
+	<p style="color:#777;margin: 30px 0;">Are you sure you want to delete <strong>{{name}}</strong>?</p>
+
+    <div style="text-align:right;">
+        <a id="{{id}}_delete_cancel" class="ss-link-cancel">Cancel</a>
+	   <button class="ss-actions-button" id="{{id}}_delete_query">Delete</button>
+	</div>
+
+</div>{% endtplhandlebars %}

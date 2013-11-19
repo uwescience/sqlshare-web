@@ -1,0 +1,32 @@
+{% load templatetag_handlebars %}
+{% tplhandlebars saved_query_change_description %}
+<div class="ss-query-description-edit">
+    
+    <h4>{{name}}</h4>
+    
+    <h5>Description</h5>
+    
+    {{ #if  is_owner }}
+	<textarea id="{{id}}_description">{{description}}</textarea>
+    {{else}}
+    <div style="margin-bottom:1em;">
+    {{ #if  description }}
+        {{description}}
+    {{else}}
+        <span class="ss-click-to-edit">No description provided by owner</span>
+
+    {{ /if }}
+    </div>
+    {{ /if }}
+
+    <h5>Tags</h5>
+    <div id="tag_container"></div>
+	
+	
+	<div style="margin-top:10px; text-align:right;">    
+	   <a id="{{id}}_cancel_description" class="ss-link-cancel">Cancel</a>
+	   <button class="ss-actions-button" id="{{id}}_save_description">Save</button>
+    </div>
+    
+</div>
+{% endtplhandlebars %}

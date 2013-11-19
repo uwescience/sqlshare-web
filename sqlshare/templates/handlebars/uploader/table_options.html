@@ -1,0 +1,55 @@
+{% load templatetag_handlebars %}
+{% tplhandlebars uploader_table_options %}
+<div class="ss-content-header">
+    <h3>Upload Dataset
+</h3>
+</div>
+
+
+
+<div class="ss-upload-container">
+    
+    <div class="ss-upload-header">
+        <span>1. Choose File
+</span> 
+        <span>2. Import Settings
+</span>
+        <span class="current last">3. Save
+</span>
+    </div>
+
+    <div style="width: 500px; margin:20px auto;">
+
+        
+        <div style="margin-bottom:10px;"><span>Title:</span><br/>
+        <input style="width:492px; padding:2px;" type="text" id="{{id}}_table_title" value="{{title}}"/>
+        <div style="display: none;" id="ss_title_required" class="ss-error-text">Title Required</div>
+        <div style="display: none;" id="ss_title_invalid" class="ss-error-text">Title must by 120 characters or less, and not include ?, #, / or \ </div>
+        </div>
+        
+        <div style="margin-bottom:10px;"><span>Description:</span><br/>
+        <textarea style="width:500px;" id="{{id}}_description">{{description}}</textarea></div>
+
+        <h5>Tags</h5>
+        <div id="upload_tag_container"></div>
+        
+        <div><input type="checkbox" id="{{id}}_is_public" {{ #if  is_public }}checked="checked"{{ /if }}/>&nbsp;Share this dataset with everyone.</div>
+        
+
+    </div>
+    
+    <div>
+        <div style="width:40%; float:left;"><a id="{{id}}_cancel" class="ss-link-cancel">Cancel
+</a></div>
+    
+        <div style="width:40%; float:right; text-align:right;">
+            <button class="ss-actions-button" id="{{id}}_back_to_2">Back
+</button>
+            <button class="ss-actions-button" id="{{id}}_load_table">Save
+</button>
+        </div>
+        <div class="clear">&nbsp;</div>
+    </div>
+        
+</div>
+{% endtplhandlebars %}

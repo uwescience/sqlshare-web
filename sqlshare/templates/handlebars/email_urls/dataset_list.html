@@ -1,0 +1,8 @@
+{% load templatetag_handlebars %}
+{% tplhandlebars email_urls_dataset_list %}
+<h1>Datasets:</h1>
+
+{{ #each  datasets }}
+    <a href="{{url}}">{{name}} ({{count}} emails)</a> <br />
+{{/each}}
+{% endtplhandlebars %}
