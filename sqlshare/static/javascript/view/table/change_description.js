@@ -10,6 +10,6 @@ SQLShare.View.Table.ChangeDescription.prototype.generateParams = function() {
 
     this.setParam('id', table.container_id);
     if (table.description) {
-        this.setParam('description', table.description.encodeHTML());
+        this.setParam('description', table.description);
     }
 };

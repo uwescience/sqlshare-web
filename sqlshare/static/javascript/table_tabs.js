@@ -111,8 +111,8 @@ SQLShare.TableTabs.prototype.highlightTab = function(type, id) {
         this._renderTo(div.id, 'table_tab.html', {
             highlighted: true,
             type: type,
-            name: id.encodeHTML(),
-            display_name: unescape(new_string).encodeHTML(),
+            name: id,
+            display_name: unescape(new_string),
             position: this._tabs.length
         });
 
@@ -202,7 +202,7 @@ SQLShare.TableTabs.prototype._redrawMenu = function() {
             }
 
             this._menu.addItem({
-                text: "<span class='go' name='sqlshare/#s=query/"+visible_tabs[i].tab.id.encodeHTML()+"'>"+unescape(visible_tabs[i].tab.display).encodeHTML()+"</span> <span class='remove' name='"+visible_tabs[i].tab.id.encodeHTML()+"'>x</span>",
+                text: "<span class='go' name='sqlshare/#s=query/"+visible_tabs[i].tab.id+"'>"+unescape(visible_tabs[i].tab.display)+"</span> <span class='remove' name='"+visible_tabs[i].tab.id+"'>x</span>",
                 onclick: { fn: this._handleMenuClick, obj: this, scope: this },
                 checked: visible_tabs[i].tab.highlighted,
                 classname: classname

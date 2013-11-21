@@ -8,10 +8,10 @@ SQLShare.View.Query.SavePanel.prototype = new SQLShare.View();
 SQLShare.View.Query.SavePanel.prototype.generateParams = function() {
     this.setParam('id', this.model.id);
     if (this.model.description) {
-        this.setParam('description', this.model.description.encodeHTML());
+        this.setParam('description', this.model.description);
     }
     if (this.model.name) {
-        this.setParam('name', this.model.name.encodeHTML());
+        this.setParam('name', this.model.name);
     }
     if (this.model.is_public) {
         this.setParam('is_public', true);

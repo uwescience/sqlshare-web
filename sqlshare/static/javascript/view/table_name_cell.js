@@ -22,15 +22,15 @@ SQLShare.View.TableNameCell.prototype.generateParams = function() {
 
     var url = model.url.replace(/^\/REST.svc\/v2\/db\/dataset/, 'query');
 
-    this.setParam('description', name.encodeHTML());
-    this.setParam('owner', encodeURIComponent(model.owner).encodeHTML());
-    this.setParam('name', model.name.encodeHTML());
-    this.setParam('uri_name', encodeURIComponent(model.name).encodeHTML());
-    this.setParam('url', url.encodeHTML());
+    this.setParam('description', name);
+    this.setParam('owner', encodeURIComponent(model.owner));
+    this.setParam('name', model.name);
+    this.setParam('uri_name', encodeURIComponent(model.name));
+    this.setParam('url', url);
 
     for (var i = 0; i < model.tags.length; i++) {
         this.addParam('tags', {
-            name: model.tags[i].encodeHTML(),
+            name: model.tags[i],
             url_name: encodeURIComponent(model.tags[i])
         });
     }

@@ -8,9 +8,8 @@ SQLShare.View.SavedQuery.Edit.prototype = new SQLShare.View();
 SQLShare.View.SavedQuery.Edit.prototype.generateParams = function() {
     var query = this.model;
 
-    var statement = query.sql_code.encodeHTML();
+    var statement = query.sql_code;
 //    statement = Solstice.String.newlinesToBreaks(statement);
-    statement = statement.replace(/ /g, '&nbsp;');
 
     var url = query.url;
     if (url) {
@@ -18,11 +17,11 @@ SQLShare.View.SavedQuery.Edit.prototype.generateParams = function() {
         this.setParam('url', url);
         this.setParam('id', query.container_id);
         if (!query.container_id.match(/^[0-9]+$/)) {
-            this.setParam('name', query.name.encodeHTML());
-            this.setParam('description', query.description.encodeHTML());
+            this.setParam('name', query.name);
+            this.setParam('description', query.description);
 
-            this.setParam('owner', query.owner.encodeHTML());
-            this.setParam('date_modified', query.date_modified.encodeHTML());
+            this.setParam('owner', query.owner);
+            this.setParam('date_modified', query.date_modified);
         }
     }
     else {
@@ -41,8 +40,8 @@ SQLShare.View.SavedQuery.Edit.prototype.generateParams = function() {
     for (var i in query.columns) {
         var column = query.columns[i];
         this.addParam('columns', {
-            name    : column.name.encodeHTML(),
-            db_type : column.dbtype.encodeHTML()
+            name    : column.name,
+            db_type : column.dbtype
         });
     }
 
@@ -54,7 +53,7 @@ SQLShare.View.SavedQuery.Edit.prototype.generateParams = function() {
             if (typeof(val) != 'string') {
                 val = ""+val;
             }
-            params.push({ value: val.encodeHTML() });
+            params.push({ value: val });
         }
         this.addParam('rows', { values: params });
     }

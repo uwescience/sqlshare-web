@@ -41,13 +41,13 @@ SQLShare.View.SavedQuery.DescriptionArea.prototype.generateParams = function() {
         });
         for (var i = 0; i < tags.length; i++) {
             this.addParam('tags', {
-                name: tags[i].encodeHTML()
+                name: tags[i]
             });
         }
     }
 
     if (!query.container_id.match(/^[0-9]+$/)) {
-        this.setParam('description', Solstice.String.newlinesToBreaks(query.description.encodeHTML()));
+        this.setParam('description', Solstice.String.newlinesToBreaks(query.description));
     }
 
     this.setParam('id', query.container_id);

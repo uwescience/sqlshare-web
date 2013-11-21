@@ -10,15 +10,15 @@ SQLShare.View.Table.prototype.generateParams = function() {
 
     this.setParam('id', table.container_id);
     this.setParam('is_public', table.is_public);
-    this.setParam('tablename', table.tablename.encodeHTML());
-    this.setParam('description', table.description.encodeHTML());
+    this.setParam('tablename', table.tablename);
+    this.setParam('description', table.description);
     this.setParam('row_count', table.rows);
 
     for (var i in table.columns) {
         var column = table.columns[i];
         this.addParam('columns', {
-            name    : column.name.encodeHTML(),
-            db_type : column.dbtype.encodeHTML()
+            name    : column.name,
+            db_type : column.dbtype
         });
     }
 
@@ -27,7 +27,7 @@ SQLShare.View.Table.prototype.generateParams = function() {
         var params = [];
         for (var j in row) {
             var val = row[j];
-            params.push({ value: val.encodeHTML() });
+            params.push({ value: val });
         }
         this.addParam('rows', { values: params });
     }

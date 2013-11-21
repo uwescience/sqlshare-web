@@ -24,10 +24,10 @@ SQLShare.View.TableTabs.prototype.generateParams = function() {
     for (var i = starting; i < tabs.length; i++) {
         var name = tabs[i].name;
         this.addParam('tabs', {
-            name            : name.encodeHTML(),
-            display_name    : unescape(name).encodeHTML(),
+            name            : name,
+            display_name    : unescape(name),
             type            : tabs[i].type,
-            uri_name        : tabs[i].name.encodeHTML(),
+            uri_name        : tabs[i].name,
             highlighted     : tabs[i].highlighted,
             position        : i
         });
@@ -50,11 +50,11 @@ SQLShare.View.TableTabs.prototype.postRender = function() {
         var tab = this.model[i];
         var name = tab.name;
         var type = tab.type;
-        var display_name = unescape(name).encodeHTML();
+        var display_name = unescape(name);
 
         submenu.push({
             text: display_name,
-            url: "sqlshare/#s="+type+"/"+name.encodeHTML()
+            url: "sqlshare/#s="+type+"/"+name
             });
     }
 

@@ -12,7 +12,7 @@ SQLShare.View.SavedQuery.ChangeDescription.prototype.generateParams = function()
     this.setParam('name', query.name);
     
     if (query.description) {
-        this.setParam('description', query.description.encodeHTML());
+        this.setParam('description', query.description);
     }
 
     if (query.owner == solstice_user.login_name) {

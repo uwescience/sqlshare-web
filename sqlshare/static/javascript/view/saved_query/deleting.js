@@ -10,5 +10,5 @@ SQLShare.View.SavedQuery.Deleting.prototype.generateParams = function() {
 
     this.setParam('id', query.container_id);
 
-    this.setParam('name', query.name.encodeHTML());
+    this.setParam('name', query.name);
 };

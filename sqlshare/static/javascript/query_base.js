@@ -411,7 +411,7 @@ QueryBase.prototype._postQuery = function(o) {
     else {
         var error;
         if (o.data) {
-            error = Solstice.String.encodeHTML(o.data.error);
+            error = o.data.error;
         }
         if (o.code == 414) {
             error = Solstice.Lang.getString('SQLShare', 'error_query_too_long');
@@ -434,7 +434,7 @@ QueryBase.prototype._postInitialRedirect = function(o) {
     }
     else {
         if (o.data) {
-            error = Solstice.String.encodeHTML(o.data.error);
+            error = o.data.error;
         }
         if (o.code == 414) {
             error = Solstice.Lang.getString('SQLShare', 'error_query_too_long');
@@ -484,7 +484,7 @@ QueryBase.prototype._postWaitForQueryResults = function(o, args) {
     else {
         var error;
         if (o.data) {
-            error = Solstice.String.encodeHTML(o.data.error);
+            error = o.data.error;
         }
         if (o.code == 414) {
             error = Solstice.Lang.getString('SQLShare', 'error_query_too_long');

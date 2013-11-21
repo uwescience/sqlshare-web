@@ -10,9 +10,9 @@ SQLShare.View.UploaderOptions.prototype.generateParams = function() {
 //    var table_data = options.parser.table;
 
     this.setParam('id', options.container_id);
-    this.setParam('title', options.dataset_name.encodeHTML());
+    this.setParam('title', options.dataset_name);
 //    if (table_data.description) {
- //       this.setParam('description', table_data.description.encodeHTML());
+ //       this.setParam('description', table_data.description);
    // }
 
 //    if (table_data.is_public) {

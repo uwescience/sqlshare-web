@@ -34,7 +34,7 @@ SQLShare.View.Query.SharingPanel.prototype.generateParams = function() {
             type:       'email',
             rel:        rel_value,
             sort_key:   emails[i],
-            email:      emails[i].encodeHTML()
+            email:      emails[i]
         });
     }
 
@@ -43,10 +43,10 @@ SQLShare.View.Query.SharingPanel.prototype.generateParams = function() {
         all_accounts.push({
             type:       'user',
             sort_key:   users[i].login,
-            login:      users[i].login.encodeHTML(),
-            name:       (users[i].name ? users[i].name.encodeHTML() : ''),
-            surname:    (users[i].surname ? users[i].surname.encodeHTML() : ''),
-            email:      (users[i].origin_email ? users[i].origin_email.encodeHTML() : '')
+            login:      users[i].login,
+            name:       (users[i].name ? users[i].name : ''),
+            surname:    (users[i].surname ? users[i].surname : ''),
+            email:      (users[i].origin_email ? users[i].origin_email : '')
         });
     }
 
@@ -77,9 +77,9 @@ SQLShare.View.Query.SharingPanel.prototype.generateParams = function() {
     }
 
     this.setParam('is_public', dataset.is_public);
-    this.setParam('dataset_name', dataset.name.encodeHTML());
-    this.setParam('owner_name', solstice_user.name.encodeHTML());
-    this.setParam('owner_surname', solstice_user.surname.encodeHTML());
+    this.setParam('dataset_name', dataset.name);
+    this.setParam('owner_name', solstice_user.name);
+    this.setParam('owner_surname', solstice_user.surname);
 
 };
 
@@ -306,7 +306,6 @@ SQLShare.View.Query.SharingPanel.prototype.addEmail = function(value) {
     this._permissionsChanged();
 
     var permissions_datatable = this.datatable;
-    value = value.encodeHTML();
     var rel_value = value.replace(/"/g, '__quote__');
     var rel_value = value.replace(/&quot;/g, '__quote__');
     permissions_datatable.addRow({

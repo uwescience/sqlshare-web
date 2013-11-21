@@ -41,8 +41,8 @@ SQLShare.View.SidebarLists.prototype._generateFavoriteParams = function() {
         var item = list[i];
         if (item.popularity > 0) {
             this.addParam('popular_datasets', {
-                name: unescape(item.name).encodeHTML(),
-                url: "sqlshare/#s=query/"+item.owner.encodeHTML()+"/"+item.name.encodeHTML(),
+                name: unescape(item.name),
+                url: "sqlshare/#s=query/"+item.owner+"/"+item.name,
                 popularity: item.popularity
             });
         }
@@ -93,7 +93,7 @@ SQLShare.View.SidebarLists.prototype._generateTagParams = function() {
 
     for (var i = 0; i < max_tag; i++) {
         this.addParam('tags', {
-            name: tag_list[i].encodeHTML(),
+            name: tag_list[i],
             url_name: encodeURIComponent(tag_list[i]),
             count: all_tags[tag_list[i]]
         });

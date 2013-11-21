@@ -89,19 +89,19 @@ Navigation.prototype._loadSavedQuery = function(parts) {
 Navigation.prototype._loadTaggedQueries = function(parts) {
     var tag = parts[0];
     var title = Solstice.Lang.getString("SQLShare", "page_title_display_tag", {
-        tag: tag.encodeHTML()
+        tag: tag
     });
     SQLShare.onNavigate.fire(title, "tag/"+tag);
 
     this._highlightTag(tag);
-    this._highlightLeftNav('popular_tag_'+tag.encodeHTML());
+    this._highlightLeftNav('popular_tag_'+tag);
 
     this.onTaggedQueriesView.fire(tag);
 };
 
 Navigation.prototype._highlightTag = function(tag) {
     if (document.getElementById('check_tagging_sidebar')) {
-        this._highlightLeftNav('popular_tag_'+tag.encodeHTML());
+        this._highlightLeftNav('popular_tag_'+tag);
     }
     else {
         var me = this;

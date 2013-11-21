@@ -11,7 +11,7 @@ SQLShare.View.TaggedQueries.List.prototype = new SQLShare.View.QueryListBase();
 SQLShare.View.TaggedQueries.List.prototype.generateParams = function() {
     var list = this.model;
 
-    this.setParam('tag', this.tag.encodeHTML());
+    this.setParam('tag', this.tag);
     this.setParam('id', list.container_id);
     if (!list.length) {
         this.setParam('no_queries', true);

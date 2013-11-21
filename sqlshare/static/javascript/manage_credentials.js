@@ -21,7 +21,7 @@ ManageCredentials.prototype._postFetch = function(o) {
 
 ManageCredentials.prototype._drawInterface = function(data) {
     this._renderTo(this.id, 'manage_credentials/interface.html', {
-        key: data.key.encodeHTML()
+        key: data.key
     });
 
     var me = this;

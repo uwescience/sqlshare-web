@@ -41,7 +41,7 @@ SQLShare.View.QueryQueue.Display.prototype.generateParams = function() {
         }
 
         this.addParam('queries', {
-            sql: data.sql_code.encodeHTML(),
+            sql: data.sql_code,
             status: data.status,
             url: data.url,
             start: start_date.toString(),

@@ -9,5 +9,5 @@ SQLShare.View.Table.Rename.prototype.generateParams = function() {
     var table = this.model;
 
     this.setParam('id', table.container_id);
-    this.setParam('name', table.tablename.encodeHTML());
+    this.setParam('name', table.tablename);
 };

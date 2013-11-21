@@ -10,6 +10,6 @@ SQLShare.View.SavedQuery.ChangeStatement.prototype.generateParams = function() {
 
     this.setParam('id', query.container_id);
     if (query.long_desc) {
-        this.setParam('statement', query.sql_code.encodeHTML());
+        this.setParam('statement', query.sql_code);
     }
 };

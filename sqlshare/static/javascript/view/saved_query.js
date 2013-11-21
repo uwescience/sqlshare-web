@@ -18,8 +18,7 @@ SQLShare.View.SavedQuery.prototype.generateParams = function() {
     this.setParam('description_area', description_view.toString());
     description_view.postRender();
 
-    var statement = query.sql_code.encodeHTML();
-    statement = statement.replace(/ /g, '&nbsp;');
+    var statement = query.sql_code;
 
     // This is a little bit hackey - but seemed better than a global var/event to track it
     if (document.getElementById('ss_editor_col').offsetWidth) {
@@ -30,9 +29,9 @@ SQLShare.View.SavedQuery.prototype.generateParams = function() {
 
     if (!query.container_id.match(/^[0-9]+$/)) {
 
-        this.setParam('name', query.name.encodeHTML());
-        this.setParam('description', Solstice.String.newlinesToBreaks(query.description.encodeHTML()));
-        this.setParam('owner', query.owner.encodeHTML());
+        this.setParam('name', query.name);
+        this.setParam('description', Solstice.String.newlinesToBreaks(query.description));
+        this.setParam('owner', query.owner);
     }
     this.setParam('statement', statement);
 
@@ -53,8 +52,8 @@ SQLShare.View.SavedQuery.prototype.generateParams = function() {
     for (var i in query.columns) {
         var column = query.columns[i];
         this.addParam('columns', {
-            name    : column.name.encodeHTML(),
-            db_type : column.dbtype.encodeHTML()
+            name    : column.name,
+            db_type : column.dbtype
         });
     }
 
@@ -66,7 +65,7 @@ SQLShare.View.SavedQuery.prototype.generateParams = function() {
             if (typeof(val) != 'string') {
                 val = ""+val;
             }
-            params.push({ value: val.encodeHTML() });
+            params.push({ value: val });
         }
         this.addParam('rows', { values: params });
     }
