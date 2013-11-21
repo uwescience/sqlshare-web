@@ -26,6 +26,9 @@
 
     </script>
 
+    {% load compress %}
+
+    {% compress js %}
     <script type="text/javascript" src="{{STATIC_URL}}javascript/jquery.min.js"></script>
 <!--     <script type="text/javascript" src="{{STATIC_URL}}javascript/jquery.tmpl.min.js"></script> -->
     <script type="text/javascript" src="{{STATIC_URL}}javascript/yui_config.js"></script>
@@ -138,6 +141,7 @@
     <script type="text/javascript" src="{{STATIC_URL}}javascript/view/sidebar_lists.js"></script>
     <script src="{{STATIC_URL}}javascript/handlebars.js"></script>
     <script src="{{STATIC_URL}}javascript/handlebars_util.js"></script>
+    {% endcompress %}
 
     <script type="text/javascript">
       function initApplication() {
@@ -149,6 +153,7 @@
       </script>
 
 
+    {% compress css %}
     <link rel="stylesheet" type="text/css"  href="{{STATIC_URL}}javascript/yui/build/menu/assets/skins/sam/menu.css"/>
     <link rel="stylesheet" type="text/css"  href="{{STATIC_URL}}javascript/yui/build/button/assets/skins/sam/button.css"/>
     <link rel="stylesheet" type="text/css"  href="{{STATIC_URL}}javascript/yui/build/tabview/assets/skins/sam/tabview.css"/>
@@ -168,6 +173,7 @@
     <link rel="stylesheet" type="text/css"  href="{{STATIC_URL}}styles/fonts.css"/>
     <link rel="stylesheet" type="text/css"  href="{{STATIC_URL}}styles/tagging.css"/>
     <link rel="stylesheet" type="text/css"  href="{{STATIC_URL}}styles/sqlshare.css"/>
+    {% endcompress %}
 
   </head>
 
