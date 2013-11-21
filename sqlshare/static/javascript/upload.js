@@ -184,21 +184,21 @@ Uploader.prototype._loadStep3 = function(ev) {
     this._parser_options.parser.has_column_headers = this.has_header;
     this._renderTo(this.id, new SQLShare.View.UploaderOptions(this._parser_options));
 
-    var me = this;
-    var tag_set = SQLShare._ALL_TAGS || {};
-    var datasource = [];
-    for (tag in tag_set) {
-        datasource.push(tag);
+    var available_tags = [];
+
+    if (SQLShare._ALL_TAGS) {
+        for (var key in SQLShare._ALL_TAGS) {
+            if (SQLShare._ALL_TAGS.hasOwnProperty(key)) {
+                available_tags.push(key);
+            }
+        }
     }
 
-    YUI().use('tagger', function(Y) {
-        var tags = new Y.Tagger('upload_tag_container', {
-            tags: {},
-            datasource: datasource
-        });
-        tags.initialize();
-        me._tagger = tags;
+    $("#upload_tags").tagit({
+        availableTags: available_tags,
     });
+
+
 
     //"uploader/table_options.html", { id : this.id, title: this._current_file_name });
     YAHOO.util.Event.addListener(this.id+"_load_table", "click", this._loadTable, this, true);
@@ -267,7 +267,7 @@ Uploader.prototype._loadTable = function(ev) {
 
     options.table_name        = base_name;
     options.table_description = document.getElementById(this.id+'_description').value;
-    options.tags = this._tagger.getTags();
+    options.tags = $("#upload_tags").tagit("assignedTags");
 
     this._final_table_name = base_name;
     this._query_name = document.getElementById(this.id+'_table_title').value;
