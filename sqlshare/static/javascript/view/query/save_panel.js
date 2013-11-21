@@ -27,14 +27,18 @@ SQLShare.View.Query.SavePanel.prototype.postRender = function() {
         datasource.push(tag);
     }
 
-    var me = this;
-    YUI().use('tagger', function(Y) {
-        var tags = new Y.Tagger('new_query_tag_container', {
-            tags: {},
-            datasource: datasource
-        });
-        tags.initialize();
-        me._tagger = tags;
+    var available_tags = [];
+
+    if (SQLShare._ALL_TAGS) {
+        for (var key in SQLShare._ALL_TAGS) {
+            if (SQLShare._ALL_TAGS.hasOwnProperty(key)) {
+                available_tags.push(key);
+            }
+        }
+    }
+
+    $("#new_query_tags").tagit({
+        availableTags: available_tags,
     });
 
 };

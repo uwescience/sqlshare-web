@@ -274,21 +274,20 @@ QueryBase.prototype._openDescriptionDialog = function(ev) {
     popin.show();
     view.postRender();
 
-    this._buildTagger();
-
     this._description_popin = popin;
 
     YAHOO.util.Event.addListener(this.id+'_save_description', "click", this._beginDescriptionSave, this, true);
     YAHOO.util.Event.addListener(this.id+'_cancel_description', "click", this._cancelDescriptionSave, this, true);
 };
 
-QueryBase.prototype._buildTagger = function() {
+getQuerySetTags = function(query) {
+    var raw_tags = query.tags;
     var is_dataset_owner = false;
-    if (this._model.owner == solstice_user.login_name) {
+
+    if (query.owner == solstice_user.login_name) {
         is_dataset_owner = true;
     }
 
-    var raw_tags = this._model.tags;
 
     var tag_hash = {};
     for (var pc = 0; pc < raw_tags.length; pc++) {
@@ -308,23 +307,8 @@ QueryBase.prototype._buildTagger = function() {
         }
     }
 
-    var tag_set = SQLShare._ALL_TAGS || {};
-    var datasource = [];
-    for (tag in tag_set) {
-        datasource.push(tag);
-    }
-
-    var me = this;
-    YUI().use('tagger', function(Y) {
-        var tags = new Y.Tagger('tag_container', {
-            tags: tag_hash,
-            datasource: datasource
-        });
-        tags.initialize();
-        me._tagger = tags;
-    });
-
-};
+    return tag_hash;
+}
 
 QueryBase.prototype._cancelDescriptionSave = function(ev) {
     YAHOO.util.Event.stopEvent(ev);
@@ -608,7 +592,7 @@ QueryBase.prototype._save = function() {
 
 QueryBase.prototype._postSave = function(o) {
     if (o.code == 201 || o.code == 200) {
-        var tags = this._save_panel_view.getTagger().getTags();
+        var tags = $("#new_query_tags").tagit("assignedTags");
         if (tags) {
             this.AsyncPUT(this._getRestRoot()+"/proxy/REST.svc/v2/db/dataset/"+solstice_user.sqlshare_schema+"/"+o.data.name+"/tags", [{"name":solstice_user.sqlshare_schema, "tags":tags }], this._postSaveTags, o);
         }
@@ -651,7 +635,7 @@ QueryBase.prototype._getNewTagData = function() {
         }
     }
 
-    var current_tags = this._tagger.getTags();
+    var current_tags = $("#query_tags").tagit("assignedTags");
     var current_tag_hash = {};
 
     var new_tags_for_user = [];

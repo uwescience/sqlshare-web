@@ -20,7 +20,12 @@
     {{ /if }}
 
     <h5>Tags</h5>
-    <div id="tag_container"></div>
+
+    <ul id="query_tags">
+    {{ #each tags }}
+        <li>{{ tag }}</li>
+    {{ /each }}
+    </ul>
 	
 	
 	<div style="margin-top:10px; text-align:right;">    
