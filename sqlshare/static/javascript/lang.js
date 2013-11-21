@@ -15,7 +15,6 @@
  * @class Abstract superclass for Lang
  * @constructor
  */
-Solstice.LangData = new Array();
 Solstice.LangParams = new Array();
 Solstice.Lang = function (namespace, others) {
     this._initialize(namespace, others);
@@ -172,22 +171,6 @@ Solstice.Lang.prototype._initialize = function(namespace, others) {
 }
 
 Solstice.Lang.prototype._fetchLangData = function(namespaces){
-
-    var cfg = {
-        method: 'GET',
-        sync: true
-    };
-
-    for (index in namespaces) {
-        var url = "/static/javascript/lang/"+namespaces[index]+".json";
-
-        var request;
-        YUI().use("io-base", function(Y) {
-            request = Y.io(url, cfg);
-        });
-
-        Solstice.LangData[namespaces[index]] = jQuery.parseJSON(request.responseText);
-    }
-
+    // Now just included as a js file inline
     return true;
 }

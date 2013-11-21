@@ -1,4 +1,6 @@
-{
+Solstice.LangData = {};
+
+Solstice.LangData['SQLShare'] = {
    "hlps" : {
       "example" : "This is an example."
    },
