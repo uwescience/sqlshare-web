@@ -1094,47 +1094,6 @@ Solstice.Message.addSuccess = function(message){
     return Solstice.YahooUI.Message.set('success', message, true);
 }
 
-Solstice.CompiledTemplates = new Array();
-
-Solstice.CompiledTemplates.set = function(namespace, template, function_ref) {
-/*
-    if(Solstice.CompiledTemplates[namespace] == null || !Solstice.CompiledTemplates[namespace] instanceof Array){
-        Solstice.CompiledTemplates[namespace] = new Array;
-    }
-    Solstice.CompiledTemplates[namespace][template] = function_ref;
-    */
-}
-
-Solstice.CompiledTemplates.get = function(namespace, template) {
-    if(Solstice.CompiledTemplates[namespace] == null || !Solstice.CompiledTemplates[namespace] instanceof Array){
-        Solstice.CompiledTemplates[namespace] = new Array;
-    }
-    return Solstice.CompiledTemplates[namespace][template];
-}
-
-Solstice.CompiledTemplates.init = function(namespace, template) {
-    var cfg = {
-        method: 'GET',
-        sync: true
-    };
-
-    var url = "/static/javascript/templates/"+template;
-
-    var request;
-    YUI().use("io-base", function(Y) {
-            request = Y.io(url, cfg);
-    });
-
-    $.template(namespace+"/"+template, request.responseText);
-    Solstice.CompiledTemplates[namespace][template] = true;
-
-    return true;
-}
-
-Solstice.CompiledTemplates.AsyncInit = function(namespace, template) {
-    Solstice.Remote.run('Solstice', 'compile_template', {'namespace':namespace,'template':template}, null, true);
-}
-
 Solstice.logSurveyOpen = function(namespace, key) {
     Solstice.Remote.run('Solstice', 'new_feature_log', {data : [namespace, key, 'show_survey']});
 }
