@@ -9,155 +9,12 @@
     <meta http-equiv="Cache-Control" content="no-cache"/>
     <meta http-equiv="Pragma" content="no-cache"/>
 
-    <script type="text/javascript">
-        solstice_document_base      = '';
-        webservice_rest_root        = '';
-        solstice_static_base        = null;
-        solstice_session_app_key    = '__SQLShare__';
-        solstice_subsession         = '';
-        solstice_subsession_chain   = '';
-        solstice_subsession_seq     = '0';
-        solstice_development_mode   = true;
-        solstice_xsrf_token         = '';
-        use_view_wireframes         = false;
-        current_year                = 2012;
-
-        solstice_user               = { login_name: "{{user}}", name: "", surname: "", email: "", nonacting_login_name: "", nonacting_name: "", nonacting_surname: "", sys_name: "", sys_surname: "", sys_email: "", is_override: false, is_actas: false };
-
-    </script>
-
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/jquery.min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/jquery.tmpl.min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yui_config.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/3.3.0/build/yui/yui-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/3.3.0/build/base/base-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/3.3.0/build/loader/loader-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/3.3.0/build/node/node-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/3.3.0/build/oop/oop-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/3.3.0/build/event/event-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/3.3.0/build/event-custom/event-custom-base-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/3.3.0/build/queue-promote/queue-promote-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/3.3.0/build/datatype/datatype-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/3.3.0/build/io/io-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/solstice.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/string.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/remote.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/lang.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/css_browser_selector.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/element.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/file_upload.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/thumbnail.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/build/yahoo/yahoo-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/build/event/event-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/build/dom/dom-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/build/dragdrop/dragdrop-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/build/connection/connection-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/build/animation/animation-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/build/container/container-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/build/element/element-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/build/menu/menu-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/build/button/button-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/build/tabview/tabview-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/build/calendar/calendar-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/build/resize/resize-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/build/datasource/datasource-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/build/paginator/paginator-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/build/datatable/datatable-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/build/autocomplete/autocomplete-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/build/slider/slider-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/build/colorpicker/colorpicker-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/build/json/json.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/build/history/history-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/build/charts/charts-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/build/editor/editor-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yahooui.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/editor.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/editor/createlink.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/editor/insertimage.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/editor/insertmedia.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/editor/inserttable.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/editor/insertlatex.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/editor/insertentity.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/editor/inserticon.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/editor/spellcheck.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/flyout.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/aria/containerariaplugin-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/aria/menuariaplugin-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/aria/tabviewariaplugin-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/aria/buttonariaplugin-min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/yui/build/uploader/uploader.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/uploader.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/sol_base.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/sol_view.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/ss_base.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/query_base.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/sqlshare.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/constants.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/navigation.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/query.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/query_queue.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/upload.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/all_tables.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/all_queries.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/shared_queries.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/my_queries.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/tagged_queries.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/recent_queries.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/table.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/saved_query.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/codemirror/codemirror.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/table_tabs.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/query_list_base.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/table_date_cell.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/table_name_cell.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/table_owner_cell.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/table.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/table/rename.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/table/change_description.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/saved_query.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/saved_query/edit.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/saved_query/rename.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/saved_query/change_description.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/saved_query/change_statement.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/saved_query/confirm_delete.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/saved_query/deleting.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/saved_query/description_area.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/query.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/query/save_panel.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/query/sharing_panel.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/uploader/parser.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/uploader/options.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/all_queries/list.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/my_queries.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/tagged_queries.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/shared_queries/list.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/query_queue.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/manage_credentials.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/tagging.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/sidebar_lists.js"></script>
-
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/wayf.js"></script>
-
-    <link rel="stylesheet" type="text/css"  href="{{STATIC_URL}}javascript/yui/build/menu/assets/skins/sam/menu.css"/>
-    <link rel="stylesheet" type="text/css"  href="{{STATIC_URL}}javascript/yui/build/button/assets/skins/sam/button.css"/>
-    <link rel="stylesheet" type="text/css"  href="{{STATIC_URL}}javascript/yui/build/tabview/assets/skins/sam/tabview.css"/>
-    <link rel="stylesheet" type="text/css"  href="{{STATIC_URL}}javascript/yui/build/autocomplete/assets/skins/sam/autocomplete.css"/>
-    <link rel="stylesheet" type="text/css"  href="{{STATIC_URL}}javascript/yui/build/assets/skins/sam/resize.css"/>
-    <link rel="stylesheet" type="text/css"  href="{{STATIC_URL}}javascript/yui/build/calendar/assets/skins/sam/calendar.css"/>
-    <link rel="stylesheet" type="text/css"  href="{{STATIC_URL}}javascript/yui/build/container/assets/container-core.css"/>
-    <link rel="stylesheet" type="text/css"  href="{{STATIC_URL}}javascript/yui/build/colorpicker/assets/skins/sam/colorpicker.css"/>
-    <link rel="stylesheet" type="text/css"  href="{{STATIC_URL}}javascript/yui/build/editor/assets/skins/sam/editor.css"/>
-    <link rel="stylesheet" type="text/css"  href="{{STATIC_URL}}javascript/yui/build/slider/assets/skins/sam/slider.css"/>
-    <link rel="stylesheet" type="text/css"  href="{{STATIC_URL}}javascript/yui/build/paginator/assets/skins/sam/paginator.css"/>
-    <link rel="stylesheet" type="text/css"  href="{{STATIC_URL}}javascript/yui/build/datatable/assets/skins/sam/datatable.css"/>
-    <link rel="stylesheet" type="text/css"  href="{{STATIC_URL}}styles/editor.css"/>
-    <link rel="stylesheet" type="text/css"  href="{{STATIC_URL}}styles/solstice.css"/>
-    <link rel="stylesheet" type="text/css"  href="{{STATIC_URL}}styles/user_content.css"/>
+    {% load compress %}
+    {% compress css %}
     <link rel="stylesheet" type="text/css"  href="{{STATIC_URL}}styles/reset.css"/>
     <link rel="stylesheet" type="text/css"  href="{{STATIC_URL}}styles/fonts.css"/>
-    <link rel="stylesheet" type="text/css"  href="{{STATIC_URL}}styles/tagging.css"/>
     <link rel="stylesheet" type="text/css"  href="{{STATIC_URL}}styles/sqlshare.css"/>
+    {% endcompress %}
 
   </head>
 
@@ -218,6 +75,8 @@
 
     </div>
 
+
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/wayf.js"></script>
 
   </body>
 </html>
