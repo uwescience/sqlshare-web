@@ -9,21 +9,6 @@ SolBase.prototype._getRestRoot = function() {
 SolBase.prototype._getData = function(uri) {
     console.trace();
     return;
-    var connection = YAHOO.util.Connect;
-    connection.syncRequest = Solstice.Remote.syncRequest;
-
-    connection.initHeader("Accept", "application/json", false);
-    connection.initHeader("X-XSRF-Token", solstice_xsrf_token, false);
-
-    try {
-        var response = connection.syncRequest('GET', uri, {}, '');
-        var json = response.conn.responseText;
-        return YAHOO.lang.JSON.parse(json);
-    }
-    catch(e) {
-        Solstice.log(e);
-        return;
-    }
 };
 
 SolBase.prototype.GET = function(uri, obj) {
@@ -49,31 +34,6 @@ SolBase.prototype.DELETE = function(uri) {
 SolBase.prototype._http = function(method, uri, obj) {
     console.trace();
     return;
-    var connection = YAHOO.util.Connect;
-    connection.syncRequest = Solstice.Remote.syncRequest;
-    connection._use_default_post_header = false;
-
-    connection.initHeader("Accept", "application/json", true);
-    connection.initHeader("Content-type", "application/json", true);
-    connection.initHeader("X-XSRF-Token", solstice_xsrf_token, true);
-    connection.initHeader("X-CSRFToken", $("input[name=csrfmiddlewaretoken]").val(), true);
-
-    try {
-        var response = connection.syncRequest(method, uri, {}, JSON.stringify(obj));
-        connection._use_default_post_header = true;
-        var response_code  = response.conn.status;
-        var json = response.conn.responseText;
-        return {
-            code    : response_code,
-            data    : JSON.parse(json),
-            conn    : response.conn
-        };
-    }
-    catch(e) {
-        Solstice.log(e);
-        return;
-    }
-
 };
 
 

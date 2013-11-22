@@ -116,82 +116,7 @@ QueryBase.prototype._removeNameHighlight = function(ev) {
 QueryBase.prototype._resetNameContainer = function() {
     // This is to prevent table renaming until we sort out behavior post release 1
     return;
-    YAHOO.util.Dom.removeClass(this.id+"_name_container", "hover");
-    YAHOO.util.Dom.removeClass(this.id+"_name", "error_input");
-    Solstice.Element.hide(this.id+'_name_required');
-    YAHOO.util.Event.addListener(this.id+'_name_container', "mouseover", this._highlightName, this, true);
-    YAHOO.util.Event.addListener(this.id+'_name_container', "mouseout", this._removeNameHighlight, this, true);
-    YAHOO.util.Event.addListener(this.id+'_name_container', "click", this._openNameDialog, this, true);
 
-};
-
-QueryBase.prototype._openNameDialog = function(ev) {
-    var query = this._model;
-    YAHOO.util.Event.removeListener(this.id+'_name_container', "mouseover");
-    YAHOO.util.Event.removeListener(this.id+'_name_container', "mouseout");
-    YAHOO.util.Event.removeListener(this.id+'_name_container', "click");
-
-    this._renderTo(this.id+'_name_container', this._getRenameView());
-
-    YAHOO.util.Event.addListener(this.id+'_save_name', "click", this._beginNameSave, this, true);
-    YAHOO.util.Event.addListener(this.id+'_cancel_name', "click", this._cancelNameSave, this, true);
-
-};
-
-QueryBase.prototype._cancelNameSave = function(ev) {
-    YAHOO.util.Event.stopEvent(ev);
-    var container = document.getElementById(this.id+'_name_container');
-
-    var obj_name = this._getObjectName();
-    container.innerHTML = obj_name.encodeHTML();
-
-    this._resetNameContainer();
-};
-
-QueryBase.prototype._beginNameSave = function(ev) {
-    var new_name = document.getElementById(this.id+'_name').value;
-
-    Solstice.Element.hide(this.id+'_name_required');
-    YAHOO.util.Dom.removeClass(this.id+"_name", "error_input");
-
-    if (!new_name.match(/[\w]/)) {
-        Solstice.Element.show(this.id+'_name_required');
-        YAHOO.util.Dom.addClass(this.id+"_name", "error_input");
-        return;
-    }
-
-    if (new_name == this._getObjectName()) {
-        this._cancelNameSave(ev);
-        return;
-    }
-_
-    // Temporary approach to get around .net bug w/ encode ? in url components
-    new_name = new_name.replace(/\?/g, '');
-    this._new_name = new_name;
-
-    this.AsyncGET(this._getRestRoot()+"/proxy/REST.svc/v2/db/"+this._getObjectType()+"/"+this._model.owner+'/'+new_name, this._postNameCheck);
-
-};
-
-QueryBase.prototype._postNameCheck = function(o) {
-    if (o.code == 200) {
-        if (!this._overwrite_panel) {
-            var overwrite_panel = new YAHOO.widget.Panel(this.id+"_overwrite_panel", { visible: false, width: "500px", fixedcenter:true, draggable: false, modal: true });
-            overwrite_panel.setBody("");
-            overwrite_panel.setHeader("");
-            overwrite_panel.render(document.body);
-            Solstice.Element.show(this.id+"_overwrite_panel");
-            this._overwrite_panel = overwrite_panel;
-        }
-        this._overwrite_panel.show();
-        this._renderTo(this.id+'_overwrite_panel', 'saved_query/overwrite_panel.html', { id: this.id });
-
-        YAHOO.util.Event.addListener(this.id+'_replace_table', "click", this._replaceTable, this, true);
-        YAHOO.util.Event.addListener(this.id+'_cancel_replace', "click", this._cancelReplace, this, true);
-    }
-    else {
-        this._saveNewName();
-    }
 };
 
 QueryBase.prototype._cancelReplace = function() {
@@ -238,7 +163,6 @@ QueryBase.prototype._resetDescriptionContainer = function() {
     document.getElementById('js-description-container').innerHTML = view.toString();
     view.postRender();
 
-
     YAHOO.util.Dom.removeClass(this.id+"_description_container", "hover");
     YAHOO.util.Event.addListener(this.id+'_description_container', "mouseover", this._highlightDescription, this, true);
     YAHOO.util.Event.addListener(this.id+'_description_container', "mouseout", this._removeDescriptionHighlight, this, true);
@@ -248,11 +172,11 @@ QueryBase.prototype._resetDescriptionContainer = function() {
 };
 
 QueryBase.prototype._highlightDescription = function(ev) {
-    YAHOO.util.Dom.addClass(this.id+"_description_container", "hover");
+    $(slash_selector("#"+this.id+"_description_container")).addClass("hover");
 };
 
 QueryBase.prototype._removeDescriptionHighlight = function(ev) {
-    YAHOO.util.Dom.removeClass(this.id+"_description_container", "hover");
+    $(slash_selector("#"+this.id+"_description_container")).removeClass("hover");
 };
 
 QueryBase.prototype._openDescriptionDialog = function(ev) {

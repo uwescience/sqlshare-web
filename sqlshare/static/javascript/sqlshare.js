@@ -527,3 +527,7 @@ SQLShare.prototype._newRecentQuery = function(name) {
     Solstice.Cookie.set('recent', JSON.stringify(this._recentQueries), 60*24*30*12);
 }
 
+function slash_selector(selector) {
+    return selector.replace("/", "\\/", "g");
+}
+
