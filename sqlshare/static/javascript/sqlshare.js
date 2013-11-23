@@ -13,7 +13,6 @@ SQLShare.prototype.run = function() {
     nav.onAllQueries.subscribe(this._drawAllQueriesInterface, this, true);
     nav.onSharedQueries.subscribe(this._drawSharedQueriesInterface, this, true);
     nav.onRecentQueries.subscribe(this._drawRecentQueriesInterface, this, true);
-    nav.onTableView.subscribe(this._drawTableInterface, this, true);
     nav.onSavedQueryView.subscribe(this._drawSavedQueryInterface, this, true);
     nav.onTaggedQueriesView.subscribe(this._drawTaggedQueriesInterface, this, true);
     nav.onChooseUpload.subscribe(this._drawUploadInterface, this, true);
@@ -289,13 +288,6 @@ SQLShare.prototype._drawRecentQueriesInterface = function(ev, args) {
     }
 
     this._recent_menu.draw(mouse_event, this._recentQueries);
-};
-
-SQLShare.prototype._drawTableInterface = function(ev, args) {
-    var table = args[0];
-    this._tabs.highlightTab('table', table);
-    var widget = new Table(this.id+'_workspace', table);
-    widget.draw();
 };
 
 SQLShare.prototype._drawSavedQueryInterface = function(ev, args) {
