@@ -25,7 +25,7 @@ ManageCredentials.prototype._drawInterface = function(data) {
     });
 
     var me = this;
-    YAHOO.util.Event.addListener('create_new_credentials', 'click', function() {
+    $("#create_new_credentials").on("click", function() {
         if (confirm("This will break any apps using your current credentials, are you sure you want to do that?")) {
             me.AsyncPUT(me._getRestRoot()+"/credentials", null, me._postFetch)
         }
