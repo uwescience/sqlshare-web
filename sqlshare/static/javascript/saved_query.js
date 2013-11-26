@@ -105,87 +105,19 @@ SavedQuery.prototype._drawSavedQuery = function(query_data) {
     this._resetStatementContainer();
 
     if (query_data.owner == solstice_user.login_name) {
-        if (!SQLShare._ACTION_MENU) {
-            SQLShare._ACTION_MENU = new YAHOO.widget.Menu("action_menu", {});
-            SQLShare._ACTION_MENU.beforeShowEvent.subscribe(function() {
-                var container_div = document.getElementById('action_menu_div');
-                SQLShare._ACTION_MENU.cfg.setProperty('x', parseInt(container_div.offsetLeft));
-                SQLShare._ACTION_MENU.cfg.setProperty('y', parseInt(container_div.offsetTop) + 30 - document.getElementById('ss_app_workspace').scrollTop);
-            });
-
-        }
-
-        SQLShare._ACTION_MENU.clearContent();
-
-        if (query_data.is_public) {
-            SQLShare._ACTION_MENU.addItem({
-                text: Solstice.Lang.getString('SQLShare', 'action_menu_make_private', { id: this.id }),
-                onclick: {
-                    fn: this._togglePublic,
-                    scope: this
-                }
-            });
-        }
-        else {
-            SQLShare._ACTION_MENU.addItem({
-                text: Solstice.Lang.getString('SQLShare', 'action_menu_make_public', {id: this.id }),
-                onclick: {
-                    fn: this._togglePublic,
-                    scope: this
-                }
-            });
-        }
-
-        SQLShare._ACTION_MENU.addItem({
-            text: Solstice.Lang.getString('SQLShare', 'action_menu_share_with_others', { id: this.id }),
-            onclick: {
-                fn: this._openSharingDialog,
-                scope: this
-            }
-        });
-
-        SQLShare._ACTION_MENU.addItem({
-            text: Solstice.Lang.getString('SQLShare', 'global_button_download', { id: this.id }),
-            onclick: {
-                fn: this._downloadQuery,
-                scope: this
-            }
-        });
-
-
-        SQLShare._ACTION_MENU.addItem({
-            text: Solstice.Lang.getString('SQLShare', 'action_menu_delete', { id: this.id }),
-            onclick: {
-                fn: this._confirmDelete,
-                scope: this
-            }
-            });
-
-        /*
-        SQLShare._ACTION_MENU.addItem({
-            text: Solstice.Lang.getString('SQLShare', 'action_menu_derive_query', { id: this.id }),
-            onclick: {
-                fn: this._deriveQuery,
-                scope: this
-            }
-            });
-        */
-
-        SQLShare._ACTION_MENU.render("menu_container");
-
-        YAHOO.util.Event.removeListener('action_menu_div', 'click');
-        YAHOO.util.Event.addListener('action_menu_div', 'click', function() {
-            SQLShare._ACTION_MENU.show();
-        });
-
+        var me = this;
+        $("#action_menu .make_private").on("click", function() { me._togglePublic(); });
+        $("#action_menu .make_public").on("click", function() { me._togglePublic(); });
+        $("#action_menu .sharing_settings").on("click", function() { me._openSharingDialog(); });
+        $("#action_menu .download").on("click", function() { me._downloadQuery(); });
+        $("#action_menu .delete").on("click", function() { me._confirmDelete(); });
+        $("#action_menu").menu();
     }
 
-    YAHOO.util.Event.removeListener(this.id+'_download_query', "click");
-    YAHOO.util.Event.removeListener(this.id+'_delete', "click");
+
+
     YAHOO.util.Event.removeListener(this.id+'_derive', "click");
     YAHOO.util.Event.removeListener(this.id+'_snapshot', "click");
-    YAHOO.util.Event.addListener(this.id+'_download_query', "click", this._downloadQuery, this, true);
-    YAHOO.util.Event.addListener(this.id+'_delete', "click", this._confirmDelete, this, true);
     YAHOO.util.Event.addListener(this.id+'_derive', "click", this._deriveQuery, this, true);
     YAHOO.util.Event.addListener(this.id+'_snapshot', "click", this._snapshotQuery, this, true);
     YAHOO.util.Event.addListener(this.id+'_save_query', "click", this._saveQueryAs, this, true);

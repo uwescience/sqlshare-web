@@ -192,20 +192,6 @@ Solstice._initializeToolTip = function(position) {
     }
 }
 
-Solstice.checkForMidnight = function (name){
-    var hour = document.getElementById(name +'_hour');
-    if (hour) {
-        var minute = document.getElementById(name +'_minute');
-        if(hour.value == 0){
-            YAHOO.util.Dom.getFirstChild(minute).innerHTML = '01';
-            YAHOO.util.Dom.getFirstChild(minute).value = '01';
-        }else{
-            YAHOO.util.Dom.getFirstChild(minute).innerHTML = '00';
-            YAHOO.util.Dom.getFirstChild(minute).value = '00';
-        }
-    }
-}
-
 Solstice.fixDate = function (date_id){
     var date_input = document.getElementById(date_id);
     var date_parts = date_input.value.split(/\//);
