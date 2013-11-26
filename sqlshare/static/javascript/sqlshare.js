@@ -23,6 +23,8 @@ SQLShare.prototype.run = function() {
     this.nav = nav;
     this._tabs = new SQLShare.TableTabs();
 
+    SQLShare.recent_queries_menu = new RecentQueries(this);
+
 
     SQLShare.onChangeContent = new YAHOO.util.CustomEvent('sqlshare:content_change');
     SQLShare.onChangeContent.subscribe(this._resetWorkspace, this, true);
@@ -277,13 +279,6 @@ SQLShare.prototype._drawSharedQueriesInterface = function() {
 
 
 SQLShare.prototype._drawRecentQueriesInterface = function(ev, args) {
-    var mouse_event = args[0];
-
-    if (!this._recent_menu) {
-        this._recent_menu = new RecentQueries();
-    }
-
-    this._recent_menu.draw(mouse_event, this._recentQueries);
 };
 
 SQLShare.prototype._drawSavedQueryInterface = function(ev, args) {
@@ -476,6 +471,10 @@ SQLShare.prototype._loadPreferences = function() {
 
     this._postPref();
 };
+
+SQLShare.prototype.getRecentQueries = function() {
+    return this._recentQueries;
+}
 
 SQLShare.prototype._postPref = function(o) {
     if (this._load_recent_queries) {

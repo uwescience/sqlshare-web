@@ -1,0 +1,8 @@
+<li><a href="#">OK</a></li>
+<li><a href="#">OK</a></li>
+{% load templatetag_handlebars %}
+{% tplhandlebars recent_queries %}
+{{ #each queries }}
+<li><a href="/sqlshare/#s=query/{{ owner }}/{{ name }}">{{ display }}</a></li>
+{{ /each }}
+{% endtplhandlebars %}
