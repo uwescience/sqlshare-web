@@ -11,20 +11,6 @@ Navigation.prototype._init = function() {
     YAHOO.util.Event.addListener("recent_queries", "click", this._recentQueriesNav, this, true);
 
     YAHOO.util.Event.addListener("favorite_queries", "click", this._favoriteQueriesNav, this, true);
-
-    this.onNewQuery = new YAHOO.util.CustomEvent("onNewQuery");
-    this.onQueryQueue = new YAHOO.util.CustomEvent("onQueryQueue");
-    this.onChooseUpload = new YAHOO.util.CustomEvent("onChooseUpload");
-    this.onHomeState = new YAHOO.util.CustomEvent("onHomeState");
-    this.onAllTables = new YAHOO.util.CustomEvent("onAllTables");
-    this.onAllQueries = new YAHOO.util.CustomEvent("onAllQueries");
-    this.onSharedQueries = new YAHOO.util.CustomEvent("onSharedQueries");
-    this.onRecentQueries = new YAHOO.util.CustomEvent("onRecentQueries");
-    this.onFavoriteQueries = new YAHOO.util.CustomEvent("onFavoriteQueries");
-    this.onTableView = new YAHOO.util.CustomEvent("onTableView");
-    this.onSavedQueryView = new YAHOO.util.CustomEvent("onSavedQueryView");
-    this.onTaggedQueriesView = new YAHOO.util.CustomEvent("onTaggedQueriesView");
-    this.onLoadCredentials = new YAHOO.util.CustomEvent("onLoadCredentials");
 };
 
 Navigation.prototype._processNavigation = function(ev) {
@@ -55,23 +41,6 @@ Navigation.prototype._processNavigation = function(ev) {
     dd.selectedIndex = 0;
 };
 
-Navigation.prototype._allTablesNav = function() {
-    var title = Solstice.Lang.getString("SQLShare", "page_title_all_tables");
-    SQLShare.onNavigate.fire(title, "all_tables");
-};
-
-Navigation.prototype._loadAllTables = function(ev) {
-    this.onAllTables.fire();
-};
-
-Navigation.prototype._loadTable = function(parts) {
-    var path = parts.join('/');
-    var title = Solstice.Lang.getString("SQLShare", "page_title_display_table");
-    SQLShare.onNavigate.fire(title, "table/"+path);
-
-    this.onTableView.fire(path);
-};
-
 Navigation.prototype._loadSavedQuery = function(parts) {
     var path = parts.join('/');
     this._highlightLeftNav();
@@ -83,7 +52,7 @@ Navigation.prototype._loadSavedQuery = function(parts) {
         query_parts[i] = encodeURIComponent(parts[i]);
     }
 
-    this.onSavedQueryView.fire(query_parts.join('/'));
+    $(document).trigger("saved_query", [[query_parts.join('/')]]);
 };
 
 Navigation.prototype._loadTaggedQueries = function(parts) {
@@ -96,7 +65,7 @@ Navigation.prototype._loadTaggedQueries = function(parts) {
     this._highlightTag(tag);
     this._highlightLeftNav('popular_tag_'+tag);
 
-    this.onTaggedQueriesView.fire(tag);
+    $(document).trigger("tagged_queries", [[tag]]);
 };
 
 Navigation.prototype._highlightTag = function(tag) {
@@ -115,14 +84,10 @@ Navigation.prototype._recentQueriesNav = function(ev) {
 //    new RecentQueries(ev, ...
 //    var title = Solstice.Lang.getString("SQLShare", "page_title_recent_queries");
 //    SQLShare.onNavigate.fire(title, "recent");
-    this.onRecentQueries.fire(ev);
+    $(document).trigger("recent_queries", [ev]);
 };
 
 Navigation.prototype._loadRecentQueries = function(ev) {
-};
-
-Navigation.prototype._favoriteQueriesNav = function(ev) {
-    this.onFavoriteQueries.fire(ev);
 };
 
 Navigation.prototype._allQueriesNav = function() {
@@ -137,12 +102,12 @@ Navigation.prototype._sharedQueriesNav = function() {
 
 
 Navigation.prototype._loadAllQueries = function(ev) {
-    this.onAllQueries.fire();
+    $(document).trigger("all_queries");
     this._highlightLeftNav('all_queries_li');
 };
 
 Navigation.prototype._loadSharedQueries = function(ev) {
-    this.onSharedQueries.fire();
+    $(document).trigger("shared_queries");
     this._highlightLeftNav('shared_queries_li');
 };
 
@@ -181,9 +146,6 @@ Navigation.prototype.loadState = function(state) {
         case 'file':
             this._chooseUpload(true);
             break;
-        case 'all_tables':
-            this._loadAllTables(null, parts);
-            break;
         case 'all_queries':
             this._loadAllQueries(null, parts);
             break;
@@ -208,14 +170,14 @@ Navigation.prototype.loadState = function(state) {
 Navigation.prototype._loadHome = function(event, args) {
     var title = Solstice.Lang.getString("SQLShare", "page_title_home");
     SQLShare.onNavigate.fire(title, "home");
-    this.onHomeState.fire();
+    $(document).trigger("home_state");
     this._highlightLeftNav('your_queries_li');
 };
 
 Navigation.prototype._newQueryNav = function(fire_event) {
     this._newQuery(fire_event);
     if (YAHOO.util.History.getCurrentState("s") == "query") {
-        this.onNewQuery.fire();
+        $(document).trigger("new_query");
     }
 }
 
@@ -225,7 +187,7 @@ Navigation.prototype._newQuery = function(fire_event) {
     SQLShare.onNavigate.fire(title, "query");
     this._highlightLeftNav('new_query_li');
     if (fire_event) {
-        this.onNewQuery.fire();
+        $(document).trigger("new_query");
     }
 };
 
@@ -234,14 +196,14 @@ Navigation.prototype._loadCredentials = function(fire_event) {
     var title = Solstice.Lang.getString("SQLShare", "page_title_rest_credentials");
     SQLShare.onNavigate.fire(title, "credentials");
     if (fire_event) {
-        this.onLoadCredentials.fire();
+        $(document).trigger("load_credentials");
     }
 };
 
 Navigation.prototype._queryQueueNav = function(fire_event) {
     this._queryQueue(fire_event);
     if (YAHOO.util.History.getCurrentState("s") == "querylist") {
-        this.onQueryQueue.fire();
+        $(document).trigger("query_queue");
     }
 }
 
@@ -252,7 +214,7 @@ Navigation.prototype._queryQueue = function(fire_event) {
     SQLShare.onNavigate.fire(title, "querylist");
     this._highlightLeftNav('query_list_li');
     if (fire_event) {
-        this.onQueryQueue.fire();
+        $(document).trigger("query_queue");
     }
 };
 
@@ -260,7 +222,7 @@ Navigation.prototype._queryQueue = function(fire_event) {
 Navigation.prototype._chooseUploadNav = function(fire_event) {
     this._chooseUpload(fire_event);
     if (YAHOO.util.History.getCurrentState("s") == "file") {
-        this.onChooseUpload.fire();
+        $(document).trigger("choose_upload");
     }
 };
 
@@ -270,7 +232,7 @@ Navigation.prototype._chooseUpload = function(fire_event) {
     SQLShare.onNavigate.fire(title, "file");
     this._highlightLeftNav('new_upload_li');
     if (fire_event) {
-        this.onChooseUpload.fire();
+        $(document).trigger("choose_upload");
     }
 };
 

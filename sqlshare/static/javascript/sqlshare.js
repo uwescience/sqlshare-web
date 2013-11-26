@@ -7,17 +7,19 @@ SQLShare.prototype = new SSBase();
 
 SQLShare.prototype.run = function() {
     var nav = new Navigation(this.id);
-    nav.onNewQuery.subscribe(this._drawQueryInterface, this, true);
-    nav.onQueryQueue.subscribe(this._drawQueryQueueInterface, this, true);
-    nav.onAllTables.subscribe(this._drawAllTablesInterface, this, true);
-    nav.onAllQueries.subscribe(this._drawAllQueriesInterface, this, true);
-    nav.onSharedQueries.subscribe(this._drawSharedQueriesInterface, this, true);
-    nav.onRecentQueries.subscribe(this._drawRecentQueriesInterface, this, true);
-    nav.onSavedQueryView.subscribe(this._drawSavedQueryInterface, this, true);
-    nav.onTaggedQueriesView.subscribe(this._drawTaggedQueriesInterface, this, true);
-    nav.onChooseUpload.subscribe(this._drawUploadInterface, this, true);
-    nav.onHomeState.subscribe(this._drawHomeScreen, this, true);
-    nav.onLoadCredentials.subscribe(this._drawManageCredentials, this, true);
+    var me = this;
+
+    $(document).on("new_query", function () { return me._drawQueryInterface.apply(me, arguments); });
+    $(document).on("query_queue", function () { return me._drawQueryQueueInterface.apply(me, arguments); });
+    $(document).on("choose_upload", function () { return me._drawUploadInterface.apply(me, arguments); });
+    $(document).on("home_state", function () { return me._drawHomeScreen.apply(me, arguments); });
+    $(document).on("all_queries", function () { return me._drawAllQueriesInterface.apply(me, arguments); });
+    $(document).on("shared_queries", function () { return me._drawSharedQueriesInterface.apply(me, arguments); });
+    $(document).on("recent_queries", function () { return me._drawRecentQueriesInterface.apply(me, arguments); });
+    $(document).on("saved_query", function () { return me._drawSavedQueryInterface.apply(me, arguments); });
+    $(document).on("tagged_queries", function () { return me._drawTaggedQueriesInterface.apply(me, arguments); });
+    $(document).on("load_credentials", function () { return me._drawManageCredentials.apply(me, arguments); });
+
     this.nav = nav;
     this._tabs = new SQLShare.TableTabs();
 
@@ -259,12 +261,6 @@ SQLShare.prototype._drawQueryQueueInterface = function(query_id) {
     this._tabs.clearHighlight();
     var controller = new QueryQueue(this.id+'_workspace');
     controller.draw();
-};
-
-SQLShare.prototype._drawAllTablesInterface = function() {
-    this._tabs.clearHighlight();
-    var widget = new AllTables(this.id+'_workspace');
-    widget.draw();
 };
 
 SQLShare.prototype._drawAllQueriesInterface = function() {
