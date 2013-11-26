@@ -1,10 +1,4 @@
 var RecentQueries = function(sqlshare) {
-/*
-    var menu = new YAHOO.widget.Menu("recent_queries_menu", {
-    });
-    menu.render('menu_container');
-    this._menu = menu;
-*/
     $("#recent_queries_menu").menu();
 
     $("#recent_queries_menu").on("menufocus", function(ev) {
