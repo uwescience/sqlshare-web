@@ -6,17 +6,15 @@ SQLShare.TableTabs = function() {
 SQLShare.TableTabs.prototype = new SSBase();
 
 SQLShare.TableTabs.prototype.initialize = function() {
-    var menu = new YAHOO.widget.Menu("table_tab_overflow", {
-    });
-
-    var container_li = document.getElementById('table_tab_overflow_li');
-    menu.cfg.setProperty('x', parseInt(container_li.offsetLeft + 12));
-    menu.cfg.setProperty('y', parseInt(container_li.offsetTop + 36));
-    menu.render("menu_container");
-
-    this._menu = menu;
     YAHOO.util.Event.addListener("tab_nav_tables", "click", this._handleTabClick, this, true);
     YAHOO.util.Event.addListener(window, "resize", this._redrawMenu, this, true);
+    $("#overflow_menu").menu();
+
+    var me = this;
+    $("#overflow_menu").on("click", function (ev) {
+        me._handleMenuClick(ev);
+    });
+
 };
 
 SQLShare.TableTabs.prototype.clearHighlight = function() {
@@ -67,9 +65,6 @@ SQLShare.TableTabs.prototype._handleTabClick = function(ev) {
         var tab = this._tabs[position];
 
         this.removeTab(tab.type, tab.id);
-    }
-    if (target && target.id == "table_tab_overflow_li" || target.id == "table_tab_overflow_div") {
-        this._menu.show();
     }
 };
 
@@ -164,7 +159,6 @@ SQLShare.TableTabs.prototype._redrawMenu = function() {
 
     var total_space = parseInt(document.getElementById('tab_nav_tables').offsetWidth) - dropdown_size - 530;
     var used_space = 0;
-
     var max = 0;
 
     var visible_tabs = [];
@@ -182,16 +176,17 @@ SQLShare.TableTabs.prototype._redrawMenu = function() {
         }
     }
 
-    this._menu.clearContent();
     var show_menu = false;
 
     var menu_highlighted = false;
     var menu_in_edit = false;
+    var overflow_params = [];
 
     for (var i = visible_tabs.length - max - 1; i >=  0; i--) {
         if (i >= 0) {
             Solstice.Element.hide('tab_nav_element_'+visible_tabs[i].position);
             show_menu = true;
+
             var classname = '';
             if (visible_tabs[i].tab.highlighted) {
                 menu_highlighted = true;
@@ -201,14 +196,14 @@ SQLShare.TableTabs.prototype._redrawMenu = function() {
                 classname = 'current_edit';
             }
 
-            this._menu.addItem({
-                text: "<span class='go' name='sqlshare/#s=query/"+visible_tabs[i].tab.id+"'>"+unescape(visible_tabs[i].tab.display)+"</span> <span class='remove' name='"+visible_tabs[i].tab.id+"'>x</span>",
-                onclick: { fn: this._handleMenuClick, obj: this, scope: this },
-                checked: visible_tabs[i].tab.highlighted,
+            overflow_params.push({
+                id: visible_tabs[i].tab.id,
+                display: unescape(visible_tabs[i].tab.display),
                 classname: classname
             });
         }
     }
+
     for (var i = visible_tabs.length - max; i < visible_tabs.length; i++) {
         if (i >= 0) {
             Solstice.Element.showInline('tab_nav_element_'+visible_tabs[i].position);
@@ -216,12 +211,14 @@ SQLShare.TableTabs.prototype._redrawMenu = function() {
     }
 
     if (show_menu) {
-        document.getElementById("table_tab_overflow_div").innerHTML = this._menu.getItems().length;
-        this._menu.render();
-        Solstice.Element.showInline('table_tab_overflow_li');
+        var template = 'tab_nav_overflow.html';
+        $("#overflow_list").html(HandlebarsUtils.to_string(template, { "queries": overflow_params }));
+        $("#overflow_menu").menu("refresh");
+        $("#overflow_list").css('z-index', 2);
+        $("#table_tab_overflow_li").css("display", "inline-block");
     }
     else {
-        Solstice.Element.hide('table_tab_overflow_li');
+        $("#table_tab_overflow_li").css("display", "none");
     }
 
     if (menu_highlighted) {
@@ -238,11 +235,11 @@ SQLShare.TableTabs.prototype._redrawMenu = function() {
         YAHOO.util.Dom.removeClass("table_tab_overflow_div", "current_edit");
     }
 
+    
 };
 
-SQLShare.TableTabs.prototype._handleMenuClick = function(type, args, post) {
-    var ev = args[0];
-    YAHOO.util.Event.stopEvent(ev);
+SQLShare.TableTabs.prototype._handleMenuClick = function(ev) {
+    ev.stopPropagation();
 
     var target = ev.target;
     if (!target) {
@@ -252,7 +249,7 @@ SQLShare.TableTabs.prototype._handleMenuClick = function(type, args, post) {
         this.removeTab('query', target.getAttribute('name'));
     }
     if (YAHOO.util.Dom.hasClass(target, 'go')) {
-        window.location.href = target.getAttribute('name');
+        console.log("In here?");
     }
     return false;
 };

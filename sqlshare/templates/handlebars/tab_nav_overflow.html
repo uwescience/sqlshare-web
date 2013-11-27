@@ -1,0 +1,9 @@
+{% load templatetag_handlebars %}
+{% tplhandlebars tab_nav_overflow %}
+{{ #each queries }}
+    <li class="{{ classname }}">
+        <span class='go'><a href="sqlshare/#s=query/{{ id }}" class="overflow_go">{{ display }}</a></span>
+        <span class='remove' name='{{ id }}'>x</span>
+    </li>
+{{ /each }}
+{% endtplhandlebars %}

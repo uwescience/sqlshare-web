@@ -206,7 +206,15 @@
 
             <div id="tab_nav_tables" class="nav-container">
                 <ul class="ss-tables-list" id="table_tab_list" style="margin-right:530px;">
-                    <li id="table_tab_overflow_li" class="tab_overflow"><div id="table_tab_overflow_div"></div></li>
+                    <li id="table_tab_overflow_li" class="tab_overflow" style="display: none;">
+                        <ul id="overflow_menu" style="width: 80px;">
+                            <li>
+                            <a href="javascript:void(0)">More...</a>
+                            <ul id="overflow_list">
+                            </ul>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
 
@@ -296,7 +304,6 @@
 {% include "handlebars/all_queries/list.html" %}
 {% include "handlebars/all_queries/table_owner_cell.html" %}
 {% include "handlebars/all_queries/error.html" %}
-{% include "handlebars/table_tabs.html" %}
 {% include "handlebars/saved_query/change_description.html" %}
 {% include "handlebars/saved_query/rename.html" %}
 {% include "handlebars/saved_query/deleting.html" %}
@@ -324,4 +331,5 @@
 {% include "handlebars/my_queries/list.html" %}
 {% include "handlebars/my_queries/error.html" %}
 {% include "handlebars/recent_queries.html" %}
+{% include "handlebars/tab_nav_overflow.html" %}
 </html>
