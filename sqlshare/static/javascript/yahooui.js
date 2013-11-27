@@ -869,7 +869,7 @@ Solstice.YahooUI.History.getCurrentState = function(name) {
 
 Solstice.YahooUI.History.multiNavigate = function(states){
     return YAHOO.util.History.multiNavigate(states);
-}
+};
 
 /*
  * Copyright 1998-2008 Learning & Scholarly Technologies, University of Washington
