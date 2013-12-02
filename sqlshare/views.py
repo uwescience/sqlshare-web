@@ -5,7 +5,6 @@ from django.core.urlresolvers import reverse
 from django.utils import simplejson as json
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from django.core.context_processors import csrf
 from django.template import RequestContext
@@ -25,9 +24,11 @@ import os
 import re
 from userservice.user import UserService
 
+from login_url_hash.decorators import hash_aware_login_required
+
 import httplib
 
-@login_required
+@hash_aware_login_required
 @csrf_protect
 def home(request):
    user = UserService().get_user()
@@ -35,7 +36,7 @@ def home(request):
    c.update(csrf(request))
    return render_to_response('home.html', c, RequestContext(request))
 
-@login_required
+@hash_aware_login_required
 @csrf_protect
 def user(request):
     content, code = get_or_create_user(UserService().get_user())
@@ -45,7 +46,7 @@ def user(request):
 
     return user_response
 
-@login_required
+@hash_aware_login_required
 @csrf_protect
 def proxy(request, path):
 
@@ -122,7 +123,7 @@ def upload(request):
 
     return HttpResponse(json_response)
 
-@login_required
+@hash_aware_login_required
 def credentials(request):
 
     user = UserService().get_user()
@@ -158,7 +159,7 @@ def _generate_credentials():
     response.status_code = ss_response.status
     return response
 
-@login_required
+@hash_aware_login_required
 @csrf_protect
 def parser(request, ss_id, sol_id):
     if request.method == "PUT":
@@ -195,7 +196,7 @@ def parser(request, ss_id, sol_id):
 
     return HttpResponse(json_response, content_type="application/json; charset=utf-8")
 
-@login_required
+@hash_aware_login_required
 @csrf_protect
 def dataset_permissions(request, schema, table_name):
     response = _send_request('GET', '/REST.svc/v1/user/%s' % (UserService().get_user()),
@@ -229,7 +230,7 @@ def dataset_permissions(request, schema, table_name):
 
     return HttpResponse(json.dumps(access))
 
-@login_required
+@hash_aware_login_required
 def accept_dataset(request, token):
     email_access = DatasetEmailAccess.get_email_access_for_token(token)
 
@@ -262,7 +263,7 @@ def email_access(request, token):
     }, RequestContext(request))
     return HttpResponse("")
 
-@login_required
+@hash_aware_login_required
 @csrf_protect
 def send_file(request):
     # The user needs to be pulled here, because the middleware that

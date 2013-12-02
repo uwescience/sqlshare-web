@@ -4,6 +4,7 @@ oauth2client
 google-api-python-client
 -e git://github.com/vegitron/django-userservice#egg=Django-UserService
 -e git://github.com/vegitron/authz_group#egg=AuthZ-Group
+-e git://github.com/vegitron/django-login-required-with-url-hash#egg=LoginRequired-HashURL
 
 # django-ses
 # mysql-python
