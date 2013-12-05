@@ -697,18 +697,6 @@ Solstice.YahooUI.setPopInTitle = function(title) {
 }
 // END: Deprecated functions
 
-/** Textarea resizing **/
-
-Solstice.YahooUI.Resize = function(){};
-Solstice.YahooUI.Resize.initialize = function(id) {
-    if (!document.getElementById(id)) return;
-    var resize = new YAHOO.util.Resize(id, {
-        proxy     : true,
-        handles   : ['br']
-    });
-    return resize; 
-}
-
 /*
  * Copyright 1998-2008 Learning & Scholarly Technologies, University of Washington
  *
