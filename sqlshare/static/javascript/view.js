@@ -69,32 +69,23 @@ SQLShare.View.prototype.formatDate = function(elLiner, oRecord, oColumn, oData) 
 
 SQLShare.View.prototype._addAccessTooltips = function() {
     var private_tooltip = new Solstice.YahooUI.tooltip("tt_private_access", {
-        context: YAHOO.util.Dom.getElementsByClassName('ss-access-private'),
-        text:   Solstice.Lang.getString("SQLShare", "private_access_tooltip"),
-        xyoffset: [-10, 20]
+        context: $('.ss-access-private'),
+        text:   Solstice.Lang.getString("SQLShare", "private_access_tooltip")
     });
 
     var public_tooltip = new Solstice.YahooUI.tooltip("tt_public_access", {
-        context: YAHOO.util.Dom.getElementsByClassName('ss-access-public'),
-        text:   Solstice.Lang.getString("SQLShare", "public_access_tooltip"),
-        xyoffset: [-10, 20]
+        context: $('.ss-access-public'),
+        text:   Solstice.Lang.getString("SQLShare", "public_access_tooltip")
     });
 
     var shared_viewer_tooltip = new Solstice.YahooUI.tooltip("tt_shared_viewer", {
-        context: YAHOO.util.Dom.getElementsByClassName('ss-access-shared-viewer'),
-        text:   Solstice.Lang.getString("SQLShare", "shared_viewer_access_tooltip"),
-        xyoffset: [-10, 20]
+        context: $('.ss-access-shared-viewer'),
+        text:   Solstice.Lang.getString("SQLShare", "shared_viewer_access_tooltip")
     });
     var shared_owner_tooltip = new Solstice.YahooUI.tooltip("tt_shared_owner", {
-        context: YAHOO.util.Dom.getElementsByClassName('ss-access-shared-owner'),
-        text:   Solstice.Lang.getString("SQLShare", "shared_owner_access_tooltip"),
-        xyoffset: [-10, 20]
+        context: $('.ss-access-shared-owner'),
+        text:   Solstice.Lang.getString("SQLShare", "shared_owner_access_tooltip")
     });
-
-    SQLShare._SHARED_VIEWER_TOOLTIP = shared_viewer_tooltip;
-    SQLShare._SHARED_OWNER_TOOLTIP = shared_owner_tooltip;
-    SQLShare._PRIVATE_TOOLTIP = private_tooltip;
-    SQLShare._PUBLIC_TOOLTIP = public_tooltip;
 
 };
 

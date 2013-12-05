@@ -199,20 +199,14 @@ border-top-right-radius: 4px;
 
 /* private/public/shared tooltips */
 
-.yui-skin-sam #tt_shared_viewer .bd,
-.yui-skin-sam #tt_shared_owner .bd,
-.yui-skin-sam #tt_public_access .bd,
-.yui-skin-sam #tt_private_access .bd { border: none; padding: 8px 0 0 0; background: transparent url(../images/ss-privacy-arrow.gif) no-repeat 7px 0; }
+.ui-tooltip {
+    border: none; padding: 8px 0 0 0; background: transparent url(../images/ss-privacy-arrow.gif) no-repeat 7px 0;
 
-.yui-skin-sam #tt_shared_viewer .bd span,
-.yui-skin-sam #tt_shared_owner .bd span,
-.yui-skin-sam #tt_public_access  .bd span,
-.yui-skin-sam #tt_private_access .bd span { padding: 4px 6px; background-color: #000; color: #fff; }
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
 
-.yui-skin-sam #tt_shared_viewer .yui-tt-shadow,
-.yui-skin-sam #tt_shared_owner .yui-tt-shadow,
-.yui-skin-sam #tt_public_access .yui-tt-shadow,
-.yui-skin-sam #tt_private_access .yui-tt-shadow { display: none; }
+.ui-tooltip span { padding: 4px 6px; background-color: #000; color: #fff; font-size: .9em}
 
 .ss-dataset-list table {  }
 .ss-dataset-list .ss-dataset-name { white-space: nowrap; overflow: hidden; }

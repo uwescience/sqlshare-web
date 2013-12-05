@@ -434,18 +434,6 @@ SQLShare.prototype._renderSidebar= function(o) {
 };
 
 SQLShare.prototype._hideToolTips = function() {
-    if (SQLShare._SHARED_VIEWER_TOOLTIP) {
-        SQLShare._SHARED_VIEWER_TOOLTIP.hide();
-    }
-    if (SQLShare._SHARED_OWNER_TOOLTIP) {
-        SQLShare._SHARED_OWNER_TOOLTIP.hide();
-    }
-    if (SQLShare._PRIVATE_TOOLTIP) {
-        SQLShare._PRIVATE_TOOLTIP.hide();
-    }
-    if (SQLShare._PUBLIC_TOOLTIP) {
-        SQLShare._PUBLIC_TOOLTIP.hide();
-    }
 };
 
 SQLShare.prototype._loadPreferences = function() {

@@ -229,7 +229,10 @@ Solstice.YahooUI.tooltip = function(title, args) {
     for (key in args) {
         delayargs[key] = args[key];
     }
-    return new YAHOO.widget.Tooltip(title, delayargs );
+
+    // jquery ui tooltips require a title attribute - so set one
+    args["context"].attr("title", "");
+    args["context"].tooltip({ content: delayargs["text"] });
 }
 
 /** Fades **/
