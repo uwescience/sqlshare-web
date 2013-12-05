@@ -287,8 +287,6 @@ QueryBase.prototype._postSaveDescription = function(o, tags) {
 QueryBase.prototype._togglePublic = function() {
     this._model.is_public = !this._model.is_public;
     this.AsyncPUT(this._getRestRoot()+"/proxy/REST.svc/v2/db/"+this._getURIFragment(), this._model, this._postTogglePublic);
-
-    this._renderTo(this.id+'_is_public', 'table/toggling_public.html', {});
 };
 
 QueryBase.prototype._postTogglePublic = function(o) {
