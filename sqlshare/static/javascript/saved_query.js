@@ -538,7 +538,7 @@ SavedQuery.prototype._postSaveAs = function(o) {
         this._fetchSavedQuery();
     }
     else {
-        YAHOO.util.History.navigate('s', decodeURI(url));
+        $.History.go("s="+decodeURI(url));
     }
 
     var popin = Solstice.YahooUI.PopIn.get('save_query_as');

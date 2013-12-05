@@ -143,7 +143,7 @@ QueryBase.prototype._postSaveName = function(o) {
         var owner = this._model.owner;
         var name = this._model.name;
 
-        YAHOO.util.History.navigate('s', obj_type+'/'+owner+'/'+name);
+        $.History.go("s="+obj_type+'/'+owner+'/'+name);
         Solstice.Message.setSuccess(Solstice.Lang.getMessage('SQLShare', obj_type+'_renamed'));
     }
     else {

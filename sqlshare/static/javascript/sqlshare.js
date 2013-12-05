@@ -326,27 +326,22 @@ SQLShare.prototype._initializeHistoryManager = function() {
     if (SQLShare.navigation) {
         return;
     }
-    var bookmarked = YAHOO.util.History.getBookmarkedState("s");
-    var initial_state = bookmarked || "home";
 
     var sql_share = this;
-    YAHOO.util.History.register("s", initial_state, function(state) {
+    $.History.bind(function(state){
+        // Translate the old requirement of s=... out
+        state = state.replace(/^s=/, '');
         sql_share.nav.loadState(state);
     });
 
-    YAHOO.util.History.register("q", '', function() {
-        if (YAHOO.util.History.getCurrentState('q') == '') {
-            return;
-        }
-        var state = YAHOO.util.History.getCurrentState('s');
-        sql_share.nav.loadState(state);
-    });
+    var hash = window.location.hash;
+    var matches = hash.match(/^#s=([^&]+)/);
 
-    try {
-        YAHOO.util.History.initialize("yui-history-field", "yui-history-iframe");
-    } catch (e) {
-        // This should only happen for browsers that don't support history management.  Show home state?
+    var initial_state = null;
+    if (matches) {
+        initial_state = matches[1];
     }
+    initial_state = initial_state || "home";
 
     SQLShare.onNavigate = new YAHOO.util.CustomEvent("sqlshare:navigation", this);
     SQLShare.onNavigate.subscribe(this._handleNavigation, this, true);
@@ -357,15 +352,10 @@ SQLShare.prototype._handleNavigation = function(ev, args) {
     var title = args.shift();
     var new_state = args[0];
 
-    try {
-        var currentState = YAHOO.util.History.getCurrentState("s");
-        if (currentState != new_state) {
-            YAHOO.util.History.navigate("s", new_state);
-        }
+    if (this.nav.getCurrentState() != new_state) {
+        console.log("Current: ", this.nav.getCurrentState(), new_state);
     }
-    catch (e) {
-        console.log(e);
-    }
+
     if (title !== null) {
         window.document.title = title;
     }

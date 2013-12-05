@@ -33,11 +33,14 @@ Query.prototype._prepareEditor = function() {
     window.setTimeout(function() {
     try {
         Solstice.Element.show(me.id+'_query_wrapper');
-        var query = YAHOO.util.History.getCurrentState('q');
-        if (query == '') {
-            query = YAHOO.util.History.getBookmarkedState("q");
+
+        var query = null;
+        var query_matches = window.location.hash.match(/&q=(.*)$/);
+        if (query_matches) {
+            query = query_matches[1];
         }
-        else if (query == null) {
+
+        if (query == null) {
             me._editor.setCode("\n");
         }
         else {
@@ -71,7 +74,7 @@ Query.prototype._postSaveAs = function(o) {
     var url = o.data.url;
 
     url = url.replace(/^\/REST.svc\/v2\/db\/dataset/, 'query');
-    YAHOO.util.History.navigate('s', decodeURI(url));
+    $.History.go("s="+decodeURI(url));
 
     var popin = Solstice.YahooUI.PopIn.get('save_query_as');
     popin.hide();

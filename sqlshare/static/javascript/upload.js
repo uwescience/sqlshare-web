@@ -358,7 +358,7 @@ Uploader.prototype._postGetFileStatus = function(o) {
         }
         else {
             var url = destination.replace(/^\/REST.svc\/v1\/db\//, '');
-            YAHOO.util.History.navigate('s', decodeURI(url));
+            $.History.go("s="+decodeURI(url));
         }
         return;
     }
@@ -370,7 +370,7 @@ Uploader.prototype._postGetFileStatus = function(o) {
 
 Uploader.prototype._postSaveTags = function(o, destination) {
     var url = destination.replace(/^\/REST.svc\/v1\/db\//, '');
-    YAHOO.util.History.navigate('s', decodeURI(url));
+    $.History.go("s="+decodeURI(url));
 };
 
 Uploader.prototype._cancel = function() {

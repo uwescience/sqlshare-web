@@ -6,6 +6,14 @@ var Navigation = function(id) {
 
 Navigation.prototype = new SSBase();
 
+Navigation.prototype.getCurrentState = function() {
+    var matches = window.location.hash.match(/^#s=([^&]+)/);
+    if (matches) {
+        return matches[1];
+    }
+    return;
+}
+
 Navigation.prototype._init = function() {
     YAHOO.util.Event.addListener('ss_sidebar_content', "click", this._processNavigation, this, true);
     YAHOO.util.Event.addListener("recent_queries", "click", this._recentQueriesNav, this, true);
@@ -24,7 +32,7 @@ Navigation.prototype._processNavigation = function(ev) {
     this.abortCurrentRequest();
 
     if (rel) {
-        if (YAHOO.util.History.getCurrentState('s') == rel) {
+        if (this.getCurrentState() == rel) {
             this.loadState(rel);
             YAHOO.util.Event.stopEvent(ev);
         }
@@ -176,7 +184,7 @@ Navigation.prototype._loadHome = function(event, args) {
 
 Navigation.prototype._newQueryNav = function(fire_event) {
     this._newQuery(fire_event);
-    if (YAHOO.util.History.getCurrentState("s") == "query") {
+    if (this.getCurrentState() == "query") {
         $(document).trigger("new_query");
     }
 }
@@ -202,7 +210,7 @@ Navigation.prototype._loadCredentials = function(fire_event) {
 
 Navigation.prototype._queryQueueNav = function(fire_event) {
     this._queryQueue(fire_event);
-    if (YAHOO.util.History.getCurrentState("s") == "querylist") {
+    if (this.getCurrentState() == "querylist") {
         $(document).trigger("query_queue");
     }
 }
@@ -221,7 +229,7 @@ Navigation.prototype._queryQueue = function(fire_event) {
 
 Navigation.prototype._chooseUploadNav = function(fire_event) {
     this._chooseUpload(fire_event);
-    if (YAHOO.util.History.getCurrentState("s") == "file") {
+    if (this.getCurrentState() == "file") {
         $(document).trigger("choose_upload");
     }
 };
