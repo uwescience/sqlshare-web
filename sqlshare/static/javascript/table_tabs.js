@@ -19,7 +19,7 @@ SQLShare.TableTabs.prototype.initialize = function() {
 
 SQLShare.TableTabs.prototype.clearHighlight = function() {
     for (var i = 0; i < this._tabs.length; i++) {
-        YAHOO.util.Dom.removeClass("tab_nav_content_"+i, "active");
+        $("#tab_nav_content_"+i).removeClass("active");
         this._tabs[i].highlighted = false;
     }
 };
@@ -58,7 +58,7 @@ SQLShare.TableTabs.prototype._postHideAnimation = function(ev, what) {
 
 SQLShare.TableTabs.prototype._handleTabClick = function(ev) {
     var target = YAHOO.util.Event.getTarget(ev);
-    if (YAHOO.util.Dom.hasClass(target, 'tab_close')) {
+    if ($(target).hasClass('tab_close')) {
         var name = target.name;
         var matches = name.match('tab_([0-9]+)');
         var position = matches[1];
@@ -78,12 +78,12 @@ SQLShare.TableTabs.prototype.highlightTab = function(type, id) {
     for (var i = 0; i < this._tabs.length; i++) {
         var tab = this._tabs[i];
         if (tab.inactive != true && tab.type == type && tab.id == id) {
-            YAHOO.util.Dom.addClass("tab_nav_content_"+i, "active");
+            $("#tab_nav_content_"+i).addClass("active");
             tab.highlighted = true;
             found_tab = true;
         }
         else {
-            YAHOO.util.Dom.removeClass("tab_nav_content_"+i, "active");
+            $("#tab_nav_content_"+i).removeClass("active");
             tab.highlighted = false;
         }
     }
@@ -111,7 +111,7 @@ SQLShare.TableTabs.prototype.highlightTab = function(type, id) {
             position: this._tabs.length
         });
 
-        YAHOO.util.Dom.addClass("tab_nav_content_"+i, "active");
+        $("#tab_nav_content_"+i).addClass("active");
         this._tabs.push({ type: type, id: id, display: base_name, highlighted: true });
     }
 
@@ -122,12 +122,12 @@ SQLShare.TableTabs.prototype.tabInEditState = function(type, id) {
     for (var i = 0; i < this._tabs.length; i++) {
         var tab = this._tabs[i];
         if (tab.inactive != true && tab.type == type && tab.id == id) {
-            YAHOO.util.Dom.addClass("tab_nav_content_"+i, "current_edit");
+            $("#tab_nav_content_"+i).addClass("current_edit");
             tab.in_edit_state = true;
             found_tab = true;
         }
         else {
-            YAHOO.util.Dom.removeClass("tab_nav_content_"+i, "current_edit");
+            $("#tab_nav_content_"+i).removeClass("current_edit");
             tab.in_edit_state = false;
         }
     }
@@ -146,7 +146,7 @@ SQLShare.TableTabs.prototype.getCurrentQueryID = function() {
 SQLShare.TableTabs.prototype.removeEditState = function(type, id) {
     for (var i = 0; i < this._tabs.length; i++) {
         var tab = this._tabs[i];
-        YAHOO.util.Dom.removeClass("tab_nav_content_"+i, "current_edit");
+        $("#tab_nav_content_"+i).removeClass("current_edit");
         tab.in_edit_state = false;
     }
     this._redrawMenu();
@@ -222,17 +222,17 @@ SQLShare.TableTabs.prototype._redrawMenu = function() {
     }
 
     if (menu_highlighted) {
-        YAHOO.util.Dom.addClass("table_tab_overflow_div", "active");
+        $("#table_tab_overflow_div").addClass("active");
     }
     else {
-        YAHOO.util.Dom.removeClass("table_tab_overflow_div", "active");
+        $("#table_tab_overflow_div").removeClass("active");
     }
 
     if (menu_in_edit) {
-        YAHOO.util.Dom.addClass("table_tab_overflow_div", "current_edit");
+        $("#table_tab_overflow_div").addClass("current_edit");
     }
     else {
-        YAHOO.util.Dom.removeClass("table_tab_overflow_div", "current_edit");
+        $("#table_tab_overflow_div").removeClass("current_edit");
     }
 
     
@@ -245,10 +245,10 @@ SQLShare.TableTabs.prototype._handleMenuClick = function(ev) {
     if (!target) {
         target = ev.srcElement;
     }
-    if (YAHOO.util.Dom.hasClass(target, 'remove')) {
+    if ($(target).hasClass('remove')) {
         this.removeTab('query', target.getAttribute('name'));
     }
-    if (YAHOO.util.Dom.hasClass(target, 'go')) {
+    if ($(target).hasClass('go')) {
         console.log("In here?");
     }
     return false;

@@ -106,11 +106,11 @@ QueryBase.prototype._getDownloadIFrame = function() {
 };
 
 QueryBase.prototype._highlightName = function(ev) {
-    YAHOO.util.Dom.addClass(this.id+"_name_container", "hover");
+    $(slash_selector("#"+this.id+"_name_container")).addClass("hover");
 };
 
 QueryBase.prototype._removeNameHighlight = function(ev) {
-    YAHOO.util.Dom.removeClass(this.id+"_name_container", "hover");
+    $(slash_selector("#"+this.id+"_name_container")).removeClass("hover");
 };
 
 QueryBase.prototype._resetNameContainer = function() {
@@ -163,7 +163,7 @@ QueryBase.prototype._resetDescriptionContainer = function() {
     document.getElementById('js-description-container').innerHTML = view.toString();
     view.postRender();
 
-    YAHOO.util.Dom.removeClass(this.id+"_description_container", "hover");
+    $(slash_selector("#"+this.id+"_description_container")).removeClass("hover");
     YAHOO.util.Event.addListener(this.id+'_description_container', "mouseover", this._highlightDescription, this, true);
     YAHOO.util.Event.addListener(this.id+'_description_container', "mouseout", this._removeDescriptionHighlight, this, true);
     YAHOO.util.Event.addListener(this.id+'_description_container', "click", this._openDescriptionDialog, this, true);

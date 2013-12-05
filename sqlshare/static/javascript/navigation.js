@@ -254,11 +254,11 @@ Navigation.prototype._unimplementedFeature = function(ev, type) {
 
 Navigation.prototype._highlightLeftNav = function(new_active) {
     if (this._current_highlight) {
-        YAHOO.util.Dom.removeClass(this._current_highlight, 'active');
+        $("#"+this._current_highlight).removeClass("active");
         this._current_highlight = null;
     }
     if (new_active) {
-        YAHOO.util.Dom.addClass(new_active, 'active');
+        $("#"+new_active).addClass("active");
         this._current_highlight = new_active;
     }
 };

@@ -68,11 +68,11 @@ SQLShare.prototype._resetWorkspace = function() {
     document.getElementById('ss_application_wrapper').scrollTop = '0px';
 
     var current_tab = this._tabs.getCurrentQueryID();
-    if (YAHOO.util.Dom.hasClass('ss_editor_col', 'qid_'+current_tab)) {
-        YAHOO.util.Dom.addClass('ss_editor_col', 'current_edit');
+    if ($("#ss_editor_col").hasClass("qid_"+current_tab)) {
+        $("#ss_editor_col").addClass("current_edit");
     }
     else {
-        YAHOO.util.Dom.removeClass('ss_editor_col', 'current_edit');
+        $("#ss_editor_col").removeClass("current_edit");
     }
     window.scrollTo(0, 0);
 };

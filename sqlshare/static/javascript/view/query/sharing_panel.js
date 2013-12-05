@@ -112,14 +112,14 @@ SQLShare.View.Query.SharingPanel.prototype._handleListClick = function(ev) {
     for (var i = 0; i < check_els.length; i++) {
         var target = check_els[i];
 
-        if (YAHOO.util.Dom.hasClass(target, 'js-remove_account')) {
+        if ($("#"+target).hasClass('js-remove_account')) {
             var account = target.getAttribute('rel');
             delete this._user_lookup[account];
             var row = this._getTableRow(target);
             this.datatable.deleteRow(row);
             this._permissionsChanged();
         }
-        else if (YAHOO.util.Dom.hasClass(target, 'js-remove_email')) {
+        else if ($("#"+target).hasClass('js-remove_email')) {
             var email = target.getAttribute('rel');
             delete this._email_lookup[email];
             email = email.replace(/__quote__/g, '"');

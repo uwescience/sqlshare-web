@@ -257,7 +257,7 @@ SavedQuery.prototype._onDownloadError = function() {
 };
 
 SavedQuery.prototype._resetStatementContainer = function() {
-    YAHOO.util.Dom.removeClass(this.id+"_statement_container", "hover");
+    $(slash_selector("#"+this.id+"_statement_container")).removeClass("hover");
     YAHOO.util.Event.removeListener(this.id+'_edit_query', "click");
     YAHOO.util.Event.addListener(this.id+'_edit_query', "click", this._resetEditPanel, this, true);
 };
@@ -297,8 +297,8 @@ SavedQuery.prototype._editQuery = function(model) {
     YAHOO.util.Event.removeListener('ss_run_query', "click");
     YAHOO.util.Event.removeListener('ss_cancel_statement', "click");
 
-    YAHOO.util.Dom.addClass('ss_editor_col', 'current_edit');
-    YAHOO.util.Dom.addClass('ss_editor_col', 'qid_'+this.query_id);
+    $("#ss_editor_col").addClass("current_edit");
+    $("#ss_editor_col").addClass("qid_"+this.query_id);
 
 };
 
@@ -385,8 +385,7 @@ SavedQuery.prototype._cancelStatementSave = function(ev) {
     SQLShare.onEditDone.fire(this);
     var center_width = document.getElementById('ss_app_workspace').offsetWidth;
 
-    YAHOO.util.Dom.removeClass('ss_editor_col', 'qid_'+this.query_id);
-
+    $("#ss_editor_col").removeClass("qid_"+this.query_id);
 
     var anim = new YAHOO.util.Anim("ss_editor_col", {
         width: { to: 0 }
@@ -545,8 +544,7 @@ SavedQuery.prototype._postSaveAs = function(o) {
     popin.hide();
 
 
-
-    YAHOO.util.Dom.removeClass('ss_editor_col', 'qid_'+this.query_id);
+    $("#ss_editor_col").removeClass("qid_"+this.query_id);
     Solstice.Cookie.set('edit_query', true);
 };
 
