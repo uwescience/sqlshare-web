@@ -126,7 +126,7 @@ Navigation.prototype.loadState = function(state) {
     var top_level = parts.shift();
 
     this.abortCurrentRequest();
-    Solstice.YahooUI.Message.clear();
+    Solstice.Message.clear();
 
     switch(top_level) {
         case 'home':

@@ -1,3 +1,11 @@
+#sol_message_container {
+
+position: absolute;
+display: block;
+top: 10px;
+
+}
+
 /* SQLShare stylesheet */
 
 .ui-autocomplete { position: absolute; cursor: default;z-index:999999 !important;} 

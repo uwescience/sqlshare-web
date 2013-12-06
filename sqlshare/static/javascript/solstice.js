@@ -1032,58 +1032,6 @@ Solstice.Message.setCookie = function(type, message) {
     return true;
 }
 
-/**
- * @function Solstice.Message.readCookie
- * @description Reads the message cookie
- * @returns {Object} Object containing message data
- */
-Solstice.Message.readCookie = function() {
-    var msgs = [];
-    var cookie_value = Solstice.Cookie.read('message_service');
-    if (cookie_value) {
-        var contents = cookie_value.split('_TYPE_');
-        var type     = contents.shift();
-        var messages = contents.shift().split('_MSG_');
-        for (i = 0; i < messages.length; i++) {
-            msgs.push({'type': type, 'msg': unescape(messages[i])});
-        }
-        Solstice.Cookie.remove('message_service');
-    }
-    return msgs;
-}
-
-Solstice.Message.clear = function() {
-    return Solstice.YahooUI.Message.clear();
-}
-Solstice.Message.setError = function(message){
-    return Solstice.YahooUI.Message.set('error', message);
-}
-Solstice.Message.setInfo = function(message){
-    return Solstice.YahooUI.Message.set('information', message);
-}
-Solstice.Message.setWarning = function(message){
-    return Solstice.YahooUI.Message.set('warning', message);
-}
-Solstice.Message.setSuccess = function(message){
-    return Solstice.YahooUI.Message.set('success', message);
-}
-Solstice.Message.addError = function(message){
-    return Solstice.YahooUI.Message.set('error', message, true);
-}
-Solstice.Message.addInfo = function(message){
-    return Solstice.YahooUI.Message.set('information', message, true);
-}
-Solstice.Message.addWarning = function(message){
-    return Solstice.YahooUI.Message.set('warning', message, true); 
-}
-Solstice.Message.addSuccess = function(message){
-    return Solstice.YahooUI.Message.set('success', message, true);
-}
-
-Solstice.logSurveyOpen = function(namespace, key) {
-    Solstice.Remote.run('Solstice', 'new_feature_log', {data : [namespace, key, 'show_survey']});
-}
-
 Solstice.findDuplicateIDs = function() {
     var tracker = {};
     Solstice._searchNodesForDupes(document, tracker);
