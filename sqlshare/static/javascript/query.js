@@ -76,8 +76,7 @@ Query.prototype._postSaveAs = function(o) {
     url = url.replace(/^\/REST.svc\/v2\/db\/dataset/, 'query');
     $.History.go("s="+decodeURI(url));
 
-    var popin = Solstice.YahooUI.PopIn.get('save_query_as');
-    popin.hide();
+    $("#save_query_dialog").dialog("close");
 };
 
 Query.prototype._downloadQuery = function() {

@@ -168,7 +168,7 @@ QueryBase.prototype._resetDescriptionContainer = function() {
     YAHOO.util.Event.addListener(this.id+'_description_container', "mouseout", this._removeDescriptionHighlight, this, true);
     YAHOO.util.Event.addListener(this.id+'_description_container', "click", this._openDescriptionDialog, this, true);
 
-    Solstice.YahooUI.PopIn.lower('edit_description_tags');
+    $("#description_tags_dialog").dialog("close");
 };
 
 QueryBase.prototype._highlightDescription = function(ev) {
@@ -185,20 +185,27 @@ QueryBase.prototype._openDescriptionDialog = function(ev) {
     YAHOO.util.Event.removeListener(this.id+'_description_container', "mouseout");
     YAHOO.util.Event.removeListener(this.id+'_description_container', "click");
 
-    var popin = Solstice.YahooUI.PopIn.init('edit_description_tags', true);
-    popin.cfg.setProperty('width', '640px');
 
-    popin.setHeader(Solstice.Lang.getString('SQLShare', 'edit_dataset_description_tags'));
+    if (!$("#description_tags_dialog").length) {
+        $("body").append("<div id='description_tags_dialog'></div>");
+    }
+
+    $("#description_tags_dialog").dialog({
+        modal: true,
+        title: Solstice.Lang.getString('SQLShare', 'edit_dataset_description_tags'),
+        width: '640px'
+    });
 
     var view = this._getChangeDescriptionView();
     var body = view.toString();
 
-    this._removeDescriptionHighlight();
-    popin.setBody(body);
-    popin.show();
-    view.postRender();
+    $("#description_tags_dialog").html(view.toString());
+    window.setTimeout(function() {
+        $("#description_tags_dialog").dialog("option", "position", "center");
+    }, 0);
 
-    this._description_popin = popin;
+    this._removeDescriptionHighlight();
+    view.postRender();
 
     YAHOO.util.Event.addListener(this.id+'_save_description', "click", this._beginDescriptionSave, this, true);
     YAHOO.util.Event.addListener(this.id+'_cancel_description', "click", this._cancelDescriptionSave, this, true);
@@ -436,10 +443,16 @@ QueryBase.prototype._finishQuery = function(data) {
 };
 
 QueryBase.prototype._saveQueryAs = function() {
-    var popin = Solstice.YahooUI.PopIn.init('save_query_as', true);
-    popin.cfg.setProperty('width', '440px');
+    if (!$("#save_query_dialog").length) {
+        $("body").append("<div id='save_query_dialog'></div>");
+    }
 
-    popin.setHeader(Solstice.Lang.getString('SQLShare', 'save_query_title'));
+    $("#save_query_dialog").dialog({
+        modal: true,
+        width: '440px',
+        title: Solstice.Lang.getString('SQLShare', 'save_query_title')
+    });
+
 
     var description;
     var name;
@@ -456,8 +469,12 @@ QueryBase.prototype._saveQueryAs = function() {
         is_public: is_public
     });
 
-    popin.setBody(view.toString());
-    popin.show();
+    $("#save_query_dialog").html(view.toString());
+
+    window.setTimeout(function() {
+        $("#save_query_dialog").dialog("option", "position", "center");
+    }, 0);
+
     view.postRender();
     this._save_panel_view = view;
 
@@ -469,8 +486,8 @@ QueryBase.prototype._cancelSaveAs = function(ev) {
     if (ev) {
         YAHOO.util.Event.stopEvent(ev);
     }
-    var popin = Solstice.YahooUI.PopIn.get('save_query_as');
-    popin.hide();
+
+    $("#save_query_dialog").dialog("close");
 };
 
 QueryBase.prototype._save = function() {

@@ -37,7 +37,7 @@ Solstice.LangData['SQLShare'] = {
       "new_query_header" : "Start a New Query",
       "edit_panel_action_save_as" : "Create new dataset",
       "page_title_home" : "SQLShare",
-      "save_query_title" : "<h3>Save Dataset</h3>",
+      "save_query_title" : "Save Dataset",
       "global_button_save_query" : "Save query",
       "global_sharing_you" : "Shared with you",
       "query_list_owner" : "Sharing / Owner",
