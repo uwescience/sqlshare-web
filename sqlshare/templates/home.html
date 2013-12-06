@@ -147,7 +147,7 @@
   <body id="solstice_document_body" class="yui-skin-sam" onload="initApplication();">
 
       <!-- BEGIN BOILERPLATE WORKSPACE -->
-      <form action="/sqlshare" method="post" accept-charset="UTF-8" id="solstice_app_form" onsubmit="return Solstice.Button.performClientAction();">
+      <form action="/sqlshare" method="post" accept-charset="UTF-8" id="solstice_app_form">
       {% csrf_token %}
 <input type="hidden" id="solstice_selected_button" name="solstice_selected_button" value=""/>
 <div class="ss-boilerplate">
