@@ -13,7 +13,7 @@ SSBase.prototype._getRestPath = function() {
 
 SSBase.prototype.abortCurrentRequest = function() {
     if (SSBase._current_request) {
-        var value = YAHOO.util.Connect.abort(SSBase._current_request, function() { console.log('ran abort'); }, false);
+        SSBase._current_request.abort();
     }
     if (SSBase._current_timeout) {
         clearTimeout(SSBase._current_timeout);

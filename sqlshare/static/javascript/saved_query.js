@@ -425,7 +425,7 @@ SavedQuery.prototype._cancelStatementSave = function(ev) {
 
 SavedQuery.prototype.abortCurrentRequest = function() {
     if (SSBase._saved_query_request) {
-        var value = YAHOO.util.Connect.abort(SSBase._saved_query_request, function() { console.log('ran abort'); }, false);
+        SSBase._saved_query_request.abort();
     }
     if (SSBase._saved_query_timeout) {
         clearTimeout(SSBase._saved_query_timeout);

@@ -55,38 +55,29 @@ SolBase.prototype.AsyncDELETE = function(uri, callback, arg) {
 
 
 SolBase.prototype._async_http = function(method, uri, obj, callback, arg) {
-    var connection = YAHOO.util.Connect;
-    connection.setDefaultPostHeader(false);
-
-    connection.initHeader("Accept", "application/json", false);
-    connection.initHeader("Content-type", "application/json", false);
-    connection.initHeader("X-XSRF-Token", solstice_xsrf_token, false);
-    connection.initHeader("X-CSRFToken", $("input[name=csrfmiddlewaretoken]").val(), true);
-
-    var callback = {
-        cache: false,
-        success: this._handleSuccess,
-        failure: this._handleSuccess,
-        argument: [this, callback, arg]
-    };
-
-    var request = connection.asyncRequest(method, uri, callback, JSON.stringify(obj));
-    connection.setDefaultPostHeader(true);
-
-    return request;
-
+    var me = this;
+    return $.ajax(uri, {
+        type: method,
+        headers: {
+            "Accept": "application/json",
+            "Content-type": "application/json",
+            "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val()
+        },
+        data: JSON.stringify(obj),
+        complete: function(response) {
+            me._handleSuccess(response, callback, arg);
+        },
+    });
 };
 
-SolBase.prototype._handleSuccess = function(o) {
-    var self = this.argument[0];
-    var callback = this.argument[1];
-    var arg = this.argument[2];
+SolBase.prototype._handleSuccess = function(response, callback, arg) {
+    var self = this;
 
     var json;
-    var status = o.status;
-    if (o.responseText != "") {
+    var status = response.status;
+    if (response.responseText != "") {
         try {
-            json = YAHOO.lang.JSON.parse(o.responseText);
+            json = YAHOO.lang.JSON.parse(response.responseText);
         }
         catch (e) {
             status = 500;
@@ -97,7 +88,7 @@ SolBase.prototype._handleSuccess = function(o) {
     callback.call(self, {
         code    : status,
         data    : json,
-        conn    : o
+        conn    : response
     }, arg);
 };
 
