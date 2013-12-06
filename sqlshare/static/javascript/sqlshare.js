@@ -353,7 +353,7 @@ SQLShare.prototype._handleNavigation = function(ev, args) {
     var new_state = args[0];
 
     if (this.nav.getCurrentState() != new_state) {
-        console.log("Current: ", this.nav.getCurrentState(), new_state);
+        // Do we need to handle this?
     }
 
     if (title !== null) {
