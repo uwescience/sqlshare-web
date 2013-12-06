@@ -285,23 +285,23 @@ SavedQuery.prototype._resetEditPanel = function(ev) {
 SavedQuery.prototype._openStatementDialog = function(ev) {
     var center_width = document.getElementById('ss_content').offsetWidth;
 
-    var anim_mid = new YAHOO.util.Anim("ss_app_workspace", {
-        width: { to: (center_width - 560) }
-    });
-
+    var me = this;
     var starting_width = parseInt(document.getElementById('ss_app_workspace').style.width);
-    anim_mid.onTween.subscribe(function() {
-        var width = document.getElementById('ss_app_workspace').style.width;
-        width = parseInt(width);
+    $("#ss_app_workspace").animate({
+        width: center_width - 560
+    },
+    {
+        step: function() {
+            var width = document.getElementById('ss_app_workspace').style.width;
+            width = parseInt(width);
 
-        var right_width = (starting_width - width) - 5;
-        if (right_width > 0) {
-            document.getElementById('ss_editor_col').style.width = right_width + 'px';
+            var right_width = (starting_width - width) - 5;
+            $("#ss_editor_col").css("width", right_width+"px");
+        },
+        complete: function() {
+            me._postExposeStatementEditor();
         }
     });
-    anim_mid.onComplete.subscribe(this._postExposeStatementEditorHook, { me: this}, true);
-    anim_mid.animate();
-
     return;
 };
 
@@ -401,25 +401,25 @@ SavedQuery.prototype._cancelStatementSave = function(ev) {
 
     $("#ss_editor_col").removeClass("qid_"+this.query_id);
 
-    var anim = new YAHOO.util.Anim("ss_editor_col", {
-        width: { to: 0 }
-    });
-
+    var me = this;
     var starting_width = parseInt(document.getElementById('ss_editor_col').style.width);
     var center_starting_width = parseInt(document.getElementById('ss_app_workspace').style.width);
-    anim.onTween.subscribe(function() {
-        var width = document.getElementById('ss_editor_col').style.width;
-        width = parseInt(width);
+    $("#ss_editor_col").animate({
+        width: 0
+    },
+    {
+        step: function() {
+            var width = document.getElementById('ss_editor_col').style.width;
+            width = parseInt(width);
 
-        var center_width = center_starting_width + (starting_width - width) - 5;
-        if (center_width > 0) {
-            document.getElementById('ss_app_workspace').style.width = center_width + 'px';
+            var center_width = center_starting_width + (starting_width - width);
+
+            $("#ss_app_workspace").css("width", center_width+"px");
+        },
+        complete: function() {
+            me._postExposeStatementEditor();
         }
     });
-
-
-    anim.onComplete.subscribe(this._postHideStatementEditorHook, { me: this}, true);
-    anim.animate();
 
 };
 
