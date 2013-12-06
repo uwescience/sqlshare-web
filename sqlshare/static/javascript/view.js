@@ -68,24 +68,15 @@ SQLShare.View.prototype.formatDate = function(elLiner, oRecord, oColumn, oData) 
 };
 
 SQLShare.View.prototype._addAccessTooltips = function() {
-    var private_tooltip = new Solstice.YahooUI.tooltip("tt_private_access", {
-        context: $('.ss-access-private'),
-        text:   Solstice.Lang.getString("SQLShare", "private_access_tooltip")
-    });
+    // jquery ui tooltips require a title attribute - so set one
+    $('.ss-access-private').attr('title', '');
+    $('.ss-access-public').attr('title', '');
+    $('.ss-access-shared-viewer').attr('title', '');
+    $('.ss-access-shared-owner').attr('title', '');
 
-    var public_tooltip = new Solstice.YahooUI.tooltip("tt_public_access", {
-        context: $('.ss-access-public'),
-        text:   Solstice.Lang.getString("SQLShare", "public_access_tooltip")
-    });
-
-    var shared_viewer_tooltip = new Solstice.YahooUI.tooltip("tt_shared_viewer", {
-        context: $('.ss-access-shared-viewer'),
-        text:   Solstice.Lang.getString("SQLShare", "shared_viewer_access_tooltip")
-    });
-    var shared_owner_tooltip = new Solstice.YahooUI.tooltip("tt_shared_owner", {
-        context: $('.ss-access-shared-owner'),
-        text:   Solstice.Lang.getString("SQLShare", "shared_owner_access_tooltip")
-    });
-
+    $('.ss-access-private').tooltip({ content:  Solstice.Lang.getString("SQLShare", "private_access_tooltip") });
+    $('.ss-access-public').tooltip({ content:  Solstice.Lang.getString("SQLShare", "public_access_tooltip") });
+    $('.ss-access-shared-viewer').tooltip({ content:  Solstice.Lang.getString("SQLShare", "shared_viewer_access_tooltip") });
+    $('.ss-access-shared-owner').tooltip({ content:  Solstice.Lang.getString("SQLShare", "shared_owner_access_tooltip") });
 };
 

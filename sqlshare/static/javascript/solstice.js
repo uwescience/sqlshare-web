@@ -128,55 +128,6 @@ Solstice.InitializedToolTipCounter = -1;
 Solstice.ToolTipData = new Array();
 Solstice.ToolTipLookup = new Array();
 
-Solstice.addToolTip = function(id, tooltip, initialize) {
-    Solstice.ToolTipCounter++;
-    Solstice.ToolTipData.push({ id:id, tooltip:tooltip });
-    if (initialize) {
-        Solstice._initializeToolTip(Solstice.ToolTipCounter);
-    }
-}
-
-Solstice.removeToolTip = function(id) {
-    var tip = Solstice.ToolTipLookup[id];
-    if (tip) {
-        tip.cfg.setProperty('disabled', true);
-    }
-}
-
-Solstice.initializeToolTips = function() {
-    if (Solstice.ToolTipCounter > Solstice.InitializedToolTipCounter) {
-        Solstice._initializeToolTip(Solstice.InitializedToolTipCounter + 1);
-    }
-}
-
-Solstice._initializeToolTip = function(position) {
-    var id = Solstice.ToolTipData[position].id;
-    var tooltip = Solstice.ToolTipData[position].tooltip;
-    Solstice.InitializedToolTipCounter = position;
-
-    var element = document.getElementById(id);
-
-    // If someone paints a button, but it isn't visible, the element won't be defined
-    if (element && tooltip) {
-        var tip = Solstice.YahooUI.tooltip("solstice_tooltip_"+position, { context:element, text:tooltip });
-
-        // Without the try/catch block, ie7 sometimes has an error when leaving the page before tooltips are
-        // loaded, when it can't read the property that was just set.
-        try {
-            tip.cfg.setProperty('text', tooltip); 
-            if (element.title) element.title = tip.cfg.getProperty('text');
-        }
-        catch (e) {
-
-        }
-        Solstice.ToolTipLookup[id] = tip;
-    }
-
-    if (position < Solstice.ToolTipCounter) {
-        var function_def = "Solstice._initializeToolTip("+(position + 1)+")";
-        setTimeout(function_def, 1);
-    }
-}
 
 Solstice.fixDate = function (date_id){
     var date_input = document.getElementById(date_id);
@@ -961,7 +912,6 @@ Solstice.Button.performClientAction = function() {
         }
 
         // Special handling for RTE
-        Solstice.YahooUI.Editor.saveAll();
     }
     Solstice.Button.set('');
 
