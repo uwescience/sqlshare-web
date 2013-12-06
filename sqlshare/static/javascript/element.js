@@ -65,47 +65,6 @@ Solstice.Element.prototype.getChildrenByClass = function(classname){
 }
 
 /**
- * Hides an element, using a fade effect
- * @param {string|object} ID of the element, or the element, to be hidden
- * @type void
- */
-Solstice.Element.fadeOut = function(el) { return new Solstice.Element(el).fadeOut() }
-Solstice.Element.prototype.fadeOut = function () {
-    if (this.element) {
-        var element = this.element;
-        Solstice.YahooUI.fadeOut(element, 0.5);
-        window.setTimeout("document.getElementById('"+element.id+"').style.display = \"none\"", 500);
-    }
-}
-
-/**
- * Fade out and destroy yourself
- */
-Solstice.Element.prototype.fadeOutAndDestroy = function () {
-    if (this.element) {
-        var element = this.element;
-        Solstice.YahooUI.fadeOut(element, 0.5);
-        window.setTimeout("document.getElementById('"+element.id+"').parentNode.removeChild(document.getElementById('"+element.id+"'));", 500);
-    }
-}
-
-
-/**
- * Sets the display of the passed element to block, using a fade effect
- * @param {string|object} ID of the element, or the element, to be shown
- * @type void
- */
-Solstice.Element.fadeToBlock = function(el) { return new Solstice.Element(el).fadeToBlock() }
-Solstice.Element.prototype.fadeToBlock = function (element) {
-    if (this.element) {
-        var element = this.element;
-        Solstice.Element._setClear(element);
-        element.style.display = 'block';
-        Solstice.YahooUI.fadeIn(element, 0.5);
-    }
-}
-
-/**
  * Hides an element
  * @param {string|object} ID of the element, or the element, to be hidden
  * @type void
@@ -137,21 +96,6 @@ Solstice.Element.prototype.showBlock = function () {
 Solstice.Element.showInline = function(el) { return new Solstice.Element(el).showInline() }
 Solstice.Element.prototype.showInline = function () {
     if (this.element) this.element.style.display = 'inline';
-}
-
-/**
- * Sets the display of the passed element to inline, using a fade effect
- * @param {string|object} ID of the element, or the element, to be shown
- * @type void
- */
-Solstice.Element.fadeToInline = function(el) { return new Solstice.Element(el).fadeToInline() }
-Solstice.Element.prototype.fadeToInline = function () {
-    if (this.element) {
-        var element = this.element;
-        Solstice.Element._setClear(element);
-        element.style.display = 'inline';
-        Solstice.YahooUI.fadeIn(element, 1);
-    }
 }
 
 Solstice.Element._setClear = function(el) { return new Solstice.Element(el)._setClear() }

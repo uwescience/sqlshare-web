@@ -31,62 +31,8 @@ Solstice.YahooUI.tooltip = function(title, args) {
     // jquery ui tooltips require a title attribute - so set one
     args["context"].attr("title", "");
     args["context"].tooltip({ content: delayargs["text"] });
-}
+};
 
-/** Fades **/
-
-/**
- * Applies a fade-in effect to the passed element 
- * @param {string|object} ID of the element, or the element reference
- * @param {float} duration of effect
- * @param {integer} target opacity
- * @type void
- */
-Solstice.YahooUI.fadeIn = function (id, duration, to) {
-    if(!to){
-        to = 1;
-    }
-    //stupid hack - safari sometimes lets faded content disappear
-    if(to == 1){
-        to = 0.9999;
-    }
-    if(!duration){
-        duration = 2;
-    }
-    var anim = new YAHOO.util.Anim(id, { opacity: { to: to } }, duration, YAHOO.util.Easing.easeBoth);
-    anim.onComplete.subscribe(function(anim_status, data, input) {
-                var element;
-                if (typeof input == "string") {
-                    element = document.getElementById(input);
-                }
-                else {
-                    element = input;
-                }
-                element.style.opacity = '';
-                element.style['-moz-opacity'] = '';
-                element.style['-khtml-opacity'] = '';
-                element.style.filter = '';
-            }, id);
-    anim.animate();
-}
-
-/**
- * Applies a fade-out effect to the passed element 
- * @param {string|object} ID of the element, or the element reference
- * @param {float} duration of effect
- * @param {integer} target opacity
- * @type void
- */
-Solstice.YahooUI.fadeOut = function (id, duration, to) {
-    if(!to){
-        to = 0;
-    }
-    if(!duration){
-        duration = 2;
-    }
-    var anim = new YAHOO.util.Anim(id, { opacity: { to: to} }, duration, YAHOO.util.Easing.easeBoth);
-    anim.animate();
-}
 
 // END: Deprecated functions
 
