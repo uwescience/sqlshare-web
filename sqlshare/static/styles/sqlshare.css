@@ -98,10 +98,6 @@ h3.ss-sidebar-logo img { margin-top:10px; }
 
 /* Overflow Tab */
 
-#table_tab_overflow a { text-decoration: none; white-space: normal; position: relative; }
-#table_tab_overflow a span.go { margin-right: 20px; }
-#table_tab_overflow a span.remove { /*float: right;*/ position: absolute; right: 10px; top: 4px; color: #000; }
-#table_tab_overflow a:hover span.remove { color: red; }
 .yui-skin-sam .yuimenuitem-checked { background-image: none !important; }
 
 /* Main Content */
@@ -171,7 +167,7 @@ button[disabled].ss-actions-button { background-color: #efefef; border-color: #d
 
 .ss-tables-list { display: block; height: 39px; margin-left: 10px; margin-top: 10px; }
 
-.ss-tables-list li { width: auto; display: inline; overflow: hidden; list-style-type: none; }
+.ss-tables-list li { width: auto; display: inline-block; float: left; overflow: hidden; list-style-type: none; }
 
 .ss-tables-list div { width: auto; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; float:left; display: inline; padding: 0 10px; line-height: 31px;  text-align: center; margin-right: 5px;
 -webkit-border-top-left-radius: 4px;
@@ -208,6 +204,12 @@ border-top-right-radius: 4px;
 
 .ss-tables-list .tab_overflow div.current_edit { background-color: #ececec; color: #000; }
 .ss-tables-list .tab_overflow div.active { background-color: #fff;  color: #000; }
+
+#table_tab_overflow a { text-decoration: none; white-space: normal; position: relative; }
+#table_tab_overflow a span.go { margin-right: 20px; }
+#table_tab_overflow a span.remove { /*float: right;*/ position: absolute; right: 10px; top: 4px; color: #000; }
+#table_tab_overflow a:hover span.remove { color: red; }
+
 
 /* private/public/shared tooltips */
 

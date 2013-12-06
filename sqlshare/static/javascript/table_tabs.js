@@ -34,26 +34,28 @@ SQLShare.TableTabs.prototype.removeTab = function(type, id) {
         }
     }
 
+    var me = this;
+    me.matched_id = matched_id;
     if (matched_id >= 0) {
-        var anim = new YAHOO.util.Anim("tab_nav_element_"+matched_id, {
-            width: { to: 0 }
+        $("#tab_nav_element_"+matched_id).animate({
+            width: 0
+        },
+        {
+            complete: function() { me._postHideAnimation(); }
         });
-        anim.onComplete.subscribe(this._postHideAnimation, { tabs: this, id: matched_id }, true);
-        anim.animate();
     }
 };
 
-SQLShare.TableTabs.prototype._postHideAnimation = function(ev, what) {
-    var this_actual = this.tabs;
-    var id = this.id;
+SQLShare.TableTabs.prototype._postHideAnimation = function() {
+    var id = this.matched_id;
 
     Solstice.Element.hide('tab_nav_element_'+id);
-    var tab = this_actual._tabs[id];
+    var tab = this._tabs[id];
 
     if (tab.highlighted) {
         window.location.href = solstice_document_base+"sqlshare/#s=home";
     }
-    this_actual._redrawMenu();
+    this._redrawMenu();
 };
 
 SQLShare.TableTabs.prototype._handleTabClick = function(ev) {
@@ -206,7 +208,7 @@ SQLShare.TableTabs.prototype._redrawMenu = function() {
 
     for (var i = visible_tabs.length - max; i < visible_tabs.length; i++) {
         if (i >= 0) {
-            Solstice.Element.showInline('tab_nav_element_'+visible_tabs[i].position);
+            $("#tab_nav_element_"+visible_tabs[i].position).css("display", "inline-block");
         }
     }
 
