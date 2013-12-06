@@ -1,3 +1,7 @@
+.dialog-no-close-button .ui-dialog-titlebar-close {
+    display: none;
+}
+
 #sol_message_container {
 
 position: absolute;

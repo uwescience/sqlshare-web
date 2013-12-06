@@ -220,15 +220,21 @@ SavedQuery.prototype._getDownloadURL = function(query) {
 };
 
 SavedQuery.prototype._confirmDelete = function() {
-    var popin = Solstice.YahooUI.PopIn.init('confirm_delete', true);
-    popin.cfg.setProperty('close', false);
 
-    popin.setHeader(Solstice.Lang.getString("SQLShare", "confirm_delete_title"));
+    if (!$("#delete_dataset_dialog").length) {
+        $("body").append("<div id='delete_dataset_dialog'></div>");
+    }
+
     var view = new SQLShare.View.SavedQuery.ConfirmDelete(this._model);
-    popin.setBody(view.toString());
 
+    $("#delete_dataset_dialog").dialog({
+        modal: true,
+        title: Solstice.Lang.getString("SQLShare", "confirm_delete_title"),
+        dialogClass: 'dialog-no-close-button'
+    });
 
-    popin.show();
+    $("#delete_dataset_dialog").html(view.toString());
+
     YAHOO.util.Event.removeListener(this.id+'_delete_query', "click");
     YAHOO.util.Event.removeListener(this.id+'_delete_cancel', "click");
     YAHOO.util.Event.addListener(this.id+'_delete_query', "click", this._startDelete, this, true);
@@ -236,14 +242,12 @@ SavedQuery.prototype._confirmDelete = function() {
 };
 
 SavedQuery.prototype._cancelDelete = function() {
-    Solstice.YahooUI.PopIn.lower('confirm_delete');
+    $("#delete_dataset_dialog").dialog("close");
 };
 
 SavedQuery.prototype._startDelete = function() {
-    var popin = Solstice.YahooUI.PopIn.get('confirm_delete');
-    popin.setBody("");
     var view = new SQLShare.View.SavedQuery.Deleting(this._model);
-    popin.setBody(view.toString());
+    $("#delete_dataset_dialog").html(view.toString());
 
     this.AsyncDELETE(this._getRestRoot()+"/proxy/REST.svc/v2/db/dataset/"+this.query_id, this._postDelete);
 };
@@ -251,7 +255,7 @@ SavedQuery.prototype._startDelete = function() {
 SavedQuery.prototype._postDelete = function(o) {
     Solstice.Message.setSuccess(Solstice.Lang.getMessage('SQLShare', 'query_deleted'));
     window.location.href = 'sqlshare/#s=home';
-    Solstice.YahooUI.PopIn.lower('confirm_delete');
+    $("#delete_dataset_dialog").dialog("close");
 
     this._model.query_id = this.query_id;
 
@@ -549,10 +553,6 @@ SavedQuery.prototype._postSaveAs = function(o) {
     else {
         $.History.go("s="+decodeURI(url));
     }
-
-    var popin = Solstice.YahooUI.PopIn.get('save_query_as');
-    popin.hide();
-
 
     $("#ss_editor_col").removeClass("qid_"+this.query_id);
     Solstice.Cookie.set('edit_query', true);
