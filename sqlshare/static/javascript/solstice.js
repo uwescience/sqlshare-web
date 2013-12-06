@@ -1045,7 +1045,7 @@ Solstice.findDuplicateIDs = function() {
                 window.console.log("Duplicate ID: "+i+" Nodes with id: "+nodes.length);
             }
             for (var j = 0; j < nodes.length; j++) {
-                YAHOO.util.Dom.setStyle(nodes[j], "border", "2px dashed red");
+                $(nodes[j]).css("border", "2px dashed red");
             }
         }
     }
