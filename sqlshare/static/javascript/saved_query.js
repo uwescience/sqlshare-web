@@ -137,23 +137,29 @@ SavedQuery.prototype._drawSavedQuery = function(query_data) {
 };
 
 SavedQuery.prototype._openSharingDialog = function() {
-    var popin = Solstice.YahooUI.PopIn.init('share_dataset', true);
-    popin.cfg.setProperty('width', '440px');
+    if (!$("#sharing_dataset_dialog").length) {
+        $("body").append("<div id='sharing_dataset_dialog'></div>");
+    }
 
-    popin.setHeader(Solstice.Lang.getString('SQLShare', 'share_dataset_title'));
+    $("#sharing_dataset_dialog").html("");
+    $("#sharing_dataset_dialog").dialog({
+        modal: true,
+        width: "440px",
+        title: Solstice.Lang.getString('SQLShare', 'share_dataset_title')
+    });
 
-    this._getExistingPermissions(popin);
+    this._getExistingPermissions();
 
 };
 
 // Stubbing this out for when we get the rest together
-SavedQuery.prototype._getExistingPermissions = function(popin) {
+SavedQuery.prototype._getExistingPermissions = function() {
     var full_url = this._getRestRoot()+"/dataset/"+this.query_id+'/permissions';
-    this.AsyncGET(full_url, this._postGetPermissions, popin, true);
+    this.AsyncGET(full_url, this._postGetPermissions, null, true);
     //this._postGetPermissions({ code: 200 }, popin);
 };
 
-SavedQuery.prototype._postGetPermissions = function(o, popin) {
+SavedQuery.prototype._postGetPermissions = function(o) {
     if (o.code != 200) {
         return;
     }
@@ -171,10 +177,14 @@ SavedQuery.prototype._postGetPermissions = function(o, popin) {
         this.draw();
     }, this, true);
 
-    popin.setBody(view.toString());
-    view.postRender();
-    popin.show();
+    $("#sharing_dataset_dialog").html(view.toString());
+    // Recenter after content.  the timeout makes sure the browser's figured out the new content
+    // size
+    window.setTimeout(function() {
+        $("#sharing_dataset_dialog").dialog("option", "position", "center");
+    }, 0);
 
+    view.postRender();
 
     YAHOO.util.Event.removeListener('js-sharing-save-public', "click");
     YAHOO.util.Event.addListener('js-sharing-save-public', "click", this._makePublic, this, true);
@@ -185,7 +195,7 @@ SavedQuery.prototype._postGetPermissions = function(o, popin) {
 SavedQuery.prototype._makePublic = function() {
     this._model.is_public = false;
     this._togglePublic();
-    Solstice.YahooUI.PopIn.lower('share_dataset');
+    $("#sharing_dataset_dialog").dialog("close");
 };
 
 SavedQuery.prototype._downloadQuery = function() {

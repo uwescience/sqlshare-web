@@ -164,7 +164,7 @@ SQLShare.View.Query.SharingPanel.prototype._getTableRow = function(el) {
 };
 
 SQLShare.View.Query.SharingPanel.prototype._closeDialog = function() {
-    Solstice.YahooUI.PopIn.lower('share_dataset');
+    $("#sharing_dataset_dialog").dialog("close");
 };
 
 SQLShare.View.Query.SharingPanel.prototype._saveChanges = function() {
@@ -208,7 +208,7 @@ SQLShare.View.Query.SharingPanel.prototype._saveChanges = function() {
 SQLShare.View.Query.SharingPanel.prototype._postSavePermissions = function(o) {
     if (o.code == 200) {
         this.onSave.fire();
-        Solstice.YahooUI.PopIn.lower('share_dataset');
+        $("#sharing_dataset_dialog").dialog("close");
         Solstice.Message.setSuccess(Solstice.Lang.getMessage('SQLShare', 'dataset_permissions_updated'));
     }
     else {
