@@ -244,53 +244,55 @@ SQLShare.View.Query.SharingPanel.prototype._buildAutoComplete = function() {
              fields: [ "login", "name", "surname", "email"]
     };
 
-    var autocomplete = new YAHOO.widget.AutoComplete('share_ds_autocomplete_input', 'share_ds_autocomplete_panel', datasource);
-
-    autocomplete.generateRequest = function(query) {
-        YAHOO.util.Connect.initHeader("Accept", "application/json", false);
-        YAHOO.util.Connect.initHeader("X-XSRF-Token", solstice_xsrf_token, false);
-        return "?q="+query;
-    };
-
+    var me = this;
+    var user_data = {};
     var permissions_datatable = this.datatable;
+    $("#share_ds_autocomplete_input").autocomplete({
+        source: function(request, callback) {
+            $.ajax({
+                "url": me._getRestRoot()+"users?q="+request.term,
+                "success": function(data) {
+                    var callback_data = [];
+                    for (var i = 0; i < data.users.length; i++) {
+                        var user = data.users[i];
+                        user_data[user.login] = user;
 
-    var onSelect = function(type, args) {
-        var data = args[2];
-        var login_name = data[0];
+                        callback_data.push({ label: user.name+" "+user.surname+" ("+user.login+")", value: user.login });
+                    }
+                    callback(callback_data);
+                },
+                "error": function() {
+                    callback([]);
+                }
+            });
+        },
+        select: function(ev, selected) {
+            $("#share_ds_autocomplete_input").val("");
+            var login_name = selected.item.value;
+            var user_info = user_data[login_name];
 
-        document.getElementById('share_ds_autocomplete_input').value = '';
-        if (this._user_lookup[login_name]) {
-            return;
+
+            me._user_lookup[login_name] = true;
+            me._permissionsChanged();
+
+            permissions_datatable.addRow({
+                name: ['<span class="permission-user">', user_info.name, ' ', user_info.surname, ' (', user_info.login, ')</span>'].join(''),
+                access: ["<span class='permission-action'>Read-only <a href='javascript:void(0);' class='js-remove_account' rel='", user_info.login, "'>x</a></span>"].join('')
+            });
+
+            ev.preventDefault();
         }
+    });
 
-        this._user_lookup[login_name] = true;
-        this._permissionsChanged();
-
-        permissions_datatable.addRow({
-            name: ['<span class="permission-user">', data[1], ' ', data[2], ' (', data[0], ')</span>'].join(''),
-            access: ["<span class='permission-action'>Read-only <a href='javascript:void(0);' class='js-remove_account' rel='", data[0], "'>x</a></span>"].join('')
-        });
-
-    };
-
-    var onKeyPress = function(ev) {
-        var value = document.getElementById('share_ds_autocomplete_input').value;
+    $("#share_ds_autocomplete_input").on("keypress", function(ev) {
         if (ev.keyCode != 13) {
             return;
         }
-        YAHOO.util.Event.stopEvent(ev);
-        this.addEmail(value);
-        document.getElementById('share_ds_autocomplete_input').value = '';
-    };
+        ev.preventDefault();
+        me.addEmail($("#share_ds_autocomplete_input").val());
+        $("#share_ds_autocomplete_input").val("");
+    });
 
-    YAHOO.util.Event.addListener('share_ds_autocomplete_input', 'keypress', onKeyPress, this, true);
-
-    var formatResult = function(resultsData, query, resultMatch) {
-        return ["<div>", resultsData[1], ' ', resultsData[2], ' (', resultsData[0], ')</div>'].join('');
-    };
-
-    autocomplete.itemSelectEvent.subscribe(onSelect, this, true);
-    autocomplete.formatResult = formatResult;
 };
 
 SQLShare.View.Query.SharingPanel.prototype.addEmail = function(value) {

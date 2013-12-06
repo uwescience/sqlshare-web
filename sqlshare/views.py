@@ -345,7 +345,7 @@ def user_search(request):
             "email": user.email,
         })
 
-    return HttpResponse(json.dumps(data))
+    return HttpResponse(json.dumps(data), content_type="application/json")
 
 def stream_upload(request, user):
     body = request.read()
