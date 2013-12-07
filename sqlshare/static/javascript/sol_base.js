@@ -37,26 +37,30 @@ SolBase.prototype._http = function(method, uri, obj) {
 };
 
 
-SolBase.prototype.AsyncGET = function(uri, callback, arg) {
-    return this._async_http('GET', uri, null, callback, arg);
+SolBase.prototype.AsyncGET = function(uri, callback, arg, opts) {
+    return this._async_http('GET', uri, null, callback, arg, opts);
 };
 
-SolBase.prototype.AsyncPOST = function(uri, obj, callback, arg) {
-    return this._async_http('POST', uri, obj, callback, arg);
+SolBase.prototype.AsyncPOST = function(uri, obj, callback, arg, opts) {
+    return this._async_http('POST', uri, obj, callback, arg, opts);
 };
 
-SolBase.prototype.AsyncPUT = function(uri, obj, callback, arg) {
-   return this._async_http('PUT', uri, obj, callback, arg);
+SolBase.prototype.AsyncPUT = function(uri, obj, callback, arg, opts) {
+   return this._async_http('PUT', uri, obj, callback, arg, opts);
 };
 
-SolBase.prototype.AsyncDELETE = function(uri, callback, arg) {
-    return this._async_http('DELETE', uri, null, callback, arg);
+SolBase.prototype.AsyncDELETE = function(uri, callback, arg, opts) {
+    return this._async_http('DELETE', uri, null, callback, arg, opts);
 };
 
 
-SolBase.prototype._async_http = function(method, uri, obj, callback, arg) {
+SolBase.prototype._async_http = function(method, uri, obj, callback, arg, opts) {
     var me = this;
-    return $.ajax(uri, {
+
+    if (!opts) { opts = {}; }
+
+
+    var ajax_args = {
         type: method,
         headers: {
             "Accept": "application/json",
@@ -66,8 +70,16 @@ SolBase.prototype._async_http = function(method, uri, obj, callback, arg) {
         data: JSON.stringify(obj),
         complete: function(response) {
             me._handleSuccess(response, callback, arg);
-        },
-    });
+        }
+    };
+
+    if (opts.progress) {
+        ajax_args.xhrFields = {
+            onprogress: opts.progress
+        };
+    }
+
+    return $.ajax(uri, ajax_args);
 };
 
 SolBase.prototype._handleSuccess = function(response, callback, arg) {

@@ -286,24 +286,21 @@ Uploader.prototype._loadTable = function(ev) {
         is_public:      is_public,
         columns:        this._parser_options.columns,
         sample_data:    this._parser_options.sample_data
-    }, this._postLoadTable);
+    }, this._postLoadTable, null, {
+        progress: function(o) {
+            var content = o.target.responseText;
 
-    request.conn.onreadystatechange = function(o) {
-        var content = o.target.responseText;
-
-        try {
-        var matches = content.match(/^{"total":([0-9]+), "progress":"([\.]+)/);
-        if (matches) {
-            var percent = matches[2].length / matches[1];
-            document.getElementById('upload_progress_meter').style.width = parseInt(percent * 100)+"px";
+            try {
+                var matches = content.match(/^{"total":([0-9]+), "progress":"([\.]+)/);
+                if (matches) {
+                    var percent = matches[2].length / matches[1];
+                    document.getElementById('upload_progress_meter').style.width = parseInt(percent * 100)+"px";
+                }
+            }
+            catch(e) { console.log(e); }
         }
-        }
-        catch(e) { console.log(e); }
-    };
+    });
 
-//    this.AsyncPUT(this._getRestRoot()+"/proxy/REST.svc/v1/file/"+this._current_file_name+"/table", this._parser_options.parser, this._postLoadTable);
-
-//    this._options.table.is_public   = is_public;
     this._options.is_public   = is_public;
 };
 
