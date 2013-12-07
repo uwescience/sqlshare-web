@@ -89,7 +89,7 @@ SolBase.prototype._handleSuccess = function(response, callback, arg) {
     var status = response.status;
     if (response.responseText != "") {
         try {
-            json = YAHOO.lang.JSON.parse(response.responseText);
+            json = JSON.parse(response.responseText);
         }
         catch (e) {
             status = 500;
