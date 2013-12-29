@@ -157,14 +157,6 @@ SolBase.prototype.showErrors = function(container_id, errors) {
     }
 };
 
-SolBase.prototype.hideErrors = function(container_id) {
-    YAHOO.util.Dom.getElementsByClassName('sol_error_notification_text', null, container_id, function(element) { Solstice.Element.hide(element);});
-};
-
-SolBase.prototype.hideAllErrors = function() {
-    YAHOO.util.Dom.getElementsByClassName('sol_error_notification_text', null, document.body, function(element) { Solstice.Element.hide(element);});
-};
-
 SolBase.prototype.showInputLoading = function(container_id, field) {
     var error_container = document.getElementById('err_'+field+'_'+container_id);
     error_container.innerHTML = '<img src="/static/images/processing.gif" alt="">';
