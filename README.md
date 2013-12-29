@@ -1,7 +1,7 @@
 A front end to SQLShare
 ========
 
-Full install instructions: https://github.com/vegitron/sqlshare/wiki/Installation-instructions
+Full install instructions: https://github.com/uwescience/sqlshare-web/wiki/Installation-instructions
 
 Can use either ss_trust or ss_apikey authentication.  For ss_trust, add this to your settings.py:
 
