@@ -49,22 +49,6 @@ Solstice.Element.prototype.appendTo = function(target){
 }
 
 /**
- * returns the first descendant element by classname
- * @type element
- */
-Solstice.Element.prototype.getChildByClass = function(classname){
-    return this.getChildrenByClass(classname).shift();
-}
-
-/**
- * returns all descendants that match the classname
- * @type array of elements
- */
-Solstice.Element.prototype.getChildrenByClass = function(classname){
-    return YAHOO.util.Dom.getElementsByClassName(classname, null, this.element);
-}
-
-/**
  * Hides an element
  * @param {string|object} ID of the element, or the element, to be hidden
  * @type void
