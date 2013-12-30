@@ -15,10 +15,10 @@ Navigation.prototype.getCurrentState = function() {
 }
 
 Navigation.prototype._init = function() {
-    YAHOO.util.Event.addListener('ss_sidebar_content', "click", this._processNavigation, this, true);
-    YAHOO.util.Event.addListener("recent_queries", "click", this._recentQueriesNav, this, true);
-
-    YAHOO.util.Event.addListener("favorite_queries", "click", this._favoriteQueriesNav, this, true);
+    var me = this;
+    $("#ss_sidebar_content").on("click", function(ev) {
+        me._processNavigation(ev);
+    });
 };
 
 Navigation.prototype._processNavigation = function(ev) {
@@ -34,19 +34,9 @@ Navigation.prototype._processNavigation = function(ev) {
     if (rel) {
         if (this.getCurrentState() == rel) {
             this.loadState(rel);
-            YAHOO.util.Event.stopEvent(ev);
+            ev.preventDefault();
         }
     }
-
-    return;
-    var option = dd.options[dd.selectedIndex];
-    if (option.className == 'new_query') {
-        this._newQueryNav();
-    }
-    else if (option.className == 'upload_file') {
-        this._chooseUploadNav();
-    }
-    dd.selectedIndex = 0;
 };
 
 Navigation.prototype._loadSavedQuery = function(parts) {
@@ -86,13 +76,6 @@ Navigation.prototype._highlightTag = function(tag) {
             me._highlightTag(tag);
         }, 1000);
     }
-};
-
-Navigation.prototype._recentQueriesNav = function(ev) {
-//    new RecentQueries(ev, ...
-//    var title = Solstice.Lang.getString("SQLShare", "page_title_recent_queries");
-//    SQLShare.onNavigate.fire(title, "recent");
-    $(document).trigger("recent_queries", [ev]);
 };
 
 Navigation.prototype._loadRecentQueries = function(ev) {
@@ -243,14 +226,6 @@ Navigation.prototype._chooseUpload = function(fire_event) {
         $(document).trigger("choose_upload");
     }
 };
-
-
-Navigation.prototype._unimplementedFeature = function(ev, type) {
-    YAHOO.util.Event.stopEvent(ev);
-    var win = window.open('sqlshare/content/not_implemented.html?type='+type, "unimplemented", "width=500,height=205,resizable=0,status=0,location=0");
-    win.focus();
-};
-
 
 Navigation.prototype._highlightLeftNav = function(new_active) {
     if (this._current_highlight) {
