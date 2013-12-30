@@ -1,0 +1,9 @@
+{% load templatetag_handlebars %}
+{% tplhandlebars sharing_panel_name_cell %}
+
+{{ #if  is_user }}
+<span class="permission-user">{{name}} {{surname}} ({{login}})</span> {{ #if  email }}shared by {{email}}{{ /if }}
+{{ else }}
+<span class="permission-user">{{email}}</span>
+{{ /if }}
+{% endtplhandlebars %}

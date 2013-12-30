@@ -60,16 +60,20 @@ SQLShare.View.Query.SharingPanel.prototype.generateParams = function() {
         return 0;
     });
 
+    this.account_data = [];
     for (var i = 0; i < sorted.length; i++) {
         var entry = sorted[i];
-        this.addParam('accounts', {
+
+        var current_data = {
             is_user:    (entry.type == "user" ? true : false),
             email:      entry.email,
             name:       entry.name,
             surname:    entry.surname,
             login:      entry.login,
             rel:        entry.rel
-        });
+        };
+        this.addParam('accounts', current_data);
+        this.account_data.push(current_data);
     }
 
     if (sorted.length) {
@@ -105,37 +109,25 @@ SQLShare.View.Query.SharingPanel.prototype.postRender = function() {
 };
 
 SQLShare.View.Query.SharingPanel.prototype._handleListClick = function(ev) {
-    var target = ev.target;
-    var td = target.children[0];
-    var check_els = [];
-    check_els.push(td);
-    for (var i = 0; i < check_els.length; i++) {
-        var target = check_els[i];
+    ev.preventDefault();
+    var el = $(ev.target);
 
-        if ($("#"+target).hasClass('js-remove_account')) {
-            var account = target.getAttribute('rel');
-            delete this._user_lookup[account];
-            var row = this._getTableRow(target);
-            this.datatable.deleteRow(row);
-            this._permissionsChanged();
-        }
-        else if ($("#"+target).hasClass('js-remove_email')) {
-            var email = target.getAttribute('rel');
-            delete this._email_lookup[email];
-            email = email.replace(/__quote__/g, '"');
-            delete this._email_lookup[email];
-            var row = this._getTableRow(target);
-            this.datatable.deleteRow(row);
-            this._permissionsChanged();
-        }
+    var row = null;
+    if (el.hasClass('js-remove_account')) {
+        var account = el.attr('rel');
+        delete this._user_lookup[account];
+        var row = this._getTableRow(el);
+    }
+    else if (el.hasClass('js-remove_email')) {
+        var email = el.attr('rel');
+        delete this._email_lookup[email];
+        email = email.replace(/__quote__/g, '"');
+        delete this._email_lookup[email];
+        var row = this._getTableRow(el);
+    }
 
-        if (target.children) {
-            var len = target.children.length;
-            for (var j = 0; j < len; j++) {
-                check_els.push(target.children[j]);
-            }
-        }
-     }
+    this.datatable.fnDeleteRow(row[0]);
+    this._permissionsChanged();
 
 };
 
@@ -152,11 +144,11 @@ SQLShare.View.Query.SharingPanel.prototype._makeDatasetPublic = function(ev) {
 };
 
 SQLShare.View.Query.SharingPanel.prototype._getTableRow = function(el) {
-    while (el.tagName.toLowerCase() != 'body' && el.tagName.toLowerCase() != 'tr') {
-        el = el.parentNode;
+    while (el.prop('tagName').toLowerCase() != 'body' && el.prop('tagName').toLowerCase() != 'tr') {
+        el = el.parent();
     }
 
-    if (el.tagName.toLowerCase() == 'tr') {
+    if (el.prop('tagName').toLowerCase() == 'tr') {
         return el;
     }
 
@@ -218,21 +210,62 @@ SQLShare.View.Query.SharingPanel.prototype._postSavePermissions = function(o) {
 };
 
 SQLShare.View.Query.SharingPanel.prototype._buildPermissionsTable = function() {
-    var columns = [
-        { key: "name", label: "Name"},
-        { key: "access", label: "" }
-    ];
+    function name_formatter(data, type, row) {
+        var data = {
+            is_user : row[1],
+            name    : row[2],
+            surname : row[3],
+            login   : row[4],
+            email   : row[5]
+        };
 
-    var datasource = new YAHOO.util.DataSource(YAHOO.util.Dom.get('sharing_list'));
-    datasource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;
-    datasource.responseSchema = {
-        fields: [
-            { key:"name" },
-            { key:"access" }
-        ]};
+        return HandlebarsUtils.to_string('sharing_panel_name_cell', data);
+    };
 
-    this.datatable = new YAHOO.widget.DataTable('permissions_wrapper', columns, datasource, {MSG_EMPTY: "You are currently not sharing this dataset with any other users."});
-    this.datatable.subscribe("cellClickEvent", this._handleListClick, this, true);
+    function access_formatter(data, type, row) {
+        var rel = row[6] || row[4];
+
+        // Email item
+        if (row[6]) {
+            return '<span class="permission-action">Read-only <a href="javascript:void" class="remove-permission js-remove_email" rel="'+rel+'">x</a></span>';
+        }
+        else {
+            // An actual account
+            return '<span class="permission-action">Read-only <a href="javascript:void" class="remove-permission js-remove_account" rel="'+rel+'">x</a></span>';
+        }
+    };
+
+    $('#permissions_wrapper').html( '<table cellpadding="0" cellspacing="0" border="0" class="display" id="permissions_table"></table>' );
+    var table_data = [];
+    for (var i = 0; i < this.account_data.length; i++) {
+        table_data.push([
+            "", // dataTable gets upset w/ a null field.
+            this.account_data[i].is_user,
+            this.account_data[i].name,
+            this.account_data[i].surname,
+            this.account_data[i].login,
+            this.account_data[i].email,
+            this.account_data[i].rel
+        ]);
+    }
+
+    var datatable = $("#permissions_table").dataTable({
+        aaData: table_data,
+        aoColumns: [
+            { sTitle: "Name" },
+            { sTitle: "" }
+        ],
+        aoColumnDefs: [
+            { mRender: name_formatter, aTargets: [0] },
+            { mRender: access_formatter, aTargets: [1] }
+        ]
+    });
+
+    this.datatable = datatable;
+    var me = this;
+    $(".remove-permission").on("click", function(ev) {
+        me._handleListClick(ev);
+    });
 
 };
 
@@ -268,11 +301,19 @@ SQLShare.View.Query.SharingPanel.prototype._buildAutoComplete = function() {
             me._user_lookup[login_name] = true;
             me._permissionsChanged();
 
-            permissions_datatable.addRow({
-                name: ['<span class="permission-user">', user_info.name, ' ', user_info.surname, ' (', user_info.login, ')</span>'].join(''),
-                access: ["<span class='permission-action'>Read-only <a href='javascript:void(0);' class='js-remove_account' rel='", user_info.login, "'>x</a></span>"].join('')
-            });
+            permissions_datatable.fnAddData([
+                "", // dataTable gets upset w/ a null field
+                true, // actual user account
+                user_info.name,
+                user_info.surname,
+                user_info.login,
+                '',
+                ''
+            ]);
 
+            $(".remove-permission").on("click", function(ev) {
+                me._handleListClick(ev);
+            });
             ev.preventDefault();
         }
     });
@@ -303,9 +344,18 @@ SQLShare.View.Query.SharingPanel.prototype.addEmail = function(value) {
     var permissions_datatable = this.datatable;
     var rel_value = value.replace(/"/g, '__quote__');
     var rel_value = value.replace(/&quot;/g, '__quote__');
-    permissions_datatable.addRow({
-        name: ['<span class="permission-user">', value, '</span>'].join(''),
-        access: ["<span class='permission-action'>Read-only <a href='javascript:void(0);' class='js-remove_email' rel='", rel_value, "'>x</a></span>"].join('')
+    permissions_datatable.fnAddData([
+        "",
+        false, // not a user, just an email address
+        '',
+        '',
+        value,
+        rel_value
+    ]);
+
+    var me = this;
+    $(".remove-permission").on("click", function(ev) {
+        me._handleListClick(ev);
     });
 };
 
