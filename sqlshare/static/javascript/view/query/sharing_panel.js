@@ -237,13 +237,6 @@ SQLShare.View.Query.SharingPanel.prototype._buildPermissionsTable = function() {
 };
 
 SQLShare.View.Query.SharingPanel.prototype._buildAutoComplete = function() {
-    var datasource = new YAHOO.util.XHRDataSource(this._getRestRoot()+'/users');
-    datasource.responseType = YAHOO.util.XHRDataSource.TYPE_JSON;
-    datasource.responseSchema = {
-        resultsList: "users",
-             fields: [ "login", "name", "surname", "email"]
-    };
-
     var me = this;
     var user_data = {};
     var permissions_datatable = this.datatable;
