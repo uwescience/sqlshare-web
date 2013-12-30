@@ -18,13 +18,26 @@ Query.prototype.draw = function() {
 
     this._prepareEditor();
 
-    YAHOO.util.Event.removeListener(this.id+'_run_query', "click");
-    YAHOO.util.Event.removeListener(this.id+'_save_query', "click");
-    YAHOO.util.Event.removeListener(this.id+'_download_query', "click");
+    var me = this;
 
-    YAHOO.util.Event.addListener(this.id+'_run_query', "click", this._processQuery, this, true);
-    YAHOO.util.Event.addListener(this.id+'_save_query', "click", this._showSaveAsDialog, this, true);
-    YAHOO.util.Event.addListener(this.id+'_download_query', "click", this._downloadQuery, this, true);
+    $("#"+this.id+"_run_query").off("click");
+    $("#"+this.id+"_save_query").off("click");
+    $("#"+this.id+"_download_query").off("click");
+
+
+    $("#"+this.id+"_run_query").on("click", function(ev) {
+        me._processQuery(ev);
+    });
+
+    $("#"+this.id+"_save_query").on("click", function(ev) {
+        ev.preventDefault();
+        return me._showSaveAsDialog();
+    });
+
+    $("#"+this.id+"_download_query").on("click", function(ev) {
+        ev.preventDefault();
+        return me._downloadQuery();
+    });
 };
 
 Query.prototype._prepareEditor = function() {

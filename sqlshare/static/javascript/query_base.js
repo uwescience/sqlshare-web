@@ -300,7 +300,8 @@ QueryBase.prototype._postTogglePublic = function(o) {
     // override in subclasses...
 }
 
-QueryBase.prototype._processQuery = function() {
+QueryBase.prototype._processQuery = function(ev) {
+    ev.preventDefault();
     this.abortCurrentRequest();
     var query = this._editor.getCode();
     Solstice.Element.show('new_query_preview_panel');
@@ -316,7 +317,7 @@ QueryBase.prototype._processQuery = function() {
 
 QueryBase.prototype._postQuery = function(o) {
     if (o.code == 202) {
-        var new_location = o.conn.getResponseHeader['Location'];
+        var new_location = o.conn.getResponseHeader('Location');
         var full_url = new_location;
         this._full_url = full_url;
         this.AsyncGET(full_url, this._postInitialRedirect);
