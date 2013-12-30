@@ -163,7 +163,7 @@ def _generate_credentials():
 @csrf_protect
 def parser(request, ss_id, sol_id):
     if request.method == "PUT":
-        json_data = json.loads(request.raw_post_data)
+        json_data = json.loads(request.body)
 
         if json_data["delimiter"] == "\\t":
             json_data["delimiter"] = "\t"
@@ -215,7 +215,7 @@ def dataset_permissions(request, schema, table_name):
     dataset = Dataset(schema=schema, name=table_name)
 
     if request.method == "PUT":
-        json_data = json.loads(request.raw_post_data)
+        json_data = json.loads(request.body)
 
         accounts = json_data["accounts"]
         emails = json_data["emails"]
