@@ -4,16 +4,6 @@ var QueryBase = function() {
 QueryBase.prototype = new SSBase();
 
 QueryBase.prototype._drawTable = function(id, columns, data) {
-    if (columns == null || columns.length == 0) {
-        return;
-    }
-    if (data == null) {
-        return;
-    }
-
-    var column_defs = [];
-    var column_names = [];
-
     var max_col = columns.length;
     if (max_col > SQLShare.Constants.MAX_PREVIEW_COLS) {
         max_col = SQLShare.Constants.MAX_PREVIEW_COLS;
@@ -23,39 +13,18 @@ QueryBase.prototype._drawTable = function(id, columns, data) {
         }));
     }
 
-    var column_keys = [];
-    for (var i = 0; i < max_col; i++) {
-        column_keys[i] = 'col_'+i;
-        column_defs.push({
-            key: column_keys[i], label: columns[i], sortable: false, resizeable: true
+    $('#ss_table_container_main').html('<table cellpadding="0" cellspacing="0" border="0" class="display" id="query_preview_table"></table>');
+    var column_titles = [];
+    for (var i = 0; i < columns.length; i++) {
+        column_titles.push({ sTitle: columns[i] });
+    }
+
+    window.setTimeout(function() {
+        $("#query_preview_table").dataTable({
+            aaData: data,
+            aoColumns: column_titles,
         });
-    }
-
-    var structured = [];
-    for (var i = 0; i < data.length; i++) {
-        var row_data = {};
-        var row = data[i];
-        for (var j = 0; j < row.length; j++) {
-            row_data[column_keys[j]] = row[j];
-        }
-        structured.push(row_data);
-    }
-
-
-    var data_source = new YAHOO.util.DataSource(structured);
-    data_source.responseType =  YAHOO.util.DataSource.TYPE_JSARRAY;
-    data_source.responseSchema = {
-        fields: column_keys
-    };
-
-    var options = {};
-    if (data.length > 20) {
-        options.paginator =  new YAHOO.widget.Paginator({ rowsPerPage : 20});
-    }
-
-    options.renderLoopSize = 1;
-
-    var data_table = new YAHOO.widget.ScrollingDataTable(id, column_defs, data_source, options);
+    }, 0);
 };
 
 
