@@ -170,29 +170,6 @@ Solstice.BackButton = function (){ };
  */
 Solstice.BackButton.disable_back_button = 0;
 
-/** 
- * This is designed as an event handler that intercepts the use of the
- * backspace key to prevent accidental back navigations.  It is attached to 
- * 'onkeypress' and 'onkeydown' automatically
- * @param  {event} e The event to inspect and potentially prevent
- * @returns {boolean} whether or not the event is a back event
- * @private
- */
-Solstice.BackButton.stopBackSpace = function (e) {
-    if (window.event) {
-        if (Solstice.BackButton.isBackAction(window.event)) {
-            return Solstice.Event.stopEvent(window.event);
-        }
-    }
-    else {
-        if (Solstice.BackButton.isBackAction(e)) {
-            return false;
-        }
-    }
-}
-window.onkeypress = Solstice.BackButton.stopBackSpace;
-document.onkeydown = Solstice.BackButton.stopBackSpace;
-
 /**
  * Checks whether the event passed would result in a browser
  * back action.
@@ -420,60 +397,6 @@ Solstice.Geometry.getEventY = function (event) {
         return event.clientY + document.body.scrollTop;
     }
     return;
-}
-
-
-
-/*********************
- * @class Event handling methods.
- * @constructor
- */
-Solstice.Event = function(){};
-
-/**
- * Adds the given function as an event handler on the given dom element.
- * See http://www.w3.org/TR/DOM-Level-3-Events/events.html#Events-EventTarget-addEventListener for more info on the "useCapture" arg
- * @param {htmlElement} obj the dom element to attach the event to
- * @param {string} evtType the event to attach to (eg, Click, MouseOver)
- * @param {function} fn a function reference
- * @param {object} An arbitrary object that will be passed as a parameter to the handler 
- * @param {boolean} If true, the obj passed in becomes the execution scope of the listener. If an object, this object becomes the execution scope. 
- * @type void
- */
-Solstice.Event.add = function (obj, evtType, fn, param, override) {
-    // Just pass off to Yahoo UI.
-    if (!Solstice.Event.exists(obj, evtType, fn)) {
-        return YAHOO.util.Event.addListener(obj, evtType, fn, param, override);
-    }
-}
-
-/**
- * Checks whether the given dom element has the function on the given event.
- * @param {htmlElement} obj the dom element to query
- * @param {string} evtType the event to query for (eg, Click, MouseOver)
- * @param {function} fn a function reference
- * @type boolean
- */
-Solstice.Event.exists = function (obj, evtType, fn) {
-    // Just pass off to Yahoo UI.
-    var listeners = YAHOO.util.Event.getListeners(obj);
-    if (listeners) {
-        for (var i=0; i < listeners.length; i++) {
-            var listener = listeners[i];
-            if (listener.type == evtType && listener.fn == fn) {
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
-/**
- * Stops the passed event 
- * @param {Event} the event
- */
-Solstice.Event.stopEvent = function (ev) {
-    return YAHOO.util.Event.stopEvent(ev);
 }
 
 /****************

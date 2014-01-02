@@ -175,11 +175,26 @@ Uploader.prototype._drawParserOptions = function(options) {
 
     this._drawTable("upload_results", table_cols, options.sample_data);
 
-    YAHOO.util.Event.addListener(this.id+"_delimiter", "change", this._updatePreview, this, true);
-    YAHOO.util.Event.addListener(this.id+"_has_column_header", "click", this._updatePreview, this, true);
-    YAHOO.util.Event.addListener(this.id+"_step_3", "click", this._loadStep3, this, true);
-    YAHOO.util.Event.addListener(this.id+"_step_1", "click", this._loadStep1Back, this, true);
-    YAHOO.util.Event.addListener(this.id+"_cancel", "click", this._cancel, this, true);
+    var me = this;
+    $(slash_selector("#"+this.id+"_delimiter")).on("change", function(ev) {
+        me._updatePreview(ev);
+    });
+    $(slash_selector("#"+this.id+"_has_column_header")).on("change", function(ev) {
+        me._updatePreview(ev);
+    });
+    $(slash_selector("#"+this.id+"_step_3")).on("click", function(ev) {
+        ev.preventDefault();
+        me._loadStep3(ev);
+    });
+    $(slash_selector("#"+this.id+"_step_1")).on("click", function(ev) {
+        ev.preventDefault();
+        me._loadStep1Back(ev);
+    });
+    $(slash_selector("#"+this.id+"_cancel")).on("click", function(ev) {
+        ev.preventDefault();
+        me._cancel(ev);
+    });
+
     $(document).trigger("sqlshare_content_change");
 };
 
@@ -201,9 +216,21 @@ Uploader.prototype._loadStep1Back = function(ev) {
 
     this._buildUploader();
 
-    YAHOO.util.Event.addListener(this.id+"_clear_upload", "click", this._clearFiles, this, true);
-    YAHOO.util.Event.addListener(this.id+"_step1", "click", this._step2Next, this, true);
-    YAHOO.util.Event.addListener(this.id+"_cancel", "click", this._cancel, this, true);
+
+    var me = this;
+    $(slash_selector("#"+this.id+"_clear_upload")).on("click", function(ev) {
+        ev.preventDefault();
+        me._clearFiles(ev);
+    });
+    $(slash_selector("#"+this.id+"_step1")).on("click", function(ev) {
+        ev.preventDefault();
+        me._step2Next(ev);
+    });
+    $(slash_selector("#"+this.id+"_cancel")).on("click", function(ev) {
+        ev.preventDefault();
+        me._cancel(ev);
+    });
+
     $(document).trigger("sqlshare_content_change");
 }
 
@@ -231,9 +258,20 @@ Uploader.prototype._loadStep3 = function(ev) {
 
 
     //"uploader/table_options.html", { id : this.id, title: this._current_file_name });
-    YAHOO.util.Event.addListener(this.id+"_load_table", "click", this._loadTable, this, true);
-    YAHOO.util.Event.addListener(this.id+"_back_to_2", "click", this._loadStep2Back, this, true);
-    YAHOO.util.Event.addListener(this.id+"_cancel", "click", this._cancel, this, true);
+
+    var me = this;
+    $(slash_selector("#"+this.id+"_load_table")).on("click", function(ev) {
+        ev.preventDefault();
+        me._loadTable(ev);
+    });
+    $(slash_selector("#"+this.id+"_back_to_2")).on("click", function(ev) {
+        ev.preventDefault();
+        me._loadStep2Back(ev);
+    });
+    $(slash_selector("#"+this.id+"_cancel")).on("click", function(ev) {
+        ev.preventDefault();
+        me._cancel(ev);
+    });
 };
 
 Uploader.prototype._updatePreview = function() {
