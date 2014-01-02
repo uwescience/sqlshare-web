@@ -31,8 +31,9 @@ SQLShare.prototype.run = function() {
         me._resetWorkspace();
     });
 
-    SQLShare.onEditQuery = new YAHOO.util.CustomEvent('sqlshare:edit_query');
-    SQLShare.onEditQuery.subscribe(this._handleEditQuery, this, true);
+    $(document).on("sqlshare_edit_query", function(ev, model) {
+        me._handleEditQuery(ev, [model]);
+    });
 
     SQLShare.onEditDone = new YAHOO.util.CustomEvent('sqlshare:on_edit_done');
     SQLShare.onEditDone.subscribe(this._handleEditQueryDone, this, true);

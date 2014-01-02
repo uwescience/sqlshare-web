@@ -304,7 +304,8 @@ SavedQuery.prototype._resetStatementContainer = function() {
 
 SavedQuery.prototype._resetEditPanel = function(ev) {
     this._editQuery(this._model);
-    SQLShare.onEditQuery.fire(this);
+
+    $(document).trigger("sqlshare_edit_query", this);
     this._openStatementDialog();
 };
 
