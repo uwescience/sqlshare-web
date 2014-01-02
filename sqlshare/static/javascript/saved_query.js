@@ -9,8 +9,6 @@ var SavedQuery = function(div_id, query_id) {
     if (query_id != null && query_id.match(/^[0-9]+$/)) {
         this._query_in_queue = true;
     }
-
-    this.onQueryDelete = new YAHOO.util.CustomEvent('onQueryDelete');
 };
 
 SavedQuery.prototype = new QueryBase();
@@ -114,14 +112,26 @@ SavedQuery.prototype._drawSavedQuery = function(query_data) {
         $("#action_menu").menu();
     }
 
+    $(slash_selector("#"+this.id+"_derive")).off("click");
+    $(slash_selector("#"+this.id+"_snapshot")).off("click");
 
 
-    YAHOO.util.Event.removeListener(this.id+'_derive', "click");
-    YAHOO.util.Event.removeListener(this.id+'_snapshot', "click");
-    YAHOO.util.Event.addListener(this.id+'_derive', "click", this._deriveQuery, this, true);
-    YAHOO.util.Event.addListener(this.id+'_snapshot', "click", this._snapshotQuery, this, true);
-    YAHOO.util.Event.addListener(this.id+'_save_query', "click", this._saveQueryAs, this, true);
-    YAHOO.util.Event.addListener(this.id+'_run_query', "click", this._processQuery, this, true);
+    $(slash_selector("#"+this.id+"_derive")).on("click", function(ev) {
+        ev.preventDefault();
+        me._deriveQuery(ev);
+    });
+    $(slash_selector("#"+this.id+"_snapshot")).on("click", function(ev) {
+        ev.preventDefault();
+        me._snapshotQuery(ev);
+    });
+    $(slash_selector("#"+this.id+"_save_query")).on("click", function(ev) {
+        ev.preventDefault();
+        me._saveQueryAs(ev);
+    });
+    $(slash_selector("#"+this.id+"_run_query")).on("click", function(ev) {
+        ev.preventDefault();
+        me._processQuery(ev);
+    });
 
     SQLShare.onChangeContent.fire();
 
@@ -188,8 +198,10 @@ SavedQuery.prototype._postGetPermissions = function(o) {
 
     view.postRender();
 
-    YAHOO.util.Event.removeListener('js-sharing-save-public', "click");
-    YAHOO.util.Event.addListener('js-sharing-save-public', "click", this._makePublic, this, true);
+    $("#js-sharing-save-public").off("click");
+    $("#js-sharing-save-public").on("click", function(ev) {
+        me._makePublic(me);
+    });
     }
     catch(e) { console.log(e) };
 };
@@ -237,10 +249,16 @@ SavedQuery.prototype._confirmDelete = function() {
 
     $("#delete_dataset_dialog").html(view.toString());
 
-    YAHOO.util.Event.removeListener(this.id+'_delete_query', "click");
-    YAHOO.util.Event.removeListener(this.id+'_delete_cancel', "click");
-    YAHOO.util.Event.addListener(this.id+'_delete_query', "click", this._startDelete, this, true);
-    YAHOO.util.Event.addListener(this.id+'_delete_cancel', "click", this._cancelDelete, this, true);
+    $(slash_selector("#"+this.id+'_delete_query')).off("click");
+    $(slash_selector("#"+this.id+'_delete_cancel')).off("click");
+
+    var me = this;
+    $(slash_selector("#"+this.id+'_delete_query')).on("click", function(ev) {
+        me._startDelete(ev);
+    });
+    $(slash_selector("#"+this.id+'_delete_cancel')).on("click", function(ev) {
+        me._cancelDelete(ev);
+    });
 };
 
 SavedQuery.prototype._cancelDelete = function() {
@@ -261,7 +279,8 @@ SavedQuery.prototype._postDelete = function(o) {
 
     this._model.query_id = this.query_id;
 
-    this.onQueryDelete.fire(this._model);
+//    this.onQueryDelete.fire(this._model);
+    $(document).trigger("query_delete", [this._model]);
 };
 
 SavedQuery.prototype._onDownloadError = function() {
@@ -274,8 +293,13 @@ SavedQuery.prototype._onDownloadError = function() {
 
 SavedQuery.prototype._resetStatementContainer = function() {
     $(slash_selector("#"+this.id+"_statement_container")).removeClass("hover");
-    YAHOO.util.Event.removeListener(this.id+'_edit_query', "click");
-    YAHOO.util.Event.addListener(this.id+'_edit_query', "click", this._resetEditPanel, this, true);
+
+    var me = this;
+
+    $(slash_selector("#"+this.id+'_edit_query')).off("click");
+    $(slash_selector("#"+this.id+'_edit_query')).on("click", function(ev) {
+        me._resetEditPanel(ev);
+    });
 };
 
 SavedQuery.prototype._resetEditPanel = function(ev) {
@@ -309,9 +333,10 @@ SavedQuery.prototype._openStatementDialog = function(ev) {
 
 SavedQuery.prototype._editQuery = function(model) {
     this._renderTo('edit_query_container', new SQLShare.View.SavedQuery.Edit(model));
-    YAHOO.util.Event.removeListener('ss_save_statement', "click");
-    YAHOO.util.Event.removeListener('ss_run_query', "click");
-    YAHOO.util.Event.removeListener('ss_cancel_statement', "click");
+
+    $("#ss_save_statement").off("click");
+    $("#ss_run_query").off("click");
+    $("#ss_cancel_statement").off("click");
 
     $("#ss_editor_col").addClass("current_edit");
     $("#ss_editor_col").addClass("qid_"+this.query_id);
@@ -384,19 +409,33 @@ SavedQuery.prototype._postExposeStatementEditor = function(ev) {
 
     SQLShare.onChangeContent.fire();
 
-    YAHOO.util.Event.removeListener('ss_save_statement', "click");
-    YAHOO.util.Event.removeListener('ss_run_query', "click");
-    YAHOO.util.Event.removeListener('ss_cancel_statement', "click");
-    YAHOO.util.Event.addListener('ss_save_statement', "click", this._beginStatementSave, this, true);
-    YAHOO.util.Event.addListener('ss_save_as', "click", this._showSaveAsDialog, this, true);
-    YAHOO.util.Event.addListener('ss_run_query', "click", this._processQuery, this, true);
-    YAHOO.util.Event.addListener('ss_cancel_statement', "click", this._cancelStatementSave, this, true);
+    $("#ss_save_statement").off("click");
+    $("#ss_run_query").off("click");
+    $("#ss_cancel_statement").off("click");
+
+    var me = this;
+    $("#ss_save_statement").on("click", function(ev) {
+        ev.preventDefault();
+        me._beginStatementSave(ev);
+    });
+    $("#ss_run_query").on("click", function(ev) {
+        ev.preventDefault();
+        me._processQuery(ev);
+    });
+    $("#ss_cancel_statement").on("click", function(ev) {
+        ev.preventDefault();
+        me._cancelStatementSave(ev);
+    });
+    $("#ss_save_as").on("click", function(ev) {
+        ev.preventDefault();
+        me._showSaveAsDialog(ev);
+    });
 };
 
 SavedQuery.prototype._cancelStatementSave = function(ev) {
     Solstice.Message.clear();
     if (ev) {
-        YAHOO.util.Event.stopEvent(ev);
+        ev.preventDefault();
     }
     SQLShare.onEditDone.fire(this);
     var center_width = document.getElementById('ss_app_workspace').offsetWidth;
@@ -487,21 +526,6 @@ SavedQuery.prototype._prepareEditor = function() {
     }, 100);
 };
 
-
-
-SavedQuery.prototype._postHideStatementEditorHook = function() {
-    this.me._postHideStatementEditor();
-};
-
-SavedQuery.prototype._postHideStatementEditor = function() {
-    document.getElementById('edit_query_container').style.overflow = 'hidden';
-    var buttons = YAHOO.util.Dom.getElementsByClassName("edit_query_button");
-    var length = buttons.length;
-    for (var i = 0; i < length; i++) {
-        buttons[i].disabled = false;
-    }
-    SQLShare.onChangeContent.fire();
-};
 
 SavedQuery.prototype._showSaveAsDialog = function(ev) {
     Solstice.Message.clear();

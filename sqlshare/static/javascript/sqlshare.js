@@ -292,7 +292,11 @@ SQLShare.prototype._drawSavedQueryInterface = function(ev, args) {
 
     var widget = new SavedQuery(this.id+'_workspace', query);
     widget.draw();
-    widget.onQueryDelete.subscribe(this._handleQueryDelete, this, true);
+
+    var me = this;
+    $(document).on("query_delete", function(ev, model) {
+        me._handleQueryDelete(ev, model);
+    });
 
     this.drawSidebarLists();
 };
@@ -305,8 +309,7 @@ SQLShare.prototype._drawTaggedQueriesInterface = function(ev, args) {
     widget.draw();
 };
 
-SQLShare.prototype._handleQueryDelete = function(type, args) {
-    var query = args[0];
+SQLShare.prototype._handleQueryDelete = function(type, query) {
     this._tabs.clearHighlight();
 
     for (var i = 0; i < this._recentQueries.length; i++) {
