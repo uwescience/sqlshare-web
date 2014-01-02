@@ -438,7 +438,8 @@ SavedQuery.prototype._cancelStatementSave = function(ev) {
     if (ev) {
         ev.preventDefault();
     }
-    SQLShare.onEditDone.fire(this);
+
+    $(document).trigger("sqlshare_edit_done", this);
     var center_width = document.getElementById('ss_app_workspace').offsetWidth;
 
     $("#ss_editor_col").removeClass("qid_"+this.query_id);

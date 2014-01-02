@@ -35,8 +35,9 @@ SQLShare.prototype.run = function() {
         me._handleEditQuery(ev, [model]);
     });
 
-    SQLShare.onEditDone = new YAHOO.util.CustomEvent('sqlshare:on_edit_done');
-    SQLShare.onEditDone.subscribe(this._handleEditQueryDone, this, true);
+    $(document).on("sqlshare_edit_done", function(ev, model) {
+        me._handleEditQueryDone(ev, [model]);
+    });
 
     SQLShare.onUpdateFinishQueryCount = new YAHOO.util.CustomEvent('sqlshare:update_finished_query_count');
     SQLShare.onUpdateFinishQueryCount.subscribe(this._handleFinishCountEvent, this, true);
