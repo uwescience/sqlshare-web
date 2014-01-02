@@ -26,8 +26,10 @@ SQLShare.prototype.run = function() {
     SQLShare.recent_queries_menu = new RecentQueries(this);
 
 
-    SQLShare.onChangeContent = new YAHOO.util.CustomEvent('sqlshare:content_change');
-    SQLShare.onChangeContent.subscribe(this._resetWorkspace, this, true);
+    var me = this;
+    $(document).on("sqlshare_content_change", function(ev) {
+        me._resetWorkspace();
+    });
 
     SQLShare.onEditQuery = new YAHOO.util.CustomEvent('sqlshare:edit_query');
     SQLShare.onEditQuery.subscribe(this._handleEditQuery, this, true);

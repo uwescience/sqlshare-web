@@ -133,7 +133,7 @@ SavedQuery.prototype._drawSavedQuery = function(query_data) {
         me._processQuery(ev);
     });
 
-    SQLShare.onChangeContent.fire();
+    $(document).trigger("sqlshare_content_change");
 
     if (Solstice.Cookie.read('edit_query')) {
         Solstice.Cookie.remove('edit_query');
@@ -215,7 +215,7 @@ SavedQuery.prototype._makePublic = function() {
 SavedQuery.prototype._downloadQuery = function() {
     var query = this._query;
     Solstice.Element.hide(this.id+'_download_error');
-    SQLShare.onChangeContent.fire();
+    $(document).trigger("sqlshare_content_change");
     this._downloadFile(query, this._onDownloadError);
 };
 
@@ -288,7 +288,7 @@ SavedQuery.prototype._onDownloadError = function() {
     var error_div = document.getElementById(this.id+'_download_error');
     error_div.innerHTML = error.innerHTML;
     Solstice.Element.show(error_div);
-    SQLShare.onChangeContent.fire();
+    $(document).trigger("sqlshare_content_change");
 };
 
 SavedQuery.prototype._resetStatementContainer = function() {
@@ -407,7 +407,7 @@ SavedQuery.prototype._postExposeStatementEditor = function(ev) {
 
     this._prepareEditor();
 
-    SQLShare.onChangeContent.fire();
+    $(document).trigger("sqlshare_content_change");
 
     $("#ss_save_statement").off("click");
     $("#ss_run_query").off("click");

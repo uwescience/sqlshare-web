@@ -16,7 +16,7 @@ Uploader.prototype.draw = function() {
     this.uploader = uploader;
     YAHOO.util.Event.addListener(this.id+"_clear_upload", "click", this._clearFiles, this, true);
     YAHOO.util.Event.addListener(this.id+"_cancel", "click", this._cancel, this, true);
-    SQLShare.onChangeContent.fire();
+    $(document).trigger("sqlshare_content_change");
 
 };
 
@@ -146,7 +146,7 @@ Uploader.prototype._drawParserOptions = function(options) {
     YAHOO.util.Event.addListener(this.id+"_step_3", "click", this._loadStep3, this, true);
     YAHOO.util.Event.addListener(this.id+"_step_1", "click", this._loadStep1Back, this, true);
     YAHOO.util.Event.addListener(this.id+"_cancel", "click", this._cancel, this, true);
-    SQLShare.onChangeContent.fire();
+    $(document).trigger("sqlshare_content_change");
 };
 
 Uploader.prototype._step2Next = function(ev) {
@@ -174,7 +174,7 @@ Uploader.prototype._loadStep1Back = function(ev) {
     YAHOO.util.Event.addListener(this.id+"_clear_upload", "click", this._clearFiles, this, true);
     YAHOO.util.Event.addListener(this.id+"_step1", "click", this._step2Next, this, true);
     YAHOO.util.Event.addListener(this.id+"_cancel", "click", this._cancel, this, true);
-    SQLShare.onChangeContent.fire();
+    $(document).trigger("sqlshare_content_change");
 }
 
 Uploader.prototype._loadStep3 = function(ev) {

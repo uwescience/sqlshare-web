@@ -294,7 +294,7 @@ QueryBase.prototype._processQuery = function(ev) {
     Solstice.Element.show('new_query_preview_panel');
     Solstice.Element.hide('dataset_preview_header');
 
-    SQLShare.onChangeContent.fire();
+    $(document).trigger("sqlshare_content_change");
 
     this._renderTo(this.id+"_results", 'query/running.html', {});
     // Should this be configurable anywhere?

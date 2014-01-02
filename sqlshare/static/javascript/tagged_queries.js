@@ -45,7 +45,7 @@ TaggedQueries.prototype._drawQueries = function(data) {
         }
     }
     this._renderTo(this.id, new SQLShare.View.TaggedQueries.List(my_data, this.tag));
-    SQLShare.onChangeContent.fire();
+    $(document).trigger("sqlshare_content_change");
 };
 
 

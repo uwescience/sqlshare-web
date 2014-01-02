@@ -79,7 +79,7 @@ QueryQueue.prototype._drawQueries = function(data) {
 
     });
 
-    SQLShare.onChangeContent.fire();
+    $(document).trigger("sqlshare_content_change");
 
     var me = this;
     this.setCurrentTimeout(window.setTimeout(function() { me._fetchUpdates(); }, 2000));

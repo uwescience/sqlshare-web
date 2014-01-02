@@ -29,7 +29,7 @@ MyQueries.prototype._drawQueries = function(data) {
         my_data.push(data[i]);
     }
     this._renderTo(this.id, new SQLShare.View.MyQueries.List(my_data));
-    SQLShare.onChangeContent.fire();
+    $(document).trigger("sqlshare_content_change");
 };
 
 

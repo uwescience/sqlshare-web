@@ -33,7 +33,7 @@ SharedQueries.prototype._drawQueries = function(data) {
     my_data.container_id = this.id;
 
     this._renderTo(this.id, new SQLShare.View.SharedQueries.List(my_data));
-    SQLShare.onChangeContent.fire();
+    $(document).trigger("sqlshare_content_change");
 };
 
 

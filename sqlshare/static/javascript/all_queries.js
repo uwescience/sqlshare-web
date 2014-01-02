@@ -26,7 +26,7 @@ AllQueries.prototype._drawQueries = function(data) {
     data.container_id = this.id;
     this._renderTo(this.id, new SQLShare.View.AllQueries.List(data));
 
-    SQLShare.onChangeContent.fire();
+    $(document).trigger("sqlshare_content_change");
 };
 
 
