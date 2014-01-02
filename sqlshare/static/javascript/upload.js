@@ -7,16 +7,52 @@ Uploader.prototype = new QueryBase();
 Uploader.prototype.draw = function() {
     this._renderTo(this.id, 'uploader/step1.html', { id : this.id });
 
-    var uploader = new YAHOO.widget.SolsticeUploader(this.id+"_upload");
-    uploader.addListener('contentReady', this._initUploader, this, true);
-    uploader.addListener('fileSelect', this._onFileSelect, this, true);
-    uploader.addListener('uploadCompleteSuccess', this._onSuccess, this, true);
-    uploader.addListener('uploadAllFinished', this._onAllFinished, this, true);
-    uploader.addListener('uploadProgress', this._onUploadProgress, this, true);
-    this.uploader = uploader;
-    YAHOO.util.Event.addListener(this.id+"_clear_upload", "click", this._clearFiles, this, true);
-    YAHOO.util.Event.addListener(this.id+"_cancel", "click", this._cancel, this, true);
+    this._buildUploader();
+
     $(document).trigger("sqlshare_content_change");
+};
+
+Uploader.prototype._buildUploader = function() {
+    var me = this;
+    $("#sqlshare_uploader").fileupload({
+        url: Solstice.getDocumentBase() + "/sqlshare/upload/",
+        add: function(e, data) {
+            var params = {};
+            params.files = [];
+
+            var file_info = data.files[0];
+            var display_size = me._formatBytes(file_info.size);
+            params.files.push({
+                name: file_info.name,
+                size: file_info.size,
+                display_size: display_size,
+                container_id: me.id,
+                file_id: file_info.name,
+
+            });
+
+            Solstice.Element.hide('ss_upload_error');
+            Solstice.Element.hide(me.id+"_selectFilesLink");
+            Solstice.Element.hide(me.id+"_step1_next_wrapper");
+            me._renderTo(me.id+'_files_list', 'uploader/file_list.html', params);
+
+            data.submit();
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+
+            var width = 5 * progress;
+            document.getElementById(me.id+"_file_status").style.width = width+"px";
+        },
+        done: function(e, data) {
+            var response = jQuery.parseJSON(data.result);
+
+            me.AsyncGET(me._getRestRoot()+"parser/"+response.ss_id+"/"+response.sol_id, function(ev) {
+                var data = ev.data;
+                me._postParser(data);
+            });
+        }
+    });
 
 };
 
@@ -107,7 +143,7 @@ Uploader.prototype._fetchFileOptions = function(o) {
 
 
 Uploader.prototype._postParser = function(data) {
-    this._current_file_name = "TRACE_THIS";
+    this._current_file_name = data.dataset_name;
     this._parser_options = data;
     this._original_columns = data.columns;
     this._drawParserOptions(data);
@@ -162,13 +198,9 @@ Uploader.prototype._loadStep1Back = function(ev) {
         is_back     : true,
         id          : this.id
     });
-    var uploader = new YAHOO.widget.SolsticeUploader(this.id+"_upload");
-    uploader.addListener('contentReady', this._initUploader, this, true);
-    uploader.addListener('fileSelect', this._onFileSelect, this, true);
-    uploader.addListener('uploadCompleteSuccess', this._onSuccess, this, true);
-    uploader.addListener('uploadAllFinished', this._onAllFinished, this, true);
-    uploader.addListener('uploadProgress', this._onUploadProgress, this, true);
-    this.uploader = uploader;
+
+    this._buildUploader();
+
     YAHOO.util.Event.addListener(this.id+"_clear_upload", "click", this._clearFiles, this, true);
     YAHOO.util.Event.addListener(this.id+"_step1", "click", this._step2Next, this, true);
     YAHOO.util.Event.addListener(this.id+"_cancel", "click", this._cancel, this, true);

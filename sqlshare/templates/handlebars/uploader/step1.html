@@ -30,8 +30,8 @@
                 <div class="clear"></div>
             </div>
         </div>
-        <div id="{{id}}_upload" style="display:block; position:absolute; z-index:2; height: 1.4em; cursor:pointer;"></div>
-        <div id="{{id}}_selectFilesLink" style="display: none; z-index:1;"><a id="selectLink" href="#">Select a different file</a></div>
+
+        <input type="file" name="file" id="sqlshare_uploader">
 
         <div style="display:none; text-align:center;" id="{{id}}_analyzing_display">
             <img src="static/images/ss-loading.gif" />
@@ -60,11 +60,9 @@
 
         <h2 style="margin:0;">File:
 </h2>            
-        <div id="{{id}}_files_list" style="position:relative;"></div>
-        <div id="{{id}}_upload" style="display:block; position:absolute; z-index:2; height: 1.4em; cursor:pointer;">            
-            <p style="color:red; margin-top:.7em;">Adobe Flash is not installed. You need to <a href="http://get.adobe.com/flashplayer/">download</a> it to use this feature.</p>
-        </div>
 
+        <input type="file" name="file" id="sqlshare_uploader">
+        <div id="{{id}}_files_list" style="position:relative;"></div>
 
         <div id="{{id}}_selectFilesLink" style="display: none; z-index:1">
             <h2><span id="selectLink" style="color:blue; text-decoration:underline; cursor:pointer;">Select file</span></h2>
