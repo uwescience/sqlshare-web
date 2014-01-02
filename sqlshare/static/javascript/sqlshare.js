@@ -351,8 +351,11 @@ SQLShare.prototype._initializeHistoryManager = function() {
     }
     initial_state = initial_state || "home";
 
-    SQLShare.onNavigate = new YAHOO.util.CustomEvent("sqlshare:navigation", this);
-    SQLShare.onNavigate.subscribe(this._handleNavigation, this, true);
+    var me = this;
+    $(document).on("sqlshare_navigation", function(ev, title, state) {
+        me._handleNavigation(ev, [title, state]);
+    });
+
     sql_share.nav.loadState(initial_state);
 };
 

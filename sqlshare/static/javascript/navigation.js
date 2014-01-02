@@ -43,7 +43,7 @@ Navigation.prototype._loadSavedQuery = function(parts) {
     var path = parts.join('/');
     this._highlightLeftNav();
     var title = Solstice.Lang.getString("SQLShare", "page_title_display_query");
-    SQLShare.onNavigate.fire(title, "query/"+path);
+    $(document).trigger("sqlshare_navigation", title, "query/"+path);
 
     var query_parts = [];
     for (var i = 0; i < parts.length; i++) {
@@ -58,7 +58,7 @@ Navigation.prototype._loadTaggedQueries = function(parts) {
     var title = Solstice.Lang.getString("SQLShare", "page_title_display_tag", {
         tag: tag
     });
-    SQLShare.onNavigate.fire(title, "tag/"+tag);
+    $(document).trigger("sqlshare_navigation", title, "tag/"+tag);
 
     this._highlightTag(tag);
     this._highlightLeftNav('popular_tag_'+tag);
@@ -83,12 +83,12 @@ Navigation.prototype._loadRecentQueries = function(ev) {
 
 Navigation.prototype._allQueriesNav = function() {
     var title = Solstice.Lang.getString("SQLShare", "page_title_all_queries");
-    SQLShare.onNavigate.fire(title, "all_queries");
+    $(document).trigger("sqlshare_navigation", title, "all_queries");
 };
 
 Navigation.prototype._sharedQueriesNav = function() {
     var title = Solstice.Lang.getString("SQLShare", "page_title_shared_queries");
-    SQLShare.onNavigate.fire(title, "shared_queries");
+    $(document).trigger("sqlshare_navigation", title, "shared_queries");
 };
 
 
@@ -160,7 +160,7 @@ Navigation.prototype.loadState = function(state) {
 
 Navigation.prototype._loadHome = function(event, args) {
     var title = Solstice.Lang.getString("SQLShare", "page_title_home");
-    SQLShare.onNavigate.fire(title, "home");
+    $(document).trigger("sqlshare_navigation", title, "home");
     $(document).trigger("home_state");
     this._highlightLeftNav('your_queries_li');
 };
@@ -175,7 +175,7 @@ Navigation.prototype._newQueryNav = function(fire_event) {
 Navigation.prototype._newQuery = function(fire_event) {
     // Update navigation state?
     var title = Solstice.Lang.getString("SQLShare", "page_title_new_query");
-    SQLShare.onNavigate.fire(title, "query");
+    $(document).trigger("sqlshare_navigation", title, "query");
     this._highlightLeftNav('new_query_li');
     if (fire_event) {
         $(document).trigger("new_query");
@@ -185,7 +185,7 @@ Navigation.prototype._newQuery = function(fire_event) {
 Navigation.prototype._loadCredentials = function(fire_event) {
     // Update navigation state?
     var title = Solstice.Lang.getString("SQLShare", "page_title_rest_credentials");
-    SQLShare.onNavigate.fire(title, "credentials");
+    $(document).trigger("sqlshare_navigation", title, "credentials");
     if (fire_event) {
         $(document).trigger("load_credentials");
     }
@@ -202,7 +202,7 @@ Navigation.prototype._queryQueueNav = function(fire_event) {
 Navigation.prototype._queryQueue = function(fire_event) {
     // Update navigation state?
     var title = Solstice.Lang.getString("SQLShare", "page_title_query_list");
-    SQLShare.onNavigate.fire(title, "querylist");
+    $(document).trigger("sqlshare_navigation", title, "querylist");
     this._highlightLeftNav('query_list_li');
     if (fire_event) {
         $(document).trigger("query_queue");
@@ -220,7 +220,7 @@ Navigation.prototype._chooseUploadNav = function(fire_event) {
 Navigation.prototype._chooseUpload = function(fire_event) {
     // Update navigation state?
     var title = Solstice.Lang.getString("SQLShare", "page_title_upload_file");
-    SQLShare.onNavigate.fire(title, "file");
+    $(document).trigger("sqlshare_navigation", title, "file");
     this._highlightLeftNav('new_upload_li');
     if (fire_event) {
         $(document).trigger("choose_upload");

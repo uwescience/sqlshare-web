@@ -122,8 +122,6 @@ Uploader.prototype._showUploadError = function() {
 Uploader.prototype._drawParserOptions = function(options) {
     var columns = options.columns;
 
-//    var title = "w00t w00t?";
-//    SQLShare.onNavigate.fire(title, "file", this._current_file_name, "step2");
     this._parser_options = options;
     this._parser_options.container_id = this.id;
 
