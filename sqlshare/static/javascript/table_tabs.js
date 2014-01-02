@@ -6,15 +6,20 @@ SQLShare.TableTabs = function() {
 SQLShare.TableTabs.prototype = new SSBase();
 
 SQLShare.TableTabs.prototype.initialize = function() {
-    YAHOO.util.Event.addListener("tab_nav_tables", "click", this._handleTabClick, this, true);
-    YAHOO.util.Event.addListener(window, "resize", this._redrawMenu, this, true);
     $("#overflow_menu").menu();
 
     var me = this;
+
+    $(window).on("resize", function(ev) {
+        me._redrawMenu();
+    });
+    $("#tab_nav_tables").on("click", function(ev) {
+        me._handleTabClick(ev);
+    });
+
     $("#overflow_menu").on("click", function (ev) {
         me._handleMenuClick(ev);
     });
-
 };
 
 SQLShare.TableTabs.prototype.clearHighlight = function() {
@@ -59,7 +64,7 @@ SQLShare.TableTabs.prototype._postHideAnimation = function() {
 };
 
 SQLShare.TableTabs.prototype._handleTabClick = function(ev) {
-    var target = YAHOO.util.Event.getTarget(ev);
+    var target = ev.target;
     if ($(target).hasClass('tab_close')) {
         var name = target.name;
         var matches = name.match('tab_([0-9]+)');
