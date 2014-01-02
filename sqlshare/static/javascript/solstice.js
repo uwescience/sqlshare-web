@@ -448,18 +448,6 @@ Solstice.Event.add = function (obj, evtType, fn, param, override) {
 }
 
 /**
- * Removes the given function as an event handler on the given dom element.
- * @param {htmlElement} obj the dom element to attach the event to
- * @param {string} evtType the event to attach to (eg, Click, MouseOver)
- * @param {function} fn a function reference
- * @param {boolean} useCapture some proprietary boolean about how events are propagated through these handlers.
- * @type void
- */
-Solstice.Event.remove = function (obj, evtType, fn, useCapture) {
-    return YAHOO.util.Event.removeListener(obj, evtType, fn);
-}
-
-/**
  * Checks whether the given dom element has the function on the given event.
  * @param {htmlElement} obj the dom element to query
  * @param {string} evtType the event to query for (eg, Click, MouseOver)
@@ -478,20 +466,6 @@ Solstice.Event.exists = function (obj, evtType, fn) {
         }
     }
     return false;
-}
-
-/**
- * Returns the event's target element.
- * @param {Event} the event
- * @type {htmlElement} the event's target
- */
-Solstice.Event.getTarget = function (ev) {
-    if (!ev) {
-        try {
-            ev = YAHOO.util.Event.getEvent();
-        } catch(ex) { return; }
-    }
-    return (ev) ? YAHOO.util.Event.getTarget(ev) : null;
 }
 
 /**
