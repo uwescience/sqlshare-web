@@ -493,6 +493,11 @@ SQLShare.prototype._newRecentQuery = function(name) {
 }
 
 function slash_selector(selector) {
+    // this is needed to get around some ids that i can't get escaped properly
+    if (selector.match(/^#/) && !selector.match(/ /)) {
+        selector = selector.replace(/^#/, '');
+        return $(document.getElementById(selector));
+    }
     return selector.replace("/", "\\/", "g");
 }
 

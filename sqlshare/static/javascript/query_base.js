@@ -31,9 +31,12 @@ QueryBase.prototype._drawTable = function(id, columns, data) {
 QueryBase.prototype._downloadFile = function(query, error_callback) {
     this._createNewIFrame();
     var iframe = this._getDownloadIFrame();
-    YAHOO.util.Event.removeListener(iframe, "load");
+    $(iframe).off("load");
     if (error_callback) {
-        YAHOO.util.Event.addListener(iframe, "load", error_callback, this, true);
+        var me = this;
+        $(iframe).on("load", function(ev) {
+            error_callback.apply(me);
+        });
     }
     var download_url = this._getDownloadURL(query);
     iframe.location.href = download_url;
@@ -133,9 +136,18 @@ QueryBase.prototype._resetDescriptionContainer = function() {
     view.postRender();
 
     $(slash_selector("#"+this.id+"_description_container")).removeClass("hover");
-    YAHOO.util.Event.addListener(this.id+'_description_container', "mouseover", this._highlightDescription, this, true);
-    YAHOO.util.Event.addListener(this.id+'_description_container', "mouseout", this._removeDescriptionHighlight, this, true);
-    YAHOO.util.Event.addListener(this.id+'_description_container', "click", this._openDescriptionDialog, this, true);
+
+    var me = this;
+
+    $(slash_selector("#"+this.id+'_description_container')).on("mouseover", function(ev) {
+        me._highlightDescription(ev);
+    });
+    $(slash_selector("#"+this.id+'_description_container')).on("mouseout", function(ev) {
+        me._removeDescriptionHighlight(ev);
+    });
+    $(slash_selector("#"+this.id+'_description_container')).on("click", function(ev) {
+        me._openDescriptionDialog(ev);
+    });
 
     $("#description_tags_dialog").dialog("close");
 };
@@ -150,10 +162,10 @@ QueryBase.prototype._removeDescriptionHighlight = function(ev) {
 
 QueryBase.prototype._openDescriptionDialog = function(ev) {
     var query = this._model;
-    YAHOO.util.Event.removeListener(this.id+'_description_container', "mouseover");
-    YAHOO.util.Event.removeListener(this.id+'_description_container', "mouseout");
-    YAHOO.util.Event.removeListener(this.id+'_description_container', "click");
 
+    $(slash_selector("#"+this.id+'_description_container')).off("mouseover");
+    $(slash_selector("#"+this.id+'_description_container')).off("mouseout");
+    $(slash_selector("#"+this.id+'_description_container')).off("click");
 
     if (!$("#description_tags_dialog").length) {
         $("body").append("<div id='description_tags_dialog'></div>");
@@ -176,8 +188,14 @@ QueryBase.prototype._openDescriptionDialog = function(ev) {
     this._removeDescriptionHighlight();
     view.postRender();
 
-    YAHOO.util.Event.addListener(this.id+'_save_description', "click", this._beginDescriptionSave, this, true);
-    YAHOO.util.Event.addListener(this.id+'_cancel_description', "click", this._cancelDescriptionSave, this, true);
+    var me = this;
+
+    $(slash_selector("#"+this.id+'_save_description')).on("click", function(ev) {
+        me._beginDescriptionSave(ev);
+    });
+    $(slash_selector("#"+this.id+'_cancel_description')).on("click", function(ev) {
+        me._cancelDescriptionSave(ev);
+    });
 };
 
 getQuerySetTags = function(query) {
@@ -211,7 +229,7 @@ getQuerySetTags = function(query) {
 }
 
 QueryBase.prototype._cancelDescriptionSave = function(ev) {
-    YAHOO.util.Event.stopEvent(ev);
+    ev.preventDefault();
     var container = document.getElementById(this.id+'_description_container');
 
     var obj_name = this._getObjectDescription();
@@ -354,7 +372,6 @@ QueryBase.prototype._postWaitForQueryResults = function(o, args) {
     var count = args.count;
     if (count == 1) {
         Solstice.Element.show('query_in_queue');
-        YAHOO.util.Event.addListener('cancel_query', "click", this._cancelQuery, this, true);
     }
     var full_url = this._full_url;
     if (o.code == 202) {
@@ -448,13 +465,19 @@ QueryBase.prototype._saveQueryAs = function() {
     view.postRender();
     this._save_panel_view = view;
 
-    YAHOO.util.Event.addListener(this.id+'_save', "click", this._save, this, true);
-    YAHOO.util.Event.addListener(this.id+'_cancel', "click", this._cancelSaveAs, this, true);
+    var me = this;
+
+    $("#"+this.id+'_save').on("click", function(ev) {
+        me._save(ev);
+    });
+    $("#"+this.id+'_cancel').on("click", function(ev) {
+        me._cancelSaveAs(ev);
+    });
 };
 
 QueryBase.prototype._cancelSaveAs = function(ev) {
     if (ev) {
-        YAHOO.util.Event.stopEvent(ev);
+        ev.preventDefault();
     }
 
     $("#save_query_dialog").dialog("close");
