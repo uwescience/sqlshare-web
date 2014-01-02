@@ -401,8 +401,15 @@ SQLShare.prototype._loadApp = function(user_data) {
     this._loadPreferences();
 
     this._resizeCenterColumn();
-    YAHOO.util.Event.addListener(window, "resize", this._resizeCenterColumn, this, true);
-    YAHOO.util.Event.addListener(window, "click", this._hideToolTips, this, true);
+
+    var me = this;
+    $(window).on("resize", function() {
+        me._resizeCenterColumn();
+    });
+
+    $(window).on("click", function() {
+        me._hideToolTips();
+    });
 
     this._initializeHistoryManager();
     this.drawSidebarLists();
