@@ -8,9 +8,6 @@ SQLShare.View.Query.SharingPanel = function(model) {
 
     Solstice.Element.show('js-dataset-sharing-info');
     Solstice.Element.show('js-dataset-sharing-info-public');
-
-    this.onSave = new YAHOO.util.CustomEvent("onSave");
-
 };
 
 SQLShare.View.Query.SharingPanel.prototype = new SQLShare.View();
@@ -100,12 +97,22 @@ SQLShare.View.Query.SharingPanel.prototype.postRender = function() {
         Solstice.Element.show('share_data_workspace');
     }
 
-    YAHOO.util.Event.addListener(YAHOO.util.Dom.getElementsByClassName('js-make_dataset_public'), 'click', this._makeDatasetPublic, this, true);
-    YAHOO.util.Event.addListener(YAHOO.util.Dom.getElementsByClassName('js-make_dataset_private'), 'click', this._makeDatasetPrivate, this, true);
-    YAHOO.util.Event.addListener(YAHOO.util.Dom.getElementsByClassName('js-close-sharing-panel'), 'click', this._closeDialog, this, true);
-
-    YAHOO.util.Event.addListener('sharing_panel_cancel', 'click', this._closeDialog, this, true);
-    YAHOO.util.Event.addListener('sharing_panel_save', 'click', this._saveChanges, this, true);
+    var me = this;
+    $(".js-make_dataset_public").on("click", function(ev) {
+        me._makeDatasetPublic(ev);
+    });
+    $(".js-make_dataset_private").on("click", function(ev) {
+        me._makeDatasetPrivate(ev);
+    });
+    $(".js-close-sharing-panel").on("click", function(ev) {
+        me._closeDialog(ev);
+    });
+    $("#sharing_panel_cancel").on("click", function(ev) {
+        me._closeDialog(ev);
+    });
+    $("#sharing_panel_save").on("click", function(ev) {
+        me._saveChanges(ev);
+    });
 };
 
 SQLShare.View.Query.SharingPanel.prototype._handleListClick = function(ev) {
@@ -199,7 +206,7 @@ SQLShare.View.Query.SharingPanel.prototype._saveChanges = function() {
 
 SQLShare.View.Query.SharingPanel.prototype._postSavePermissions = function(o) {
     if (o.code == 200) {
-        this.onSave.fire();
+        $(document).trigger("sharing_panel_save");
         $("#sharing_dataset_dialog").dialog("close");
         Solstice.Message.setSuccess(Solstice.Lang.getMessage('SQLShare', 'dataset_permissions_updated'));
     }

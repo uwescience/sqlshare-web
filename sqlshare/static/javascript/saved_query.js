@@ -173,9 +173,11 @@ SavedQuery.prototype._postGetPermissions = function(o) {
         permissions: { users: data.accounts, emails: data.emails },
         dataset: this._model
     });
-    view.onSave.subscribe(function() {
-        this.draw();
-    }, this, true);
+
+    var me = this;
+    $(document).on("sharing_panel_save", function() {
+        me.draw();
+    });
 
     $("#sharing_dataset_dialog").html(view.toString());
     // Recenter after content.  the timeout makes sure the browser's figured out the new content
