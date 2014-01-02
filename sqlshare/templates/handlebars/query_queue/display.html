@@ -31,7 +31,9 @@
         {{ #each  queries }}
             <tr>
                 <td>
+                    {{ #if end }}<a href="sqlshare/#s=query/{{ query_id }}">{{ /if }}
                     {{sql}}
+                    {{ #if end }}</a>{{ /if }}
                 </td>
                 <td>
                     {{start}}
@@ -42,7 +44,7 @@
 </span>{{ /if }}
                 </td>
                 <td>
-                    <a href="javascript:void(0)" class="remove" id='remove_{{url}}' rel="{{ #if  end }}remove{{else}}cancel{{ /if }}">{{ #unless end }}x{{ /unless }}</a>
+                    <a href="javascript:void(0)" class="remove_query" id='remove_{{url}}' rel="{{ #if  end }}remove{{else}}cancel{{ /if }}">x</a>
                 </td>
                 <td style="display: none;">{{query_id}}</td>
                 <td style="display: none;">{{ #if  end }}1{{else}}0{{ /if }}</td>

@@ -92,67 +92,21 @@ SQLShare.View.QueryQueue.Display.prototype.updateData = function(data) {
 };
 
 SQLShare.View.QueryQueue.Display.prototype.postRender = function() {
-    var col_defs = [
-        { key:'sql', label: 'SQL', sortable: true, formatter: this.formatSQL },
-        { key:'start', label: 'Started', sortable: true, formatter:this.formatDate, width: 200},
-        { key:'status', label: 'Status', sortable: true, width: 110 },
-        { key:'remove', label: '', sortable: false, width: 20 }
-    ];
+    $("#js-query-queue-table").dataTable({
+        aaSorting: [[ 1, "desc"]],
+        aoColumnDefs: [
+            {
+                aTargets: [1],
+                mRender: function(data) {
+                    var view = new SQLShare.View.TableDateCell({
+                        date_obj:  new Date(data) //oRecord.getData('create_date')
+                    });
 
-    var data_source = new YAHOO.util.DataSource(YAHOO.util.Dom.get('js-query-queue-table'));
-    data_source.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;
-    data_source.responseSchema = {
-        fields: [
-            {key: 'sql' },
-            {key: 'start', parser:'date' },
-            {key: 'status' },
-            {key: 'remove' },
-            {key: 'id' },
-            {key: 'finished' }
+                    return view.toString();
+                }
+            }
         ]
-    };
-
-    var width = document.getElementById('ss_app_workspace').offsetWidth;
-    var height = document.getElementById('ss_app_workspace').offsetHeight;
-    var table_height = height - 80;
-
-    var data_table = new YAHOO.widget.ScrollingDataTable('js-query-queue', col_defs, data_source, {
-        sortedBy: { key: 'start', dir: 'asc' },
-        height: table_height+"px"
     });
-    SQLShare._DATA_TABLE = data_table;
 };
-
-SQLShare.View.QueryQueue.Display.prototype.formatSQL = function(elLiner, oRecord, oColumn, oData) {
-    var field = oColumn.getKey();
-
-    var id = oRecord.getData('id');
-    var s = oRecord.getData('status');
-    var f = oRecord.getData('finished');
-    if (f == '1') {
-        value = ['<span class="view_queue_entry" id="js-query-', id, '">', oRecord.getData(field), '</span>'].join('');
-    }
-    else {
-        value = ['<span class="in_queue_unfinished">', oRecord.getData(field), '</span>'].join('');
-    }
-
-    elLiner.innerHTML = value;
-};
-
-SQLShare.View.QueryQueue.Display.prototype.formatDate = function(elLiner, oRecord, oColumn, oData) {
-    var field = oColumn.getKey();
-
-    var view = new SQLShare.View.TableDateCell({
-        date_obj:  new Date(oRecord.getData(field)) //oRecord.getData('create_date')
-    });
-
-    var class_name = 'in_queue_unfinished';
-    if (oRecord.getData('finished')) {
-        class_name = 'view_queue_entry';
-    }
-
-    elLiner.innerHTML = ['<span class="',class_name,'">',view.toString(),'</span>'].join('');
-};
-
 
 

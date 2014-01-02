@@ -70,39 +70,19 @@ QueryQueue.prototype._drawQueries = function(data) {
 
     this._renderTo(this.id, this.view);
 
-    SQLShare._DATA_TABLE.subscribe("cellClickEvent", this._handleListClick, this, true);
+    var me = this;
+    $("#js-query-queue-table .remove_query").on("click", function(ev) {
+        var target = ev.target;
+        var id = target.id.replace(/^remove_/, '');
+        var type = target.rel;
+        me.AsyncDELETE(me._getRestRoot()+'/proxy/'+id, me._postDelete, { type: type });
+
+    });
 
     SQLShare.onChangeContent.fire();
 
     var me = this;
     this.setCurrentTimeout(window.setTimeout(function() { me._fetchUpdates(); }, 2000));
-};
-
-QueryQueue.prototype._handleListClick = function(ev) {
-    var target = ev.target;
-    var td = target.children[0];
-    var check_els = [];
-    check_els.push(td);
-    for (var i = 0; i < check_els.length; i++) {
-        var el = check_els[i];
-        if (el.className == 'remove') {
-            var id = el.id.replace(/^remove_/, '');
-            var type = target.rel;
-            this.AsyncDELETE(this._getRestRoot()+'/proxy/'+id, this._postDelete, { type: type });
-            return;
-         }
-        else if (el.className == 'view_queue_entry') {
-            var id = el.id.replace(/^js-query-/, '');
-            window.location.href = 'sqlshare/#s=query/'+id;
-            return;
-        }
-        if (el.children) {
-            var len = el.children.length;
-            for (var j = 0; j < len; j++) {
-                check_els.push(el.children[j]);
-            }
-        }
-     }
 };
 
 QueryQueue.prototype._postDelete = function(o, args) {
