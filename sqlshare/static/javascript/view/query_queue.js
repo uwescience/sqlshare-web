@@ -49,7 +49,8 @@ SQLShare.View.QueryQueue.Display.prototype.generateParams = function() {
             query_id: query_id
         });
     }
-    SQLShare.onUpdateFinishQueryCount.fire(finished_count);
+
+    $(document).trigger("update_finished_query_count", finished_count);
 
     this._data = full_data;
 

@@ -39,8 +39,9 @@ SQLShare.prototype.run = function() {
         me._handleEditQueryDone(ev, [model]);
     });
 
-    SQLShare.onUpdateFinishQueryCount = new YAHOO.util.CustomEvent('sqlshare:update_finished_query_count');
-    SQLShare.onUpdateFinishQueryCount.subscribe(this._handleFinishCountEvent, this, true);
+    $(document).on("update_finished_query_count", function(ev, count) {
+        me._handleFinishCountEvent(ev, count);
+    });
 
     this._getUser();
 };
@@ -416,7 +417,8 @@ SQLShare.prototype._fetchFinishedFinishCount = function() {
                     finished_count++;
                 }
             }
-            SQLShare.onUpdateFinishQueryCount.fire(finished_count);
+
+            $(document).trigger("update_finished_query_count", finished_count);
         }
 
         var me = this;
