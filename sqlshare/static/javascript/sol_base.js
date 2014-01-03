@@ -6,37 +6,6 @@ SolBase.prototype._getRestRoot = function() {
     return "/"+this._getRestPath()+"/";
 };
 
-SolBase.prototype._getData = function(uri) {
-    console.trace();
-    return;
-};
-
-SolBase.prototype.GET = function(uri, obj) {
-    console.trace();
-//    return this._http('GET', uri, obj);
-};
-
-SolBase.prototype.POST = function(uri, obj) {
-    console.trace();
-//    return this._http('POST', uri, obj);
-};
-
-SolBase.prototype.PUT = function(uri, obj) {
-    console.trace();
-//   return this._http('PUT', uri, obj);
-};
-
-SolBase.prototype.DELETE = function(uri) {
-    console.trace();
-//    return this._http('DELETE', uri);
-};
-
-SolBase.prototype._http = function(method, uri, obj) {
-    console.trace();
-    return;
-};
-
-
 SolBase.prototype.AsyncGET = function(uri, callback, arg, opts) {
     return this._async_http('GET', uri, null, callback, arg, opts);
 };
@@ -145,20 +114,3 @@ SolBase.prototype._renderTo = function() {
 
 };
 
-SolBase.prototype.showErrors = function(container_id, errors) {
-    for (var i = 0; i < errors.length; i++) {
-        var message = errors[i].message;
-        var field = errors[i].field;
-        var error_container = document.getElementById('err_'+field+'_'+container_id);
-        if(error_container){
-            error_container.innerHTML = Solstice.String.encodeHTML(message);
-            Solstice.Element.showInline(error_container);
-        }
-    }
-};
-
-SolBase.prototype.showInputLoading = function(container_id, field) {
-    var error_container = document.getElementById('err_'+field+'_'+container_id);
-    error_container.innerHTML = '<img src="/static/images/processing.gif" alt="">';
-    Solstice.Element.showInline(error_container);
-};
