@@ -1,3 +1,4 @@
+"use strict";
 SQLShare.View.SharedQueries = function() {};
 
 SQLShare.View.SharedQueries.List = function(model) {

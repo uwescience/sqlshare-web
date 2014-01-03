@@ -1,3 +1,5 @@
+"use strict";
+"use strict";
 SQLShare.View.SavedQuery.DescriptionArea = function(model) {
     SQLShare.View.call(this, model);
     this.template = 'saved_query/description_area.html';
@@ -26,7 +28,7 @@ SQLShare.View.SavedQuery.DescriptionArea.prototype.generateParams = function() {
         }
 
         var tags = [];
-        for (tag in tag_hash) {
+        for (var tag in tag_hash) {
             tags.push(tag);
         }
 

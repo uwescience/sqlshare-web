@@ -1,3 +1,4 @@
+"use strict";
 String.prototype.encodeHTML = function() {
     if (this == null) {
         return '';

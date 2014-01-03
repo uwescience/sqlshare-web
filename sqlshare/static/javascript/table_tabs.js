@@ -1,3 +1,4 @@
+"use strict";
 SQLShare.TableTabs = function() {
     this._tabs = [];
     this.initialize();
@@ -131,7 +132,6 @@ SQLShare.TableTabs.prototype.tabInEditState = function(type, id) {
         if (tab.inactive != true && tab.type == type && tab.id == id) {
             $("#tab_nav_content_"+i).addClass("current_edit");
             tab.in_edit_state = true;
-            found_tab = true;
         }
         else {
             $("#tab_nav_content_"+i).removeClass("current_edit");

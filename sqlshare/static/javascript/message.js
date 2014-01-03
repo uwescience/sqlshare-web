@@ -1,3 +1,4 @@
+"use strict";
 Solstice.Message = {};
 Solstice.Message.current_fade = null;
 

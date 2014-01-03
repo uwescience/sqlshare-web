@@ -1,3 +1,4 @@
+"use strict";
 var AllQueries = function(div_id) {
     this.id = div_id;
 };

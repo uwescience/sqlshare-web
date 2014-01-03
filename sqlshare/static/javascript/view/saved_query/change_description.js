@@ -1,3 +1,4 @@
+"use strict";
 SQLShare.View.SavedQuery.ChangeDescription = function(model) {
     SQLShare.View.call(this, model);
     this.template = 'saved_query/change_description.html';

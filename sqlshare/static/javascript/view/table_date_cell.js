@@ -1,3 +1,4 @@
+"use strict";
 SQLShare.View.TableDateCell = function(model) {
     SQLShare.View.call(this, model);
     this.template = 'all_queries/table_date_cell.html';

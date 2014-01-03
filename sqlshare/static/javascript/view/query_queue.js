@@ -1,3 +1,4 @@
+"use strict";
 SQLShare.View.QueryQueue = function() {};
 
 SQLShare.View.QueryQueue.Display = function(model) {

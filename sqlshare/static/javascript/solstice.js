@@ -1,3 +1,4 @@
+"use strict";
 /**
  * @fileoverview
  * This is the master JavaScript file that is included with every
@@ -11,7 +12,7 @@
  * @class Namespace for all solstice javascript, also contains some basic global functionality
  * @constructor
  */
-Solstice = function (){};
+var Solstice = function (){};
 
 
 /**

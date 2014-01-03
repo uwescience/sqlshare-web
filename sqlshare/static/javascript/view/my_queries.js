@@ -1,3 +1,4 @@
+"use strict";
 SQLShare.View.MyQueries = function() {};
 
 SQLShare.View.MyQueries.List = function(model) {

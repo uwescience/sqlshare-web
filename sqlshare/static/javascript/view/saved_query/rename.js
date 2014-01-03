@@ -1,3 +1,4 @@
+"use strict";
 SQLShare.View.SavedQuery.Rename = function(model) {
     SQLShare.View.call(this, model);
     this.template = 'saved_query/rename.html';

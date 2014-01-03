@@ -1,3 +1,4 @@
+"use strict";
 var ManageCredentials = function(div_id, query_id) {
     this.id = div_id;
     this.query_id = query_id;

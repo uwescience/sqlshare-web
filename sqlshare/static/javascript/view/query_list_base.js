@@ -1,3 +1,4 @@
+"use strict";
 SQLShare.View.QueryListBase = function() {
 };
 
@@ -52,7 +53,7 @@ function draw_jquery_table(id, list) {
             tags: tag_array
         });
 
-        html = view.toString();
+        var html = view.toString();
         rendered_data['name'][key] = html;
 
         return html;
@@ -70,7 +71,7 @@ function draw_jquery_table(id, list) {
             is_public:  row[3],
             is_shared:  row[4]
         });
-        html = view.toString();
+        var html = view.toString();
         rendered_data["owner"][key] = html;
         return html;
     }
@@ -150,7 +151,7 @@ function get_tag_list_from_raw(raw_tags) {
     }
 
     var tags = [];
-    for (tag in tag_hash) {
+    for (var tag in tag_hash) {
         tags.push(tag);
     }
 

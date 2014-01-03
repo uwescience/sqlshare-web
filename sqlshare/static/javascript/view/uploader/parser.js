@@ -1,3 +1,4 @@
+"use strict";
 SQLShare.View.ParserOptions = function(model) {
     SQLShare.View.call(this, model);
     this.template = 'uploader/parser_options.html';

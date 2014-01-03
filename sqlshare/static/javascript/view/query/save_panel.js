@@ -1,3 +1,4 @@
+"use strict";
 SQLShare.View.Query.SavePanel = function(model) {
     SQLShare.View.call(this, model);
     this.template = 'query/save_panel.html';
@@ -23,7 +24,7 @@ SQLShare.View.Query.SavePanel.prototype.generateParams = function() {
 SQLShare.View.Query.SavePanel.prototype.postRender = function() {
     var tag_set = SQLShare._ALL_TAGS || {};
     var datasource = [];
-    for (tag in tag_set) {
+    for (var tag in tag_set) {
         datasource.push(tag);
     }
 

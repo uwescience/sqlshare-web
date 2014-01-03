@@ -1,3 +1,4 @@
+"use strict";
 SQLShare.View.Table.Rename = function(model) {
     SQLShare.View.call(this, model);
     this.template = 'table/rename.html';

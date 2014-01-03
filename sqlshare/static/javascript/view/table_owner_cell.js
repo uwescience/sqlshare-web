@@ -1,3 +1,4 @@
+"use strict";
 SQLShare.View.TableOwnerCell = function(model) {
     SQLShare.View.call(this, model);
     this.template = 'all_queries/table_owner_cell.html';

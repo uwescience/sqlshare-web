@@ -1,3 +1,4 @@
+"use strict";
 SQLShare.View.Query.SharingPanel = function(model) {
     SQLShare.View.call(this, model);
     this.template = 'query/sharing_panel.html';

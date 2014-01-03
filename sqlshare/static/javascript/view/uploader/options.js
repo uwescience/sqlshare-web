@@ -1,3 +1,4 @@
+"use strict";
 SQLShare.View.UploaderOptions = function(model) {
     SQLShare.View.call(this, model);
     this.template = 'uploader/table_options.html';

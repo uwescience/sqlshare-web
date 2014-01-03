@@ -1,4 +1,3 @@
-
 var SQLShare = function(div_id) {
     this.id = div_id;
 };

@@ -1,3 +1,4 @@
+"use strict";
 SQLShare.View.SidebarLists = function(model) {
     SQLShare.View.call(this, model);
     this.template = 'sidebar_lists.html';

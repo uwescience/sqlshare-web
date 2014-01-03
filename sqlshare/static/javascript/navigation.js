@@ -1,3 +1,4 @@
+"use strict";
 var Navigation = function(id) {
     this.id = id;
     this.element = document.getElementById(id);

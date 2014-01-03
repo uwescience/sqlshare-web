@@ -1,4 +1,5 @@
-HandlebarsUtils = (function() {
+"use strict";
+var HandlebarsUtils = (function() {
     "use strict";
     var compiled_templates = {};
 

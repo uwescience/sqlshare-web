@@ -1,3 +1,4 @@
+"use strict";
 var Uploader = function(div_id, args) {
     this.id = div_id;
 };

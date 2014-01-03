@@ -1,3 +1,4 @@
+"use strict";
 SQLShare.View.TableNameCell = function(model) {
     SQLShare.View.call(this, model);
     this.template = 'all_queries/table_name_cell.html';

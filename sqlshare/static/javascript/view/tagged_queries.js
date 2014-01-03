@@ -1,3 +1,4 @@
+"use strict";
 SQLShare.View.TaggedQueries = function() {};
 
 SQLShare.View.TaggedQueries.List = function(model, tag) {

@@ -1,3 +1,4 @@
+"use strict";
 SQLShare.View.Table.ChangeDescription = function(model) {
     SQLShare.View.call(this, model);
     this.template = 'table/change_description.html';
