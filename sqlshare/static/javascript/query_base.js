@@ -13,14 +13,15 @@ QueryBase.prototype._drawTable = function(id, columns, data) {
         }));
     }
 
-    $('#ss_table_container_main').html('<table cellpadding="0" cellspacing="0" border="0" class="display" id="query_preview_table"></table>');
+    var table_id = id+"_table";
+    $(slash_selector("#"+id)).html('<table cellpadding="0" cellspacing="0" border="0" class="display" id="'+table_id+'"></table>');
     var column_titles = [];
     for (var i = 0; i < columns.length; i++) {
         column_titles.push({ sTitle: columns[i] });
     }
 
     window.setTimeout(function() {
-        $("#query_preview_table").dataTable({
+        $(slash_selector("#"+table_id)).dataTable({
             aaData: data,
             aoColumns: column_titles,
         });
