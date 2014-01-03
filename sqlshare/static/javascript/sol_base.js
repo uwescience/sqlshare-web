@@ -67,7 +67,7 @@ SolBase.prototype._async_http = function(method, uri, obj, callback, arg, opts) 
             "Content-type": "application/json",
             "X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val()
         },
-        data: JSON.stringify(obj),
+        data: obj ? JSON.stringify(obj) : null,
         complete: function(response) {
             me._handleSuccess(response, callback, arg);
         }
