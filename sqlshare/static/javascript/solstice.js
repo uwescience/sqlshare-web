@@ -171,25 +171,6 @@ Solstice.Geometry.getBrowserHeight = function () {
     return;
 }
 
-/****************
- * @class Methods used by Solstice to manipulate the messaging container 
- * @constructor
- */
-Solstice.Message = function(){};
-
-/**
- * @function Solstice.Message.setCookie
- * @description Set a persistent message
- * @param {string} type
- * @param {string} message
- * @returns {boolean} true
- */
-Solstice.Message.setCookie = function(type, message) {
-    var cookie_str = type + '_TYPE_' + message;
-    Solstice.Cookie.set('message_service', cookie_str, 60);
-    return true;
-}
-
 Solstice.findDuplicateIDs = function() {
     var tracker = {};
     Solstice._searchNodesForDupes(document, tracker);
