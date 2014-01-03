@@ -147,11 +147,13 @@ table.display {
      * If you want that effect I'd suggest setting a border-top/left on th/td's and 
      * then filling in the gaps with other borders.
      */
+     
+     border: solid 1px #7f7f7f;
 }
 
 table.display thead th {
-    padding: 3px 18px 3px 10px;
-    border-bottom: 1px solid black;
+    padding: 5px 10px;
+    border-bottom: 1px solid #7f7f7f;
     font-weight: bold;
     cursor: pointer;
     * cursor: hand;
@@ -168,13 +170,17 @@ table.display tr.heading2 td {
 }
 
 table.display td {
-    padding: 3px 10px;
+    padding: 5px 10px;
+    /*border-bottom: solid 1px #cbcbcb;*/
 }
 
 table.display td.center {
     text-align: center;
 }
 
+table.display tr:last-child td{
+    border: none;
+}
 
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -182,15 +188,15 @@ table.display td.center {
  */
 
 .sorting_asc {
-    background: url('../images/sort_asc.png') no-repeat center right;
+    background: #ddd url('../images/sort_asc.png') no-repeat center right;
 }
 
 .sorting_desc {
-    background: url('../images/sort_desc.png') no-repeat center right;
+    background: #ddd url('../images/sort_desc.png') no-repeat center right;
 }
 
 .sorting {
-    background: url('../images/sort_both.png') no-repeat center right;
+    background: #eee url('../images/sort_both.png') no-repeat center right;
 }
 
 .sorting_asc_disabled {
@@ -246,11 +252,11 @@ table.display tr.even.gradeU {
 
 
 tr.odd {
-    background-color: #E2E4FF;
+    background-color: #fff;
 }
 
 tr.even {
-    background-color: white;
+    background-color: #edf5ff;
 }
 
 
@@ -365,6 +371,8 @@ table.display tr.odd.row_selected td {
  * Sorting classes for columns
  */
 /* For the standard odd/even */
+
+/*
 tr.odd td.sorting_1 {
     background-color: #D3D6FF;
 }
@@ -388,7 +396,7 @@ tr.even td.sorting_2 {
 tr.even td.sorting_3 {
     background-color: #F9F9FF;
 }
-
+*/
 
 /* For the Conditional-CSS grading rows */
 /*
