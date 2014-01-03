@@ -23,7 +23,7 @@ top: 10px;
 
 /* Minimum Browser Width 1100px;  */
 
-body { min-width: 1100px; overflow-x: auto !important; }
+body { min-width: 1100px; overflow-x: hidden !important; }
 #ss_content, #ss_application_wrapper { min-width: 952px !important; }
 #ss_app_workspace { min-width: 395px; }
 
@@ -76,7 +76,7 @@ div.hr hr {
 
 /* Sidebar */
 .ss-sidebar { width: 148px; float: left; background-color: #d2d2d2; }
-.ss-sidebar-content { border-right:solid 1px #b0b0b0; padding-top: 8px; }
+.ss-sidebar-content { border-right:solid 1px #b0b0b0; padding-top: 8px; overflow-y: auto; }
 
 h3.ss-sidebar-logo { background-color: #316b92; height:41px; color: #fff;text-align:center; border-right: solid 1px #275877; margin:0; }
 h3.ss-sidebar-logo img { margin-top:10px; }
@@ -119,7 +119,7 @@ h3.ss-sidebar-logo img { margin-top:10px; }
 
 .ss-processing-container { position: absolute; left: 50%; top: 50%; margin-left: -40px;  margin-top: -40px; }
 
-.ss-content-header { line-height:30px; }
+.ss-content-header { }
 .ss-content-header p { margin: 0; }
 .ss-content-header h5 { color: #B0B0B0; font-size: 83%; display: inline; }
 .ss-content-header a, .ss-content-header a:visited { color: #888; text-decoration: none; }
@@ -239,22 +239,6 @@ border-top-right-radius: 4px;
 .ss-dataset-list .ss-access-shared-owner { display: inline-block; width: 20px; background: url(../images/ss-privacy.gif) no-repeat -16px 0; height: 16px; overflow: hidden; text-indent: 100px; vertical-align: middle; } */
 
 .ss-dataset-list .ss-access-shared-owner, .ss-dataset-list .ss-access-shared-viewer, .ss-dataset-list .ss-access-private { display: inline-block; width: 20px; background: url(../images/ss-privacy.gif) no-repeat -16px -32px; height: 16px; overflow: hidden; text-indent: 100px; vertical-align: middle; } 	 
-
-/* YUI Dataset List overrides */ 	 
-.yui-skin-sam .ss-dataset-list tr.yui-dt-odd { background-color: #fff; } 	 
-.yui-skin-sam .ss-dataset-list td { border: none; border-bottom: 1px solid #cbcbcb; } 	 
-.yui-skin-sam .ss-dataset-list th { border-right: none !important; } 	 
-
-.yui-skin-sam .ss-dataset-list tr.yui-dt-odd td.yui-dt-asc, 	 
-.yui-skin-sam .ss-dataset-list tr.yui-dt-odd td.yui-dt-desc, 	 
-.yui-skin-sam .ss-dataset-list tr.yui-dt-even td.yui-dt-asc, 	 
-.yui-skin-sam .ss-dataset-list tr.yui-dt-even td.yui-dt-desc { background-color: #fff; }
-
-.yui-skin-sam .ss-dataset-list tr.yui-dt-highlighted, 
-.yui-skin-sam .ss-dataset-list tr.yui-dt-highlighted td.yui-dt-asc, 
-.yui-skin-sam .ss-dataset-list tr.yui-dt-highlighted td.yui-dt-desc, 
-.yui-skin-sam .ss-dataset-list tr.yui-dt-even td.yui-dt-highlighted, 
-.yui-skin-sam .ss-dataset-list tr.yui-dt-odd td.yui-dt-highlighted { background-color: #fff; }
 
 /* Dataset Output Tables */
 

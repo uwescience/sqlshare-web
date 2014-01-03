@@ -48,7 +48,7 @@ margin-bottom: 3px;
     }
 
 
-#ss_app_workspace_table .ss-dataset-tags { margin-top: 4px; }
+#ss_app_workspace_table .ss-dataset-tags { margin-top: 4px; line-height: 1.5em; }
 
 .ss-dataset-tags { margin-top: 1em; }
 
