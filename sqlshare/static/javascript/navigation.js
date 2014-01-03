@@ -47,7 +47,7 @@ Navigation.prototype._loadSavedQuery = function(parts) {
 
     var query_parts = [];
     for (var i = 0; i < parts.length; i++) {
-        query_parts[i] = encodeURIComponent(parts[i]);
+        query_parts[i] = parts[i];
     }
 
     $(document).trigger("saved_query", [[query_parts.join('/')]]);
