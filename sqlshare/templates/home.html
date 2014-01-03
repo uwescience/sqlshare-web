@@ -28,83 +28,6 @@
 
     {% load compress %}
 
-    {% compress js %}
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/jquery.min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/jquery.history.min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/solstice.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/string.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/message.js"></script>
-    <script src="{{ STATIC_URL }}javascript/lang/SQLShare.json"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/lang.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/css_browser_selector.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/element.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/sol_base.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/sol_view.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/ss_base.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/query_base.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/sqlshare.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/constants.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/navigation.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/query.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/query_queue.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/upload.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/all_tables.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/all_queries.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/shared_queries.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/my_queries.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/tagged_queries.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/recent_queries.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/saved_query.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/codemirror/codemirror.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/table_tabs.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/query_list_base.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/table_date_cell.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/table_name_cell.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/table_owner_cell.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/table.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/table/rename.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/table/change_description.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/saved_query.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/saved_query/edit.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/saved_query/rename.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/saved_query/change_description.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/saved_query/change_statement.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/saved_query/confirm_delete.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/saved_query/deleting.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/saved_query/description_area.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/query.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/query/save_panel.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/query/sharing_panel.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/uploader/parser.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/uploader/options.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/all_queries/list.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/my_queries.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/tagged_queries.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/shared_queries/list.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/query_queue.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/manage_credentials.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/sidebar_lists.js"></script>
-    <script src="{{STATIC_URL}}javascript/handlebars.js"></script>
-    <script src="{{STATIC_URL}}javascript/handlebars_util.js"></script>
-    <script src="{{STATIC_URL}}javascript/tag-it.js"></script>
-    <script src="{{STATIC_URL}}javascript/jquery.dataTables.js"></script>
-    <script src="{{STATIC_URL}}javascript/vendor/jquery.iframe-transport.js"></script>
-    <script src="{{STATIC_URL}}javascript/vendor/jquery.fileupload.js"></script>
-
-    {% endcompress %}
-
-    <script type="text/javascript">
-      function initApplication() {
-        SolTimer.appInit = new Date().getTime();
-
-        (new SQLShare('ss_app')).run();
-        SolTimer.postAppInit = new Date().getTime();
-      }
-      </script>
-
-
     {% compress css %}
     <link rel="stylesheet" type="text/css"  href="{{STATIC_URL}}styles/jquery-ui.css"/>
     <link rel="stylesheet" type="text/css"  href="{{STATIC_URL}}styles/jquery.tagit.css"/>
@@ -120,7 +43,7 @@
 
   </head>
 
-  <body id="solstice_document_body" class="yui-skin-sam" onload="initApplication();">
+  <body id="solstice_document_body" class="yui-skin-sam">
 
       <!-- BEGIN BOILERPLATE WORKSPACE -->
       <form action="/sqlshare" method="post" accept-charset="UTF-8" id="solstice_app_form">
@@ -300,4 +223,81 @@
 {% include "handlebars/recent_queries.html" %}
 {% include "handlebars/tab_nav_overflow.html" %}
 {% include "handlebars/query/sharing_name_cell.html" %}
+
+
+    {% compress js %}
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/jquery.min.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/jquery.history.min.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/solstice.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/string.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/message.js"></script>
+    <script src="{{ STATIC_URL }}javascript/lang/SQLShare.json"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/lang.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/css_browser_selector.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/element.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/sol_base.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/sol_view.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/ss_base.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/query_base.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/sqlshare.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/constants.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/navigation.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/query.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/query_queue.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/upload.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/all_tables.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/all_queries.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/shared_queries.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/my_queries.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/tagged_queries.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/recent_queries.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/saved_query.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/codemirror/codemirror.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/table_tabs.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/view.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/query_list_base.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/table_date_cell.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/table_name_cell.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/table_owner_cell.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/table.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/table/rename.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/table/change_description.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/saved_query.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/saved_query/edit.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/saved_query/rename.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/saved_query/change_description.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/saved_query/change_statement.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/saved_query/confirm_delete.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/saved_query/deleting.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/saved_query/description_area.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/query.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/query/save_panel.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/query/sharing_panel.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/uploader/parser.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/uploader/options.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/all_queries/list.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/my_queries.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/tagged_queries.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/shared_queries/list.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/query_queue.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/manage_credentials.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}javascript/view/sidebar_lists.js"></script>
+    <script src="{{STATIC_URL}}javascript/handlebars.js"></script>
+    <script src="{{STATIC_URL}}javascript/handlebars_util.js"></script>
+    <script src="{{STATIC_URL}}javascript/tag-it.js"></script>
+    <script src="{{STATIC_URL}}javascript/jquery.dataTables.js"></script>
+    <script src="{{STATIC_URL}}javascript/vendor/jquery.iframe-transport.js"></script>
+    <script src="{{STATIC_URL}}javascript/vendor/jquery.fileupload.js"></script>
+
+    {% endcompress %}
+
+    <script type="text/javascript">
+        $(function() {
+            new SQLShare('ss_app').run();
+        });
+      </script>
+
+
+
 </html>
