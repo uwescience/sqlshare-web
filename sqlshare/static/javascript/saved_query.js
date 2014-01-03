@@ -102,14 +102,17 @@ SavedQuery.prototype._drawSavedQuery = function(query_data) {
     this._resetDescriptionContainer();
     this._resetStatementContainer();
 
+    var me = this;
     if (query_data.owner == solstice_user.login_name) {
-        var me = this;
         $("#action_menu .make_private").on("click", function() { me._togglePublic(); });
         $("#action_menu .make_public").on("click", function() { me._togglePublic(); });
         $("#action_menu .sharing_settings").on("click", function() { me._openSharingDialog(); });
         $("#action_menu .download").on("click", function() { me._downloadQuery(); });
         $("#action_menu .delete").on("click", function() { me._confirmDelete(); });
         $("#action_menu").menu();
+    }
+    else {
+        $(".download").on("click", function(ev) { ev.preventDefault();  me._downloadQuery(); });
     }
 
     $(slash_selector("#"+this.id+"_derive")).off("click");
