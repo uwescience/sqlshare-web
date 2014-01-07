@@ -1,4 +1,3 @@
-"use strict";
 /**
  * @fileoverview
  * This is the master JavaScript file that is included with every
@@ -213,7 +212,7 @@ Solstice._searchNodesForDupes = function(node, tracker) {
         Solstice._searchNodesForDupes(children[i], tracker);
     }
 
-}
+};
 
 
 /*

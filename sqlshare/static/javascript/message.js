@@ -1,4 +1,3 @@
-"use strict";
 Solstice.Message = {};
 Solstice.Message.current_fade = null;
 
@@ -53,5 +52,5 @@ Solstice.Message._init = function() {
     if (!$("#sol_message_container").length) {
         $("body").append("<div id='sol_message_container' style='display: none;'><div id='sol_message_wrapper' class='bd'><div id='sol_message' class='sol-message'></div></div></div>");
     }
-}
+};
 
