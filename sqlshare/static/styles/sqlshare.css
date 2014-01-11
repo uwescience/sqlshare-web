@@ -233,12 +233,30 @@ border-top-right-radius: 4px;
 .ss-dataset-list a:hover.remove { text-decoration: underline; }
 
 
-.ss-dataset-list .ss-access-public { display: inline-block; width: 20px; background: url(../images/ss-privacy-gray.gif) no-repeat -16px 0; height: 16px; overflow: hidden; text-indent: 100px; vertical-align: middle; } 	 
+.ss-dataset-list .ss-access-public { 
+    display: inline-block; 
+    width: 15px; 
+    /*background: url(../images/ss-privacy-gray.gif) no-repeat -16px 0;*/
+    height: 16px; 
+    overflow: hidden; 
+   /* text-indent: 100px;*/
+    vertical-align: middle;
+    font-size: 1em; 
+} 	 
 
 /* .ss-dataset-list .ss-access-shared-viewer { display: inline-block; width: 20px; background: url(../images/ss-privacy.gif) no-repeat -16px 0; height: 16px; overflow: hidden; text-indent: 100px; vertical-align: middle; } 	 
 .ss-dataset-list .ss-access-shared-owner { display: inline-block; width: 20px; background: url(../images/ss-privacy.gif) no-repeat -16px 0; height: 16px; overflow: hidden; text-indent: 100px; vertical-align: middle; } */
 
-.ss-dataset-list .ss-access-shared-owner, .ss-dataset-list .ss-access-shared-viewer, .ss-dataset-list .ss-access-private { display: inline-block; width: 20px; background: url(../images/ss-privacy.gif) no-repeat -16px -32px; height: 16px; overflow: hidden; text-indent: 100px; vertical-align: middle; } 	 
+.ss-dataset-list .ss-access-shared-owner, .ss-dataset-list .ss-access-shared-viewer, .ss-dataset-list .ss-access-private { 
+    display: inline-block; 
+    width: 12px; 
+    /*background: url(../images/ss-privacy.gif) no-repeat -16px -32px;*/
+    height: 16px; 
+    overflow: hidden; 
+    /*text-indent: 100px;*/
+    vertical-align: middle; 
+    font-size: 1em;
+} 	 
 
 /* Dataset Output Tables */
 
@@ -367,11 +385,35 @@ a:hover.ss-save-as-secondary {  color: #222; cursor: pointer; }
 
 .ss-access-public, .ss-access-shared-owner, .ss-access-shared-viewer, .ss-access-private  { font-size: 70%; font-weight: normal; color: #777; padding-top: 1px; }
 
-.ss-content-header h3 .ss-access-public { display: inline-block; background: url(../images/ss-privacy-gray.gif) no-repeat -16px 0; overflow: hidden; text-indent: 17px; vertical-align: middle; margin-left: 4px; line-height: 18px; } 	 
+.ss-content-header h3 .ss-access-public { 
+    display: inline-block; 
+    /*background: url(../images/ss-privacy-gray.gif) no-repeat -16px 0;*/ 
+    overflow: hidden; 
+    /*text-indent: 17px;*/
+    vertical-align: middle; 
+    margin-left: 4px; 
+    line-height: 18px; 
+} 	 
+.ss-content-header h3 .ss-access-public i { font-size: 1.2em; }
 
-.ss-content-header h3 .ss-access-private, .ss-content-header h3 .ss-access-shared-owner, .ss-content-header h3 .ss-access-shared-viewer { display: inline-block; background: url(../images/ss-privacy-gray.gif) no-repeat -16px -32px; overflow: hidden; text-indent: 17px; vertical-align: middle; margin-left: 4px; line-height: 18px; } 
+.ss-content-header h3 .ss-access-private, .ss-content-header h3 .ss-access-shared-owner, .ss-content-header h3 .ss-access-shared-viewer { 
+    display: inline-block; 
+    /*background: url(../images/ss-privacy-gray.gif) no-repeat -16px -32px;*/
+    overflow: hidden; 
+    /*text-indent: 17px;*/ 
+    vertical-align: middle; 
+    margin-left: 8px; 
+    line-height: 18px; 
+} 
 
-.ss-content-header .ss-owner-info { display: inline-block; background: url(../images/ss-privacy-gray.gif) no-repeat -16px -64px; overflow: hidden; vertical-align: middle; padding-left: 18px; }
+.ss-content-header .ss-owner-info { 
+    display: inline-block; 
+    /*background: url(../images/ss-privacy-gray.gif) no-repeat -16px -64px;*/
+    overflow: hidden; 
+    vertical-align: middle; 
+    padding-left: 18px; 
+}
+.ss-content-header .ss-owner-info i { font-size: 1.2em; }
 
 .ss-content-header .ss-mod-date { margin-right: 10px; color: #bbb; }
 
