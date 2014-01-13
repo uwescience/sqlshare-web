@@ -232,7 +232,6 @@ border-top-right-radius: 4px;
 .ss-dataset-list a.remove { color: red; text-decoration: none; }
 .ss-dataset-list a:hover.remove { text-decoration: underline; }
 
-
 .ss-dataset-list .ss-access-public { 
     display: inline-block; 
     width: 15px; 
@@ -405,6 +404,7 @@ a:hover.ss-save-as-secondary {  color: #222; cursor: pointer; }
     margin-left: 8px; 
     line-height: 18px; 
 } 
+.ss-content-header h3 .ss-access-private i { font-size: 1.1em; }
 
 .ss-content-header .ss-owner-info { 
     display: inline-block; 

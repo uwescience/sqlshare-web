@@ -11,7 +11,7 @@
                 <span class="ss-access-public"><i class="fa fa-globe"></i>&nbsp;&nbsp;Viewable by everyone</span>
             {{else}}
                 {{ #if  is_shared }}
-                    <span class="ss-access-shared-owner">Sharing with others</span>
+                    <span class="ss-access-shared-owner"><i class="fa fa-cogs"></i>&nbsp;&nbsp;Sharing with others</span>
                 {{else}}
                     <span class="ss-access-private"><i class="fa fa-lock"></i>&nbsp;&nbsp;Only you can view this</span>
                 {{ /if }}
@@ -20,7 +20,7 @@
             {{ #if  is_public }}
                 <span class="ss-access-public"><i class="fa fa-globe"></i>&nbsp;&nbsp;Viewable by everyone</span>
             {{else}}
-                <span class="ss-access-shared-viewer">Shared with you</span>
+                <span class="ss-access-shared-viewer"><i class="fa fa-cogs"></i>&nbsp;&nbsp;Shared with you</span>
             {{ /if }}
         {{ /if }}
     </h3>
