@@ -9,7 +9,7 @@
     <h4>{{dataset_name}}</h4>
 
     <div id="js-dataset-sharing-info-public">
-    <span class="ss-access-public"><strong>Everyone</strong> can view this dataset</span><a style="margin-left:15px;font-size:82%;" class="js-make_dataset_private" href="javascript:void(0);">Make dataset private</a>
+    <span class="ss-access-public"><i class="fa fa-globe"></i>&nbsp;&nbsp;<strong>Everyone</strong> can view this dataset</span><a style="margin-left:15px;font-size:82%;" class="js-make_dataset_private" href="javascript:void(0);">Make dataset private</a>
     </div>
     <div id="js-dataset-sharing-changed-public" style="display: none;">
     <span style="color:orange;" >Dataset will be set to public upon saving.</span>
@@ -56,9 +56,9 @@
 
     <div id="js-dataset-sharing-info">
     {{ #if  has_users }}
-    <span class="ss-access-shared">Only <strong>you</strong> and <strong>specific users</strong> can view this dataset</span><a style="margin-left:15px;font-size:82%;" href="javascript:void(0)" class="js-make_dataset_public">Make dataset public</a>
+    <span class="ss-access-shared"><i class="fa fa-cogs"></i>&nbsp;&nbsp;Only <strong>you</strong> and <strong>specific users</strong> can view this dataset</span><a style="margin-left:15px;font-size:82%;" href="javascript:void(0)" class="js-make_dataset_public">Make dataset public</a>
     {{else}}
-    <span class="ss-access-private">Only <strong>you</strong> can view this dataset</span><a style="margin-left:15px;font-size:82%;" href="javascript:void(0)" class="js-make_dataset_public">Make dataset public</a>
+    <span class="ss-access-private"><i class="fa fa-lock"></i>&nbsp;&nbsp;Only <strong>you</strong> can view this dataset</span><a style="margin-left:15px;font-size:82%;" href="javascript:void(0)" class="js-make_dataset_public">Make dataset public</a>
     {{ /if }}
     </div>
     <div id="js-dataset-sharing-changed" style="display: none;">

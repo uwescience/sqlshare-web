@@ -404,7 +404,7 @@ a:hover.ss-save-as-secondary {  color: #222; cursor: pointer; }
     margin-left: 8px; 
     line-height: 18px; 
 } 
-.ss-content-header h3 .ss-access-private i { font-size: 1.1em; }
+.ss-content-header h3 .ss-access-private i, .ss-content-header h3 .ss-access-shared-owner i, .ss-content-header h3 .ss-access-shared-viewer i { font-size: 1.1em; }
 
 .ss-content-header .ss-owner-info { 
     display: inline-block; 
@@ -466,9 +466,23 @@ display: none;
 #share_data_public .ss-access-public, #share_data_workspace .ss-access-shared, #share_data_workspace .ss-access-private { font-size: 92%; font-weight: normal; padding-top: 2px; }
 #share_data_public h5, #share_data_workspace h5 { font-size: 90%; font-weight: bold; color: #777; }
 
-#share_data_public .ss-access-public { display: inline-block; background: url(../images/ss-privacy.gif) no-repeat -16px 0; height: 16px; overflow: hidden; text-indent: 18px; vertical-align: middle; }
+#share_data_public .ss-access-public { 
+    display: inline-block; 
+    /*(background: url(../images/ss-privacy.gif) no-repeat -16px 0;*/
+    height: 16px; 
+    overflow: hidden; 
+    /*text-indent: 18px;*/
+    vertical-align: middle; 
+}
 
-#share_data_workspace .ss-access-shared , #share_data_workspace .ss-access-private { display: inline-block; background: url(../images/ss-privacy.gif) no-repeat -16px -32px; height: 16px; overflow: hidden; text-indent: 18px; vertical-align: middle; } 
+#share_data_workspace .ss-access-shared , #share_data_workspace .ss-access-private { 
+    display: inline-block; 
+    /*background: url(../images/ss-privacy.gif) no-repeat -16px -32px;*/
+    height: 16px; 
+    overflow: hidden; 
+    /*text-indent: 18px;*/
+    vertical-align: middle; 
+} 
 
 .ss-sharing-container { border: solid 1px #ccc; padding:10px; margin-top: 10px; min-height: 200px;
 -webkit-border-radius: 5px;
