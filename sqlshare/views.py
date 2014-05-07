@@ -105,11 +105,22 @@ def upload(request):
 
     # Javerage is just here until we get off yui - the cookies for auth
     # aren't reliable behind the flash uploader
+    # Need to not use javerage with API KEY!
+    tmp_user = ""
+    auth_type = "secret"
+    if hasattr(settings, "SQLSHARE_AUTH_TYPE"):
+        auth_type = settings.SQLSHARE_AUTH_TYPE
+
+    if auth_type == "secret":
+        tmp_user = "javerage"
+    elif auth_type == "apikey":
+        tmp_user = settings.SQLSHARE_API_USER
+
     ss_response = _send_request('POST', '/REST.svc/v3/file',
                 {
                     "Accept": "application/json",
                     "Content-Type": _getMultipartContentType(),
-                }, body=content, user="javerage")
+                }, body=content, user=tmp_user)
 
     headers = ss_response.getheaders()
     response = ss_response.read()
