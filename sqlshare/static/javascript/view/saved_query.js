@@ -96,8 +96,8 @@ SQLShare.View.SavedQuery.prototype.postRender= function() {
         this._editor = CodeMirror.fromTextArea(this.model.container_id+'_sql_display', {
             textWrapping: false,
             parserfile: "parsesql.js",
-            stylesheet: solstice_document_base+"/static/styles/sqlcolors.css",
-            path: solstice_document_base+'/static/javascript/codemirror/',
+            stylesheet: static_url+"/styles/sqlcolors.css",
+            path: static_url+'/javascript/codemirror/',
             readOnly: true,
             height: height+'px'
         });
