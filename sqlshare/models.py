@@ -1,6 +1,5 @@
 from django.db import models
 from sqlshare.utils import _send_request
-from django.utils import simplejson as json
 from django.contrib.auth.models import User
 from django.core.mail import EmailMultiAlternatives
 from django.core.urlresolvers import reverse
@@ -8,6 +7,7 @@ from django.conf import settings
 from django.template.loader import render_to_string
 from oauth2client.django_orm import CredentialsField, FlowField
 import re
+import json
 import urllib
 import binascii
 from Crypto.Cipher import AES

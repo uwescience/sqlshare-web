@@ -2,7 +2,6 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response, redirect
 from django.conf import settings
 from django.core.urlresolvers import reverse
-from django.utils import simplejson as json
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
@@ -17,6 +16,7 @@ import httplib2
 import hashlib
 import random
 import urllib
+import json
 import time
 import math
 import sys
