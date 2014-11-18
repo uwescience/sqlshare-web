@@ -1,3 +1,4 @@
+{% load static %}
 {% load templatetag_handlebars %}
 {% tplhandlebars tagged_queries_loading %}
 <div class="ss-content-header">
@@ -5,5 +6,5 @@
 </h3>
 </div>
 
-<div class="ss-processing-container"><img src="{{ STATIC_URL }}/images/ss-loading.gif" /></div>
+<div class="ss-processing-container"><img src="{% static '/images/ss-loading.gif' %}" /></div>
 {% endtplhandlebars %}

@@ -1,3 +1,4 @@
+{% load static %}
 {% load templatetag_handlebars %}
 {% tplhandlebars uploader_step1 %}
 <div class="ss-content-header">
@@ -34,7 +35,7 @@
         <input type="file" name="file" id="sqlshare_uploader">
 
         <div style="display:none; text-align:center;" id="{{id}}_analyzing_display">
-            <img src="{{ STATIC_URL }}/images/ss-loading.gif" />
+            <img src="{% static 'images/ss-loading.gif' %}" />
             <p style="color:#999;">Analysing your file...</p>
         </div>
 
@@ -70,7 +71,7 @@
         </div> 
 
         <div style="display: none; text-align:center;" id="{{id}}_analyzing_display">
-            <img src="{{ STATIC_URL }}/images/ss-loading.gif" />
+            <img src="{% static 'images/ss-loading.gif' %}" />
             <p>Analysing your file...</p>
         </div>
 
