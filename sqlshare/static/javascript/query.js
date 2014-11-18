@@ -12,8 +12,8 @@ Query.prototype.draw = function() {
     this._editor = CodeMirror.fromTextArea(this.id +'_query', {
         textWrapping: false,
         parserfile: "parsesql.js",
-        stylesheet: solstice_document_base+"/static/styles/sqlcolors.css",
-        path: solstice_document_base+'/static/javascript/codemirror/',
+        stylesheet: static_url+"/styles/sqlcolors.css",
+        path: static_url+'/javascript/codemirror/',
         autoMatchParens: true
     });
 
