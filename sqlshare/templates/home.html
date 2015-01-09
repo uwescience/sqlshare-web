@@ -147,6 +147,8 @@
       </script>
 
 
+    {% load compress %}
+    {% compress css %}
     <link rel="stylesheet" type="text/css"  href="{{STATIC_URL}}javascript/yui/build/menu/assets/skins/sam/menu.css"/>
     <link rel="stylesheet" type="text/css"  href="{{STATIC_URL}}javascript/yui/build/button/assets/skins/sam/button.css"/>
     <link rel="stylesheet" type="text/css"  href="{{STATIC_URL}}javascript/yui/build/tabview/assets/skins/sam/tabview.css"/>
@@ -166,7 +168,7 @@
     <link rel="stylesheet" type="text/css"  href="{{STATIC_URL}}styles/fonts.css"/>
     <link rel="stylesheet" type="text/css"  href="{{STATIC_URL}}styles/tagging.css"/>
     <link rel="stylesheet" type="text/css"  href="{{STATIC_URL}}styles/sqlshare.css"/>
-
+    {% endcompress %}
   </head>
 
   <body id="solstice_document_body" class="yui-skin-sam" onload="initApplication();">
