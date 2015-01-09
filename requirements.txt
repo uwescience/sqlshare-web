@@ -1,4 +1,6 @@
 Django==1.4
+django-templatetag-handlebars
+django-compressor==1.3
 pycrypto
 oauth2client
 google-api-python-client
