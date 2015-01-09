@@ -283,9 +283,9 @@ def send_file(request):
 
 def require_uw_login(request):
     login = request.META['REMOTE_USER']
-    name = request.META['givenName']
-    last_name = request.META['sn']
-    email = request.META['mail']
+    name = request.META.get('givenName', '')
+    last_name = request.META.get('sn', '')
+    email = request.META.get('mail', '')
 
     return _login_user(request, login, name, last_name, email)
 
