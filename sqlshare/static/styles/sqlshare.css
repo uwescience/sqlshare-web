@@ -261,6 +261,8 @@ border-top-right-radius: 4px;
 
 .ss-table-container { overflow:auto; border:solid 1px #ccc; background-color: #fff; position: relative; }
 
+.ss-table-container .dataTables_wrapper { margin: 8px; }
+
 #ss_table_container .ss-table-processing { position: absolute; left: 50%; top: 50%; margin-left: -40px;  margin-top: -40px; }
 #ss_app_workspace_results .ss-table-processing { position: absolute; left: 50%; top: 50%; margin-left: -40px; margin-top: -40px; }
 #new_query_preview_panel .ss-table-processing { position: absolute; left: 50%; top: 50%; margin-left: -40px; margin-top: -40px; }
