@@ -608,8 +608,13 @@ box-shadow: 0 0px 4px rgba(0, 0, 0, 0.1);
 
 
 
-/* All Datasets Overrides */
+/* Your, all, shared, recent activity datatable overrides */
 
 #query_list_table tr.even { background: none; }
 #query_list_table td { border-bottom: solid 1px #cbcbcb; }
 #query_list_table tr:last-of-type td { border: none; }
+
+#js-query-queue-table tr.even { background: none; }
+#js-query-queue-table td { border-bottom: solid 1px #cbcbcb; }
+#js-query-queue-table tr:last-of-type td { border: none; }
+#js-query-queue-table td a { color: #000; text-decoration: none; }
