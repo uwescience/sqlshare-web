@@ -605,3 +605,11 @@ box-shadow: 0 0px 4px rgba(0, 0, 0, 0.1);
 #recent_query_list li { padding: 0; margin: 0;}
 #recent_query_list li a { line-height: 26px; padding-left: 10px !important; color: #0084B5; }
 #recent_query_list li:hover { background: #edf5ff; }
+
+
+
+/* All Datasets Overrides */
+
+#query_list_table tr.even { background: none; }
+#query_list_table td { border-bottom: solid 1px #cbcbcb; }
+#query_list_table tr:last-of-type td { border: none; }
