@@ -110,9 +110,11 @@ h3.ss-sidebar-logo img { margin-top:10px; }
 
 .tab_overflow a.ui-state-focus, .tab_overflow a.ui-state-active { background: #2d6284; border: none; font-weight: normal; }  
 
-#overflow_list { background: #fff; margin-left: 10px; border-radius: 0 !important; min-width: 150px; border: solid 1px #333; height: auto; }
-
-#overflow_list a { color: #000; display: inline-block; }
+#overflow_list { background: #fff; margin-left: 10px; border-radius: 0 !important; min-width: 150px; border: solid 1px #ddd; height: auto; }
+#overflow_list li:hover { background: #edf5ff; }
+#overflow_list a { color: #0084B5; display: inline-block; min-width: 150px; padding-left: 10px; text-align: left; }
+#overflow_list li .remove { color: #000; cursor: pointer; margin-right: 5px; font-size: 11px; }
+#overflow_list li:hover .remove { color: red; }
 
 /* Main Content */
 
