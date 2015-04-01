@@ -181,7 +181,7 @@ button[disabled].ss-actions-button { background-color: #efefef; border-color: #d
 .ss-app-navigation { background-color: #3777A1; }
 .ss-app-navigation .nav-container { width:100%; height:41px; float:left; margin-right:-400px; }
 
-.ss-tables-list { display: block; height: 39px; margin-left: 5px; margin-top: 10px; }
+.ss-tables-list { display: block; height: 39px; margin-left: 10px; margin-top: 10px; }
 
 .ss-tables-list li { width: auto; display: inline-block; float: left; overflow: hidden; list-style-type: none; }
 
@@ -355,6 +355,12 @@ border-radius: 3px;
 
 a.ss-save-as-secondary { color: #777; text-decoration: underline; }
 a:hover.ss-save-as-secondary {  color: #222; cursor: pointer; }
+
+
+/* Derive overrides */
+
+.ss-editor .ss-content-header { line-height: 30px; }
+
 
 /* File Upload */
 
@@ -634,3 +640,37 @@ box-shadow: 0 0px 4px rgba(0, 0, 0, 0.1);
 #js-query-queue-table td { border-bottom: solid 1px #cbcbcb; }
 #js-query-queue-table tr:last-of-type td { border: none; }
 #js-query-queue-table td a { color: #000; text-decoration: none; }
+
+
+/* jQuery UI modals and overlay overrides */
+
+.ui-widget-overlay { background: #ccc; }
+
+.ui-dialog { border: 10px solid #316b92; padding: 0; border-radius: 5px; }
+
+.ui-dialog .ui-dialog-titlebar { background: none; border: none; }
+
+.ui-dialog .ui-dialog-title, .ui-dialog h5 { font-size: 16px; font-weight: bold; }
+
+
+.ui-dialog .ui-dialog-titlebar-close { border: none; background: none; }
+
+.ui-dialog .ui-dialog-titlebar-close.ui-state-hover { background: #aaa; }
+
+.ui-dialog .ui-dialog-content { font-size: 14px; }
+
+.ui-dialog .ui-dialog-content .ss-query-description-edit h4 { font-weight: normal; color: #777; margin-bottom: 20px; }
+.ui-dialog .ui-dialog-content .ss-query-description-edit h5 { font-size: 12px; font-weight: bold; color: #999; }
+
+
+
+/* Tagging */
+
+.tagit li { border: none; }
+.tagit li.ui-state-default { background: #ddd; color: #000; font-weight: normal; font-size: 12px;}
+
+
+
+
+
+
