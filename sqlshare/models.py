@@ -26,23 +26,23 @@ class Dataset(models.Model):
 
         return "%s#s=query/%s/%s" % (base_url, urllib.quote(self.schema), urllib.quote(self.name))
 
-    def get_server_access(self):
-        return self._get_server_data()
+    def get_server_access(self, request):
+        return self._get_server_data(request)
 
-    def set_server_access(self, access):
+    def set_server_access(self, request, access):
         schema = self.schema
         name = self.name
 
         url = '/REST.svc/v2/db/dataset/%s/%s/permissions' % (urllib.quote(schema), urllib.quote(name))
 
-        response = _send_request('PUT', url, {
+        response = _send_request(request, 'PUT', url, {
                         "Accept": "application/json",
                         "Content-Type": "application/json",
         }, body=json.dumps(access), user=schema)
 
 
     def get_all_access(self):
-        server_data = self._get_server_data()
+        server_data = self._get_server_data(request)
 
 
         data = {
@@ -75,7 +75,7 @@ class Dataset(models.Model):
 
         return data
 
-    def set_access(self, accounts, emails, user_from):
+    def set_access(self, request, accounts, emails, user_from):
         data = {
             'is_shared': False,
             'is_public': False,
@@ -90,7 +90,7 @@ class Dataset(models.Model):
 
         url = '/REST.svc/v2/db/dataset/%s/%s/permissions' % (urllib.quote(schema), urllib.quote(name))
 
-        _send_request('PUT', url, {
+        _send_request(request, 'PUT', url, {
                         "Accept": "application/json",
                         "Content-Type": "application/json",
         }, body=json.dumps(data), user=schema)
@@ -138,12 +138,12 @@ class Dataset(models.Model):
         msg.attach_alternative(html_version, "text/html")
         msg.send()
 
-    def _get_server_data(self):
+    def _get_server_data(self, request):
         schema = self.schema
         name = self.name
 
         url = '/REST.svc/v2/db/dataset/%s/%s/permissions' % (urllib.quote(schema), urllib.quote(name))
-        response = _send_request('GET', url, {
+        response = _send_request(request, 'GET', url, {
                         "Accept": "application/json",
                         "Content-Type": "application/json",
                     }, user=schema)

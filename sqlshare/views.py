@@ -8,7 +8,7 @@ from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from django.core.context_processors import csrf
 from django.template import RequestContext
 from sqlshare.models import UserFile, Dataset, DatasetEmailAccess, CredentialsModel, FlowModel
-from sqlshare.utils import _send_request, get_or_create_user
+from sqlshare.utils import _send_request, get_or_create_user, OAuthNeededException
 from oauth2client.django_orm import Storage
 from oauth2client.client import OAuth2WebServerFlow
 from apiclient.discovery import build
@@ -24,29 +24,27 @@ import os
 import re
 from userservice.user import UserService
 
-from login_url_hash.decorators import hash_aware_login_required
-
 import httplib
 
-@hash_aware_login_required
 @csrf_protect
 def home(request):
-   user = UserService().get_user()
-   c = { "user":user }
+   c = { }
    c.update(csrf(request))
    return render_to_response('home.html', c, RequestContext(request))
 
-@hash_aware_login_required
 @csrf_protect
 def user(request):
-    content, code = get_or_create_user(UserService().get_user())
+    try:
+        content, code = get_or_create_user(request)
 
-    user_response = HttpResponse(content)
-    user_response.status_code = code
+        user_response = HttpResponse(content)
+        user_response.status_code = code
 
-    return user_response
+        return user_response
+    except OAuthNeededException as ex:
+        print "Ex: ", ex, ex.redirect
+        return ex.redirect
 
-@hash_aware_login_required
 @csrf_protect
 def proxy(request, path):
 
@@ -60,7 +58,7 @@ def proxy(request, path):
         request_url = request_url + "%s=%s&" % (urllib.quote(arg), urllib.quote(request.GET[arg]))
 
     body = request.read()
-    ss_response = _send_request(request.META['REQUEST_METHOD'], request_url,
+    ss_response = _send_request(request, request.META['REQUEST_METHOD'], request_url,
                 {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
@@ -105,7 +103,7 @@ def upload(request):
 
     # Javerage is just here until we get off yui - the cookies for auth
     # aren't reliable behind the flash uploader
-    ss_response = _send_request('POST', '/REST.svc/v3/file',
+    ss_response = _send_request(request, 'POST', '/REST.svc/v3/file',
                 {
                     "Accept": "application/json",
                     "Content-Type": _getMultipartContentType(),
@@ -123,43 +121,6 @@ def upload(request):
 
     return HttpResponse(json_response)
 
-@hash_aware_login_required
-def credentials(request):
-
-    user = UserService().get_user()
-
-    if request.META['REQUEST_METHOD'] == 'GET':
-        ss_response = _send_request('GET','/REST.svc/v1/api_key/%s' % (user),
-                {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json",
-                }, user=user)
-
-        if ss_response.status == 404:
-            return _generate_credentials()
-
-        response = HttpResponse(ss_response.read())
-        return response
-    else:
-        return _generate_credentials()
-
-
-def _generate_credentials():
-    api_key = hashlib.md5("%s%s%s" % (time.time(), random.randint(0, sys.maxint), os.getpid())).hexdigest()
-
-    user = UserService().get_user()
-    data = json.dumps({ 'key': api_key })
-    ss_response = _send_request('PUT','/REST.svc/v1/api_key/%s' % (user),
-            {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-            }, body=data, user=user)
-
-    response = HttpResponse(ss_response.read())
-    response.status_code = ss_response.status
-    return response
-
-@hash_aware_login_required
 @csrf_protect
 def parser(request, ss_id, sol_id):
     if request.method == "PUT":
@@ -174,7 +135,7 @@ def parser(request, ss_id, sol_id):
         if not json_data["has_header"]:
             json_data["columns"] = []
 
-        parser_response = _send_request('PUT', '/REST.svc/v3/file/%s/parser' % ss_id,
+        parser_response = _send_request(request, 'PUT', '/REST.svc/v3/file/%s/parser' % ss_id,
             {
                     "Accept": "application/json",
                     "Content-type": "application/json",
@@ -182,7 +143,7 @@ def parser(request, ss_id, sol_id):
 
     else:
         ## This is the old File::Parser bit
-        parser_response = _send_request('GET', '/REST.svc/v3/file/%s/parser' % ss_id,
+        parser_response = _send_request(request, 'GET', '/REST.svc/v3/file/%s/parser' % ss_id,
                 {
                     "Accept": "application/json",
                 }, user=UserService().get_user())
@@ -196,10 +157,9 @@ def parser(request, ss_id, sol_id):
 
     return HttpResponse(json_response, content_type="application/json; charset=utf-8")
 
-@hash_aware_login_required
 @csrf_protect
 def dataset_permissions(request, schema, table_name):
-    response = _send_request('GET', '/REST.svc/v1/user/%s' % (UserService().get_user()),
+    response = _send_request(request, 'GET', '/REST.svc/v1/user/%s' % (UserService().get_user()),
                 { "Accept": "application/json" })
 
     code = response.status
@@ -221,7 +181,7 @@ def dataset_permissions(request, schema, table_name):
         emails = json_data["emails"]
 
         user_model = User.objects.get(username = UserService().get_user())
-        dataset.set_access(accounts, emails, user_model)
+        dataset.set_access(request, accounts, emails, user_model)
 
         return HttpResponse("")
 
@@ -230,13 +190,12 @@ def dataset_permissions(request, schema, table_name):
 
     return HttpResponse(json.dumps(access))
 
-@hash_aware_login_required
 def accept_dataset(request, token):
     email_access = DatasetEmailAccess.get_email_access_for_token(token)
 
-    get_or_create_user(UserService().get_user())
+    get_or_create_user(request)
 
-    accounts = email_access.dataset.get_server_access()
+    accounts = email_access.dataset.get_server_access(request)
 
     existing_account = False
     for login in accounts['authorized_viewers']:
@@ -245,10 +204,16 @@ def accept_dataset(request, token):
 
     if not existing_account:
         accounts['authorized_viewers'].append(UserService().get_user())
-        email_access.dataset.set_server_access(accounts)
+        email_access.dataset.set_server_access(request, accounts)
 
     return redirect(email_access.dataset.get_url())
 
+def oauth_return(request):
+    print "In the return: ", request.GET["code"]
+
+    from sqlshare.utils import oauth_access_token
+
+    return oauth_access_token(request)
 
 def email_access(request, token):
     email_access = DatasetEmailAccess.get_email_access_for_token(token)
@@ -263,7 +228,6 @@ def email_access(request, token):
     }, RequestContext(request))
     return HttpResponse("")
 
-@hash_aware_login_required
 @csrf_protect
 def send_file(request):
     # The user needs to be pulled here, because the middleware that
@@ -361,7 +325,7 @@ def stream_upload(request, user):
     chunk_count = 1
     content = _getMultipartData(user_file.user_file.path, chunk_count)
     while content is not None:
-        ss_response = _send_request('POST', '/REST.svc/v3/file/%s' % ss_id,
+        ss_response = _send_request(request, 'POST', '/REST.svc/v3/file/%s' % ss_id,
                 {
                     "Accept": "application/json",
                     "Content-Type": _getMultipartContentType(),
@@ -406,7 +370,7 @@ def stream_upload(request, user):
         put_json["description"] = body_json["description"]
         put_json["sample_data"] = None
 
-        put_response = _send_request("PUT", "/REST.svc/v3/file/%s/database" % ss_id,
+        put_response = _send_request(request, "PUT", "/REST.svc/v3/file/%s/database" % ss_id,
                     {
                         "Accept": "application/json",
                         "Content-Type": "application/json",

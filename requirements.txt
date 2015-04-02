@@ -4,6 +4,7 @@ django-compressor==1.3
 pycrypto
 oauth2client
 google-api-python-client
+sanction
 -e git://github.com/vegitron/django-userservice#egg=Django-UserService
 -e git://github.com/vegitron/authz_group#egg=AuthZ-Group
 -e git://github.com/vegitron/django-login-required-with-url-hash#egg=LoginRequired-HashURL
