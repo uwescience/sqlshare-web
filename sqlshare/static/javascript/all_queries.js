@@ -11,7 +11,7 @@ AllQueries.prototype.draw = function() {
 };
 
 AllQueries.prototype._fetchQueries = function() {
-    this.setCurrentRequest(this.AsyncGET(this._getRestRoot()+"/proxy/REST.svc/v2/db/dataset", this._postFetch));
+    this.setCurrentRequest(this.AsyncGET(this._getRestRoot()+"/proxy/v3/db/dataset/all", this._postFetch));
 };
 
 AllQueries.prototype._postFetch = function(o) {

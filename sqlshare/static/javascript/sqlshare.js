@@ -372,31 +372,10 @@ SQLShare.prototype._handleNavigation = function(ev, args) {
 };
 
 SQLShare.prototype._getUser = function() {
-    this.AsyncGET(this._getRestRoot()+"/user/", this._postUserLoad);
-};
-
-SQLShare.prototype._postUserLoad = function(o) {
-    if (o.code == 200 || o.code == 201) {
-        this._loadApp(o.data);
-        return;
-    }
-    else {
-        this.handleUserError(o);
-    }
-};
-
-SQLShare.prototype.handleUserError = function(o) {
-    if (o.code == 500 && o.conn.responseText.match(/^500 Can't connect to /)) {
-        this._renderTo('ss_app_workspace', 'load_error/bad_host.html', {});
-        this._resizeCenterColumn();
-    }
+    this._loadApp();
 };
 
 SQLShare.prototype._loadApp = function(user_data) {
-    solstice_user.sqlshare_schema = user_data.schema;
-    solstice_user.sqlshare_user   = user_data.username;
-
-
     this._loadPreferences();
 
     this._resizeCenterColumn();
@@ -436,7 +415,7 @@ SQLShare.prototype._fetchFinishedFinishCount = function() {
 };
 
 SQLShare.prototype.drawSidebarLists = function() {
-    this.AsyncGET(this._getRestRoot()+"/proxy/REST.svc/v2/db/dataset", this._renderSidebar)
+    this.AsyncGET(this._getRestRoot()+"/proxy/v3/top-content", this._renderSidebar)
 };
 
 SQLShare.prototype._renderSidebar= function(o) {

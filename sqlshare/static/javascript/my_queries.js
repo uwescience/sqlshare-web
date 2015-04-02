@@ -10,7 +10,7 @@ MyQueries.prototype.draw = function() {
 };
 
 MyQueries.prototype._fetchQueries = function() {
-    this.setCurrentRequest(this.AsyncGET(this._getRestRoot()+"/proxy/REST.svc/v2/db/dataset/"+solstice_user.sqlshare_schema, this._postFetch));
+    this.setCurrentRequest(this.AsyncGET(this._getRestRoot()+"/proxy/v3/db/dataset/", this._postFetch));
 };
 
 MyQueries.prototype._postFetch = function(o) {

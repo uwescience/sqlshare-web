@@ -10,7 +10,7 @@ SharedQueries.prototype.draw = function() {
 };
 
 SharedQueries.prototype._fetchQueries = function() {
-    this.setCurrentRequest(this.AsyncGET(this._getRestRoot()+"/proxy/REST.svc/v2/db/dataset", this._postFetch));
+    this.setCurrentRequest(this.AsyncGET(this._getRestRoot()+"/proxy/v3/db/dataset/shared", this._postFetch));
 };
 
 SharedQueries.prototype._postFetch = function(o) {

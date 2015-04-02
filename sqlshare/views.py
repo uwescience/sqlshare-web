@@ -34,22 +34,10 @@ def home(request):
     except OAuthNeededException as ex:
         return ex.redirect
 
-    c = {"user": user["username"] }
+    c = {"user": user["username"], "schema": user["schema"] }
     c.update(csrf(request))
     return render_to_response('home.html', c, RequestContext(request))
 
-@csrf_protect
-def user(request):
-    try:
-        content, code = get_or_create_user(request)
-
-        user_response = HttpResponse(content)
-        user_response.status_code = code
-
-        return user_response
-    except OAuthNeededException as ex:
-        print "Ex: ", ex, ex.redirect
-        return ex.redirect
 
 @csrf_protect
 def proxy(request, path):
