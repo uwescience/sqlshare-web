@@ -2,7 +2,25 @@ from django.conf import settings
 import re
 import httplib
 from django.http import HttpResponseRedirect
+from urllib2 import urlopen, HTTPError
 from sanction import Client, transport_headers
+
+
+class MockResponse(object):
+    """
+    To help the transition from pre-oauth connections to the new
+    urlopen approach
+    """
+    def __init__(self, status_code, data, headers):
+        self.status = status_code
+        self.content = data
+        self.headers = headers
+
+    def read(self):
+        return self.content
+
+    def getheaders(self):
+        return self.headers
 
 def _get_sqlshare_host():
     full_host = 'https://rest.sqlshare.uw.edu'
@@ -12,43 +30,40 @@ def _get_sqlshare_host():
 
 class OAuthNeededException(Exception):
     def __init__(self, redirect):
-        print "in __init__: ", redirect
         self.redirect = redirect
 
 def _send_request(request, method, url, headers, body=None, user=None):
     # If we don't have an access token in our session, we need to get the
     # user to auth through the backend server
-    if not "sqlshare_access_token" in request.session:
+    if not request.session.get("sqlshare_access_token", None):
         raise OAuthNeededException(oauth_authorize())
 
+    client = get_oauth_client()
+    client.access_token = request.session.get("sqlshare_access_token", None)
 
-    full_host = _get_sqlshare_host()
+    # sanction makes too many assumptions about what we're up to, so pulling
+    # their request method's content out into here.
+    backend_host = _get_sqlshare_host()
+    req = client.token_transport('{0}{1}'.format(backend_host, url), client.access_token, data=body, method=method, headers=headers)
 
-    host = re.sub(r"^https?://", "", full_host)
+    try:
+        resp = urlopen(req)
+    except HTTPError as e:
+        resp = e
 
-    if full_host.startswith('https://'):
-        conn = httplib.HTTPSConnection(host)
-    else:
-        conn = httplib.HTTPConnection(host)
+    headers = {}
+    all_headers = resp.info()
+    for header in all_headers:
+        if "set-cookie" == header:
+            next
+        if "vary" == header:
+            next
+        if "server" == header:
+            next
 
-    conn.connect()
+        headers[header] = all_headers[header]
 
-    conn.putrequest(method, url)
-
-    for header in headers:
-        conn.putheader(header, headers[header])
-
-    if body and len(body) > 0:
-        conn.putheader('Content-Length', len(body))
-
-    conn.endheaders()
-
-    if body and len(body) > 0:
-        conn.send(body)
-
-    response = conn.getresponse()
-
-    return response
+    return MockResponse(resp.getcode(), resp.read(), headers)
 
 
 def get_or_create_user(request):
@@ -86,14 +101,15 @@ def oauth_access_token(request):
 
     redirect_uri = "%s/sqlshare/oauth" % settings.SQLSHARE_WEB_HOST
 
-    print "RU: ", redirect_uri
     token_request_data = {
         'code': request.GET['code'],
         'redirect_uri': redirect_uri,
     }
 
-    access_token = c.request_token(**token_request_data)
-    request.session['sqlshare_access_token'] = access_token
+    c.request_token(**token_request_data)
+
+    request.session['sqlshare_access_token'] = c.access_token
+    request.session['sqlshare_refresh_access_token'] = c.refresh_token
 
     response = HttpResponseRedirect("%s/sqlshare" % settings.SQLSHARE_WEB_HOST)
 

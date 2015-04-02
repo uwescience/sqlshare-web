@@ -28,9 +28,14 @@ import httplib
 
 @csrf_protect
 def home(request):
-   c = { }
-   c.update(csrf(request))
-   return render_to_response('home.html', c, RequestContext(request))
+    try:
+        user = get_or_create_user(request)
+    except OAuthNeededException as ex:
+        return ex.redirect
+
+    c = { }
+    c.update(csrf(request))
+    return render_to_response('home.html', c, RequestContext(request))
 
 @csrf_protect
 def user(request):
