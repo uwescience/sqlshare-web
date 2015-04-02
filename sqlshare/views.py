@@ -151,38 +151,6 @@ def parser(request, ss_id, sol_id):
 
     return HttpResponse(json_response, content_type="application/json; charset=utf-8")
 
-@csrf_protect
-def dataset_permissions(request, schema, table_name):
-    response = _send_request(request, 'GET', '/REST.svc/v1/user/%s' % (UserService().get_user()),
-                { "Accept": "application/json" })
-
-    code = response.status
-    content = response.read()
-
-    person_data = json.loads(content)
-
-    person_schema = person_data['schema']
-
-    if (person_schema != schema):
-        return HttpResponse(status = 403)
-
-    dataset = Dataset(schema=schema, name=table_name)
-
-    if request.method == "PUT":
-        json_data = json.loads(request.body)
-
-        accounts = json_data["accounts"]
-        emails = json_data["emails"]
-
-        user_model = User.objects.get(username = UserService().get_user())
-        dataset.set_access(request, accounts, emails, user_model)
-
-        return HttpResponse("")
-
-
-    access = dataset.get_all_access()
-
-    return HttpResponse(json.dumps(access))
 
 def accept_dataset(request, token):
     email_access = DatasetEmailAccess.get_email_access_for_token(token)

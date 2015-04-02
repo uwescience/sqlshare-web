@@ -12,7 +12,6 @@ urlpatterns = patterns('',
     url(r'^upload/?$', 'sqlshare.views.upload'),
     url(r'^parser/(?P<ss_id>.*)/(?P<sol_id>.*)$', 'sqlshare.views.parser'),
     url(r'^/*file/upload?$', 'sqlshare.views.send_file'),
-    url(r'^/*dataset/(?P<schema>[^/]+)/(?P<table_name>[^/]+)/permissions$', 'sqlshare.views.dataset_permissions'),
 
     url(r'^ds/(?P<token>.*)/accept', 'sqlshare.views.accept_dataset'),
     url(r'^ds/(?P<token>.*)', 'sqlshare.views.email_access'),
