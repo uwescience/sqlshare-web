@@ -52,10 +52,10 @@
         <button class="ss-actions-button" id="{{id}}_snapshot">Create snapshot
 </button>
         {{ #if  is_editable }}
-        <ul id="action_menu" style="display: inline-block">
+        <ul id="action_menu" style="display: inline-block;">
             <li>
-                <a href="javascript:void(0)">More actions</a>
-                <ul style="z-index: 2">
+                <a href="javascript:void(0)" style="color:#fff;">More actions</a>
+                <ul style="z-index: 2" id="action_menu_items">
                     {{ #if is_public }}
                     <li>
                         <a href="javascript:void(0)" class="make_private">Make dataset private</a>
@@ -78,8 +78,7 @@
             </li>
         </ul>
         {{else}}
-        <button class="ss-actions-button download" title="Download this dataset" id="{{id}}_download_query">Download
-        </button>
+        <button class="ss-actions-button download" title="Download this dataset" id="{{id}}_download_query">Download</button>
         {{ /if }}
         <div id="{{id}}_download_error" style="display: none;"></div>
     </div>
