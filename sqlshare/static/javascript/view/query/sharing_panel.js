@@ -196,7 +196,7 @@ SQLShare.View.Query.SharingPanel.prototype._saveChanges = function() {
         emails.push(email);
     }
 
-    this.AsyncPUT(this._getRestRoot()+"/dataset/"+this.model.dataset.container_id+"/permissions", {
+    this.AsyncPUT(this._getRestRoot()+"/proxy/v3/db/dataset/"+this.model.dataset.container_id+"/permissions", {
         accounts: accounts,
         emails: emails,
         is_public: false

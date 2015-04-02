@@ -167,7 +167,7 @@ SavedQuery.prototype._openSharingDialog = function() {
 
 // Stubbing this out for when we get the rest together
 SavedQuery.prototype._getExistingPermissions = function() {
-    var full_url = this._getRestRoot()+"/dataset/"+this.query_id+'/permissions';
+    var full_url = this._getRestRoot()+"/proxy/v3/db/dataset/"+this.query_id+'/permissions';
     this.AsyncGET(full_url, this._postGetPermissions, null, true);
     //this._postGetPermissions({ code: 200 }, popin);
 };
