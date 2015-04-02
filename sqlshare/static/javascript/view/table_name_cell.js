@@ -21,7 +21,7 @@ SQLShare.View.TableNameCell.prototype.generateParams = function() {
         name += "...";
     }
 
-    var url = model.url.replace(/^\/REST.svc\/v2\/db\/dataset/, 'query');
+    var url = model.url.replace(/^\/v3\/db\/dataset/, 'query');
 
     this.setParam('description', name);
     this.setParam('owner', encodeURIComponent(model.owner));
