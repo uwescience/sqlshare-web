@@ -514,7 +514,7 @@ QueryBase.prototype._save = function() {
         query = this._model.sql_code;
     }
 
-    this.AsyncPUT(this._getRestRoot()+"/proxy/REST.svc/v2/db/dataset/"+solstice_user.sqlshare_schema+"/"+encodeURIComponent(name),
+    this.AsyncPUT(this._getRestRoot()+"/proxy/v3/db/dataset/"+solstice_user.sqlshare_schema+"/"+encodeURIComponent(name),
         {
             sql_code: query,
             description: description,

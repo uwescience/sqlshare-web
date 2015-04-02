@@ -23,7 +23,7 @@ SavedQuery.prototype._fetchSavedQuery = function() {
         this.AsyncGET(this._getRestRoot()+"/proxy/REST.svc/v2/db/process/"+this.query_id, this._postFetch);
     }
     else {
-        this.AsyncGET(this._getRestRoot()+"/proxy/REST.svc/v2/db/dataset/"+this.query_id, this._postFetch);
+        this.AsyncGET(this._getRestRoot()+"/proxy/v3/db/dataset/"+this.query_id, this._postFetch);
     }
 };
 
