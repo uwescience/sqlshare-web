@@ -263,7 +263,7 @@ QueryBase.prototype._saveTags = function(o) {
     var data = this._getNewTagData();
 
     if (data.is_changed) {
-        this.AsyncPUT(this._getRestRoot()+"/proxy/REST.svc/v2/db/"+this._getURIFragment()+"/tags", data.tags, this._postSaveDescription, data.tags);
+        this.AsyncPUT(this._getRestRoot()+"/proxy/v3/db/"+this._getURIFragment()+"/tags", data.tags, this._postSaveDescription, data.tags);
     }
     else {
         return this._postSaveDescription({ code: 200 }, data.tags);
@@ -527,7 +527,7 @@ QueryBase.prototype._postSave = function(o) {
     if (o.code == 201 || o.code == 200) {
         var tags = $("#new_query_tags").tagit("assignedTags");
         if (tags) {
-            this.AsyncPUT(this._getRestRoot()+"/proxy/REST.svc/v2/db/dataset/"+solstice_user.sqlshare_schema+"/"+o.data.name+"/tags", [{"name":solstice_user.sqlshare_schema, "tags":tags }], this._postSaveTags, o);
+            this.AsyncPUT(this._getRestRoot()+"/proxy/v3/db/dataset/"+solstice_user.sqlshare_schema+"/"+o.data.name+"/tags", [{"name":solstice_user.sqlshare_schema, "tags":tags }], this._postSaveTags, o);
         }
         else {
             this._postSaveAs(o);
