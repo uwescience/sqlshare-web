@@ -223,6 +223,7 @@ SQLShare.TableTabs.prototype._redrawMenu = function() {
         $("#overflow_menu").menu("refresh");
         $("#overflow_list").css('z-index', 2);
         $("#table_tab_overflow_li").css("display", "inline-block");
+        $("#table_tab_overflow_label").text(overflow_params.length);
     }
     else {
         $("#table_tab_overflow_li").css("display", "none");
