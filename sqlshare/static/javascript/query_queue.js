@@ -10,11 +10,11 @@ QueryQueue.prototype.draw = function() {
 };
 
 QueryQueue.prototype._fetchQueries = function() {
-    this.setCurrentRequest(this.AsyncGET(this._getRestRoot()+"/proxy/REST.svc/v2/db/process", this._postFetch));
+    this.setCurrentRequest(this.AsyncGET(this._getRestRoot()+"/proxy/v3/db/query", this._postFetch));
 };
 
 QueryQueue.prototype._fetchUpdates = function() {
-    this.setCurrentRequest(this.AsyncGET(this._getRestRoot()+"/proxy/REST.svc/v2/db/process", this._postFetchUpdates));
+    this.setCurrentRequest(this.AsyncGET(this._getRestRoot()+"/proxy/v3/db/query", this._postFetchUpdates));
 };
 
 QueryQueue.prototype._postFetch = function(o) {

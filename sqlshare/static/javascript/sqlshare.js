@@ -395,7 +395,7 @@ SQLShare.prototype._loadApp = function(user_data) {
 };
 
 SQLShare.prototype._fetchFinishedFinishCount = function() {
-    this.AsyncGET(this._getRestRoot()+"/proxy/REST.svc/v2/db/process", function(o) {
+    this.AsyncGET(this._getRestRoot()+"/proxy/v3/db/query", function(o) {
         if (o.code == 200) {
             var data = o.data;
             var len = data.length;

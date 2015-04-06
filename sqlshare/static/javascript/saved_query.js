@@ -20,7 +20,7 @@ SavedQuery.prototype.draw = function() {
 
 SavedQuery.prototype._fetchSavedQuery = function() {
     if (this._query_in_queue) {
-        this.AsyncGET(this._getRestRoot()+"/proxy/REST.svc/v2/db/process/"+this.query_id, this._postFetch);
+        this.AsyncGET(this._getRestRoot()+"/proxy/v3/db/query/"+this.query_id, this._postFetch);
     }
     else {
         this.AsyncGET(this._getRestRoot()+"/proxy/v3/db/dataset/"+this.query_id, this._postFetch);

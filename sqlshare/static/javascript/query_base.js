@@ -300,7 +300,7 @@ QueryBase.prototype._processQuery = function(ev) {
     this._renderTo(this.id+"_results", 'query/running.html', {});
     // Should this be configurable anywhere?
     var max_rows = SQLShare.Constants.MAX_PREVIEW_ROWS;
-    this.setCurrentRequest(this.AsyncPOST(this._getRestRoot()+"/proxy/REST.svc/v2/db", { sql: query, max_records: max_rows, sleep: 0 }, this._postQuery));
+    this.setCurrentRequest(this.AsyncPOST(this._getRestRoot()+"/proxy/v3/db/query", { sql: query, max_records: max_rows, sleep: 0 }, this._postQuery));
 };
 
 QueryBase.prototype._postQuery = function(o) {
@@ -357,7 +357,7 @@ QueryBase.prototype._cancelQuery = function(ev) {
     var matches = this._full_url.match(/([0-9]+)$/);
     var process_id = matches[0];
 
-    this.AsyncDELETE(this._getRestRoot()+'/proxy/REST.svc/v2/db/process/'+process_id, this._postDelete);
+    this.AsyncDELETE(this._getRestRoot()+'/proxy/v3/db/query/'+process_id, this._postDelete);
 };
 
 QueryBase.prototype._postDelete = function(o) {
