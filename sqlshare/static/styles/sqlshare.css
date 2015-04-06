@@ -684,3 +684,7 @@ box-shadow: 0 0px 4px rgba(0, 0, 0, 0.1);
 #action_menu_items li a { line-height: 26px; padding: 0 10px; font-size: 13px !important; }
 
 #action_menu_items .ui-state-focus { background: #edf5ff !important; border: none !important; font-size: 13px !important; color: #0084B5; padding: 1px 11px; line-height: 26px; }
+
+/* more tabs overflow */
+
+#overflow_menu { padding-left: 10px; }
