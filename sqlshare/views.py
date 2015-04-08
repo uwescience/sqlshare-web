@@ -63,8 +63,8 @@ def proxy(request, path):
     response = HttpResponse(ss_response.read())
 
     for header in headers:
-        name = header[0]
-        value = header[1]
+        name = header
+        value = headers[header]
         if name == "x-powered-by":
             continue
         if name == "client-peer":
@@ -77,9 +77,12 @@ def proxy(request, path):
             continue
         if name == "connection":
             continue
+        if name == "set-cookie":
+            continue
 
-        # django 
         if name == "location":
+            # The django backend sends absolute urls - that's no good for us
+            value = re.sub("^https?://[^/]+", "", value)
             response[name] = "/sqlshare/proxy/"+value
         else:
             response[name] = value
@@ -171,8 +174,6 @@ def accept_dataset(request, token):
     return redirect(email_access.dataset.get_url())
 
 def oauth_return(request):
-    print "In the return: ", request.GET["code"]
-
     from sqlshare.utils import oauth_access_token
 
     return oauth_access_token(request)
