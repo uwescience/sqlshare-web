@@ -539,7 +539,7 @@ SavedQuery.prototype._showSaveAsDialog = function(ev) {
 };
 
 SavedQuery.prototype._loadWorkingPreview = function() {
-    var full_url = this._getRestRoot()+"/proxy/REST.svc/v2/db/dataset/"+this.query_id;
+    var full_url = this._getRestRoot()+"/proxy/v3/db/dataset/"+this.query_id;
     this.AsyncGET(full_url, this._loadDataPreview);
 };
 
