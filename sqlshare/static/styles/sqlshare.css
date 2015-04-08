@@ -166,7 +166,7 @@ h3.ss-sidebar-logo img { margin-top:10px; }
 .ss-query-actions { border: solid 1px #555; padding: 2px 4px; }
 
 
-button.ss-actions-button { padding: 3px 6px; font-size: 93%; }
+button.ss-actions-button { padding: 3px 6px; font-size: 93%; height: 25px; }
 
 .ss-actions-button { border:solid 1px #275877; background: #316B92 url(../images/ss-button-gradient.png) repeat-x; color: #fff; margin-right: 3px;
 -webkit-border-radius: 3px;
@@ -628,8 +628,7 @@ box-shadow: 0 0px 4px rgba(0, 0, 0, 0.1);
 #recent_query_list li a { line-height: 26px; padding-left: 10px !important; color: #0084B5; }
 #recent_query_list li:hover { background: #edf5ff; }
 
-
-
+ 
 /* Your, all, shared, recent activity datatable overrides */
 
 #query_list_table tr.even { background: none; }
@@ -669,8 +668,19 @@ box-shadow: 0 0px 4px rgba(0, 0, 0, 0.1);
 .tagit li { border: none; }
 .tagit li.ui-state-default { background: #ddd; color: #000; font-weight: normal; font-size: 12px;}
 
+/* More Actions button override */
 
+#action_menu { padding: 0; border:solid 1px #275877; background: #316B92 url(../images/ss-button-gradient.png) repeat-x; 
+    color: #fff;
+    margin-right: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    font-size: 13px !important;
+}
 
+#action_menu .ui-state-focus, #action_menu .ui-state-active  { background: #3777A1 !important; border:solid 1px #275877 !important; cursor:pointer; }
+#action_menu_items { border: solid 1px #ddd; border-radius: 0 !important; font-size: 13px !important; line-height: 20px; width: 180px; text-align: left; }
+#action_menu_items li a { line-height: 26px; padding: 0 10px; font-size: 13px !important; }
 
-
-
+#action_menu_items .ui-state-focus { background: #edf5ff !important; border: none !important; font-size: 13px !important; color: #0084B5; padding: 1px 11px; line-height: 26px; }
