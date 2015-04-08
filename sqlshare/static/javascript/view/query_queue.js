@@ -95,7 +95,7 @@ SQLShare.View.QueryQueue.Display.prototype.updateData = function(data) {
 
 SQLShare.View.QueryQueue.Display.prototype.postRender = function() {
     $("#js-query-queue-table").dataTable({
-        aaSorting: [[ 1, "desc"]],
+        aaSorting: [[1, "desc"]],
         aoColumnDefs: [
             {
                 aTargets: [1],
@@ -105,7 +105,8 @@ SQLShare.View.QueryQueue.Display.prototype.postRender = function() {
                     });
 
                     return view.toString();
-                }
+                },
+                aDataSort: [4, 1]
             }
         ]
     });
