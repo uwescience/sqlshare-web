@@ -394,13 +394,14 @@ Uploader.prototype._postLoadTable = function(o) {
 };
 
 Uploader.prototype._getFileUploadStatus = function() {
-    this.AsyncGET(this._getRestRoot()+"/proxy/REST.svc/v3/file/"+this._ss_id+"/database", this._postGetFileStatus);
+    this.AsyncGET(this._getRestRoot()+"/proxy/v3/db/file/"+this._ss_id+"/finalize", this._postGetFileStatus);
 };
 
 Uploader.prototype._postGetFileStatus = function(o) {
     if (o.code == 202) {
         var uploader = this;
         var data = o.data;
+        /*
         var total = data.records_total;
         var uploaded = data.records_uploaded;
 
@@ -408,9 +409,10 @@ Uploader.prototype._postGetFileStatus = function(o) {
             var percent = uploaded / total;
             document.getElementById('upload_progress_meter').style.width = 100 + parseInt(percent * 100)+"px";
         }
+        */
 
         window.setTimeout(function() {
-            uploader.AsyncGET(uploader._getRestRoot()+"/proxy/REST.svc/v3/file/"+uploader._ss_id+"/database", uploader._postGetFileStatus);
+            uploader.AsyncGET(uploader._getRestRoot()+"/proxy/v3/db/file/"+uploader._ss_id+"/finalize", uploader._postGetFileStatus);
         }, 2000);
         return;
     }

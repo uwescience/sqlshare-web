@@ -96,15 +96,14 @@ def upload(request):
     user_file = UserFile(user_file=request.FILES["file"])
     user_file.save()
 
-    content = _getMultipartData(user_file.user_file.path, 0, append_new_line=True)
+    content = _getMultipartData(user_file.user_file.path, 0, append_new_line=False)
 
     # Javerage is just here until we get off yui - the cookies for auth
     # aren't reliable behind the flash uploader
-    ss_response = _send_request(request, 'POST', '/REST.svc/v3/file',
+    ss_response = _send_request(request, 'POST', '/v3/db/file/',
                 {
                     "Accept": "application/json",
-                    "Content-Type": _getMultipartContentType(),
-                }, body=content, user="javerage")
+                }, body=content)
 
     headers = ss_response.getheaders()
     response = ss_response.read()
@@ -132,7 +131,7 @@ def parser(request, ss_id, sol_id):
         if not json_data["has_header"]:
             json_data["columns"] = []
 
-        parser_response = _send_request(request, 'PUT', '/REST.svc/v3/file/%s/parser' % ss_id,
+        parser_response = _send_request(request, 'PUT', '/v3/db/file/%s/parser' % ss_id,
             {
                     "Accept": "application/json",
                     "Content-type": "application/json",
@@ -140,7 +139,7 @@ def parser(request, ss_id, sol_id):
 
     else:
         ## This is the old File::Parser bit
-        parser_response = _send_request(request, 'GET', '/REST.svc/v3/file/%s/parser' % ss_id,
+        parser_response = _send_request(request, 'GET', '/v3/db/file/%s/parser' % ss_id,
                 {
                     "Accept": "application/json",
                 }, user=UserService().get_user())
@@ -288,11 +287,10 @@ def stream_upload(request, user):
     chunk_count = 1
     content = _getMultipartData(user_file.user_file.path, chunk_count)
     while content is not None:
-        ss_response = _send_request(request, 'POST', '/REST.svc/v3/file/%s' % ss_id,
+        ss_response = _send_request(request, 'POST', '/v3/db/file/%s' % ss_id,
                 {
                     "Accept": "application/json",
-                    "Content-Type": _getMultipartContentType(),
-                }, body=content, user=user)
+                }, body=content)
 
         headers = ss_response.getheaders()
         response = ss_response.read()
@@ -327,13 +325,13 @@ def stream_upload(request, user):
         else:
             put_json["is_public"] = False
 
-        put_json["table_name"] = body_json["table_name"]
-        put_json["columns"] = body_json["columns"]
+#        put_json["table_name"] = body_json["table_name"]
+#        put_json["columns"] = body_json["columns"]
         put_json["dataset_name"] = body_json["dataset_name"]
         put_json["description"] = body_json["description"]
-        put_json["sample_data"] = None
+#        put_json["sample_data"] = None
 
-        put_response = _send_request(request, "PUT", "/REST.svc/v3/file/%s/database" % ss_id,
+        put_response = _send_request(request, "POST", "/v3/db/file/%s/finalize" % ss_id,
                     {
                         "Accept": "application/json",
                         "Content-Type": "application/json",
@@ -359,20 +357,7 @@ def _getMultipartData(file_name, position, append_new_line=False):
     if append_new_line and len(chunk) < upload_chunk_size:
         chunk += "\n\n"
 
-    boundary = _getMultipartBoundary()
-    name = re.match(".*/([^/]+)$", file_name).group(1)
-    name = name.encode('ascii', 'ignore')
-
-    multipart_data = "\r\n".join([
-        "--%s" % boundary,
-        "Content-Disposition: form-data; name=\"file\" filename=\"%s\";" % name,
-        "Content-Type: text/csv",
-        "",
-        chunk,
-        "--%s--" % boundary,
-    ])
-
-    return multipart_data
+    return chunk
 
 def _getChunkCount(user_file):
     file_size = user_file.user_file.size
