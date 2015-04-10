@@ -284,7 +284,7 @@ SQLShare.View.Query.SharingPanel.prototype._buildAutoComplete = function() {
     $("#share_ds_autocomplete_input").autocomplete({
         source: function(request, callback) {
             $.ajax({
-                "url": me._getRestRoot()+"users?q="+request.term,
+                "url": me._getRestRoot()+"/proxy/v3/users?q="+request.term,
                 "success": function(data) {
                     var callback_data = [];
                     for (var i = 0; i < data.users.length; i++) {
