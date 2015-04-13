@@ -418,11 +418,11 @@ Uploader.prototype._postGetFileStatus = function(o) {
     }
     else if (o.code == 201) {
         var new_location = o.conn.getResponseHeader['Location'];
-        var destination = 'query/'+solstice_user.sqlshare_schema+'/'+this._final_table_name;
+        var destination = 'query/'+solstice_user.sqlshare_user+'/'+this._final_table_name;
 
         var tags = this._options.tags;
         if (tags) {
-            this.AsyncPUT(this._getRestRoot()+"/proxy/REST.svc/v2/db/dataset/"+solstice_user.sqlshare_schema+"/"+this._options.table_name+"/tags", [{"name":solstice_user.sqlshare_schema, "tags":tags }], this._postSaveTags, destination);
+            this.AsyncPUT(this._getRestRoot()+"/proxy/REST.svc/v2/db/dataset/"+solstice_user.sqlshare_user+"/"+this._options.table_name+"/tags", [{"name":solstice_user.sqlshare_user, "tags":tags }], this._postSaveTags, destination);
         }
         else {
             var url = destination.replace(/^\/REST.svc\/v1\/db\//, '');

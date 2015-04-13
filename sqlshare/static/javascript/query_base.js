@@ -514,7 +514,7 @@ QueryBase.prototype._save = function() {
         query = this._model.sql_code;
     }
 
-    this.AsyncPUT(this._getRestRoot()+"/proxy/v3/db/dataset/"+solstice_user.sqlshare_schema+"/"+encodeURIComponent(name),
+    this.AsyncPUT(this._getRestRoot()+"/proxy/v3/db/dataset/"+solstice_user.sqlshare_user+"/"+encodeURIComponent(name),
         {
             sql_code: query,
             description: description,
@@ -527,7 +527,7 @@ QueryBase.prototype._postSave = function(o) {
     if (o.code == 201 || o.code == 200) {
         var tags = $("#new_query_tags").tagit("assignedTags");
         if (tags) {
-            this.AsyncPUT(this._getRestRoot()+"/proxy/v3/db/dataset/"+solstice_user.sqlshare_schema+"/"+o.data.name+"/tags", [{"name":solstice_user.sqlshare_schema, "tags":tags }], this._postSaveTags, o);
+            this.AsyncPUT(this._getRestRoot()+"/proxy/v3/db/dataset/"+solstice_user.sqlshare_user+"/"+o.data.name+"/tags", [{"name":solstice_user.sqlshare_user, "tags":tags }], this._postSaveTags, o);
         }
         else {
             this._postSaveAs(o);
