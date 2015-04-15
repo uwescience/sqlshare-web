@@ -415,7 +415,7 @@ SQLShare.prototype._fetchFinishedFinishCount = function() {
 };
 
 SQLShare.prototype.drawSidebarLists = function() {
-    this.AsyncGET(this._getRestRoot()+"/proxy/v3/top-content", this._renderSidebar)
+    this.AsyncGET(this._getRestRoot()+"/proxy/v3/db/dataset/all", this._renderSidebar)
 };
 
 SQLShare.prototype._renderSidebar= function(o) {
