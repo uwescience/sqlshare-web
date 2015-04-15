@@ -11,7 +11,7 @@ TaggedQueries.prototype.draw = function() {
 };
 
 TaggedQueries.prototype._fetchQueries = function() {
-    this.setCurrentRequest(this.AsyncGET(this._getRestRoot()+"/proxy/REST.svc/v1/tags/"+this.tag, this._postFetch));
+    this.setCurrentRequest(this.AsyncGET(this._getRestRoot()+"/proxy/v3/db/dataset/tagged/"+this.tag, this._postFetch));
 };
 
 TaggedQueries.prototype._postFetch = function(o) {
