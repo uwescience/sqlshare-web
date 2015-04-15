@@ -272,7 +272,7 @@ SavedQuery.prototype._startDelete = function() {
     var view = new SQLShare.View.SavedQuery.Deleting(this._model);
     $("#delete_dataset_dialog").html(view.toString());
 
-    this.AsyncDELETE(this._getRestRoot()+"/proxy/REST.svc/v2/db/dataset/"+this.query_id, this._postDelete);
+    this.AsyncDELETE(this._getRestRoot()+"/proxy/v3/db/dataset/"+this.query_id, this._postDelete);
 };
 
 SavedQuery.prototype._postDelete = function(o) {
