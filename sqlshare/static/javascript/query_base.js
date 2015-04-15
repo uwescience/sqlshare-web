@@ -252,7 +252,7 @@ QueryBase.prototype._beginDescriptionSave = function(ev) {
 
         var container = document.getElementById(this.id+'_description_container');
         container.innerHTML = new_description.encodeHTML();
-        this.AsyncPUT(this._getRestRoot()+"/proxy/v3/db/"+this._getURIFragment(), this._model, this._saveTags);
+        this.AsyncPATCH(this._getRestRoot()+"/proxy/v3/db/"+this._getURIFragment(), { "description": this._model.description }, this._saveTags);
     }
     else {
         this._saveTags();

@@ -18,6 +18,10 @@ SolBase.prototype.AsyncPUT = function(uri, obj, callback, arg, opts) {
    return this._async_http('PUT', uri, obj, callback, arg, opts);
 };
 
+SolBase.prototype.AsyncPATCH = function(uri, obj, callback, arg, opts) {
+   return this._async_http('PATCH', uri, obj, callback, arg, opts);
+};
+
 SolBase.prototype.AsyncDELETE = function(uri, callback, arg, opts) {
     return this._async_http('DELETE', uri, null, callback, arg, opts);
 };
