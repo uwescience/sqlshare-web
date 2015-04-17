@@ -107,7 +107,7 @@ Query.prototype._onDownloadError = function() {
 };
 
 Query.prototype._getDownloadURL = function(query) {
-    return this._getRestRoot()+"/proxy/REST.svc/v1/db/file?SQL="+encodeURIComponent(query)+"&solstice_xsrf_token="+solstice_xsrf_token;
+    return this._getRestRoot()+"/proxy/v3/db/sql";
 };
 
 

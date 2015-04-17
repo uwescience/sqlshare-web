@@ -39,8 +39,22 @@ QueryBase.prototype._downloadFile = function(query, error_callback) {
             error_callback.apply(me);
         });
     }
+
     var download_url = this._getDownloadURL(query);
-    iframe.location.href = download_url;
+
+    console.log(iframe.name)
+    var form = $("<form>").attr({ "target": iframe.name, "method": "POST", "action": download_url});
+    console.log("Target: ", form.attr("target"));
+
+    $("body").append(form);
+    form.append($('input[name="csrfmiddlewaretoken"]'));
+
+
+    form.append($("<input>").attr({"name": "sql", "value": query }));
+
+    console.log(form);
+    form.submit();
+
 };
 
 QueryBase.prototype._getDownloadError = function() {
@@ -63,7 +77,7 @@ QueryBase.prototype._createNewIFrame = function() {
         new_iframe.style.left = '-1000px';
         new_iframe.style.position = 'absolute';
     }
-    new_iframe.setAttribute('src', Solstice.getDocumentBase() + '/content/blank.html');
+    new_iframe.setAttribute('src', static_url + '/content/blank.html');
     new_iframe.setAttribute('tabindex', '-1');
     document.getElementById('solstice_app_form').appendChild(new_iframe);
 
