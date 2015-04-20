@@ -261,7 +261,7 @@ QueryBase.prototype._postSaveDescription = function(o, tags) {
 
 QueryBase.prototype._togglePublic = function() {
     this._model.is_public = !this._model.is_public;
-    this.AsyncPUT(this._getRestRoot()+"/proxy/REST.svc/v2/db/"+this._getURIFragment(), this._model, this._postTogglePublic);
+    this.AsyncPATCH(this._getRestRoot()+"/proxy/v3/db/"+this._getURIFragment(), { "is_public": this._model.is_public }, this._postTogglePublic);
 };
 
 QueryBase.prototype._postTogglePublic = function(o) {
