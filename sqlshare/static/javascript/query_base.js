@@ -50,7 +50,6 @@ QueryBase.prototype._downloadFile = function(query, error_callback) {
 
     form.append($("<input>").attr({"name": "sql", "value": query }));
 
-    console.log(form);
     form.submit();
 
 };
@@ -106,37 +105,6 @@ QueryBase.prototype._resetNameContainer = function() {
 
 QueryBase.prototype._cancelReplace = function() {
     this._overwrite_panel.hide();
-};
-
-QueryBase.prototype._replaceTable = function() {
-    this._saveNewName();
-    this._overwrite_panel.hide();
-};
-
-
-QueryBase.prototype._saveNewName = function() {
-    var original_name = this._getObjectName();
-    this._setObjectName(this._new_name);
-    var name = this._getObjectName();
-    this._new_name = null;
-    this.AsyncPOST(this._getRestRoot()+"/proxy/REST.svc/v2/db/"+this._getObjectType()+"/"+this._model.owner+"/"+name, this._model, this._postSaveName);
-}
-
-QueryBase.prototype._postSaveName = function(o) {
-    var obj_type = this._getObjectType();
-    if (o.code == 201) {
-        var owner = this._model.owner;
-        var name = this._model.name;
-
-        $.History.go("s="+obj_type+'/'+owner+'/'+name);
-        Solstice.Message.setSuccess(Solstice.Lang.getMessage('SQLShare', obj_type+'_renamed'));
-    }
-    else {
-        Solstice.Message.setError(Solstice.Lang.getMessage('SQLShare', obj_type+'_rename_failed'));
-        if (window.console) {
-            window.console.log(o);
-        }
-    }
 };
 
 QueryBase.prototype._resetDescriptionContainer = function() {
