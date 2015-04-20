@@ -42,9 +42,7 @@ QueryBase.prototype._downloadFile = function(query, error_callback) {
 
     var download_url = this._getDownloadURL(query);
 
-    console.log(iframe.name)
     var form = $("<form>").attr({ "target": iframe.name, "method": "POST", "action": download_url});
-    console.log("Target: ", form.attr("target"));
 
     $("body").append(form);
     form.append($('input[name="csrfmiddlewaretoken"]'));

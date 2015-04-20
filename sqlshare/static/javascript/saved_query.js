@@ -230,8 +230,7 @@ SavedQuery.prototype._getDownloadURL = function(query) {
         url += "&solstice_xsrf_token="+solstice_xsrf_token;
     }
     else {
-        url = this._getRestRoot()+"/proxy/REST.svc/v2/db/dataset/"+this.query_id+"/result";
-        url += "?solstice_xsrf_token="+solstice_xsrf_token;
+        url = this._getRestRoot()+"/proxy/v3/db/dataset/"+this.query_id+"/result";
     }
     return url;
 };
