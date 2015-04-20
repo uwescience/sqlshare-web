@@ -135,7 +135,7 @@ function draw_jquery_table(id, list) {
         }
         var aData = datatable.fnGetData( position );
 
-        var url = aData[7].replace(/^\/REST.svc\/v2\/db\/dataset/, 'query');
+        var url = aData[7].replace(/^\/v3\/db\/dataset/, 'query');
 
         window.location.href = '/sqlshare/#s='+url;
     })
