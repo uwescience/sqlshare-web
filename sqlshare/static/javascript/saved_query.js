@@ -565,8 +565,7 @@ SavedQuery.prototype._postSaveAs = function(o) {
     var name = o.data.name;
     var url = o.data.url;
 
-    console.trace("REST.svc");
-    url = url.replace(/^\/REST.svc\/v1\/db\//, '');
+    url = url.replace(/^\/v3\/db\/dataset/, 'query');
     var test_id = "#s="+url;
 
     if (decodeURIComponent(test_id) == decodeURIComponent(window.location.hash)) {
@@ -575,6 +574,8 @@ SavedQuery.prototype._postSaveAs = function(o) {
     else {
         $.History.go("s="+decodeURI(url));
     }
+
+    $("#save_query_dialog").dialog("close")
 
     $("#ss_editor_col").removeClass("qid_"+this.query_id);
     Solstice.Cookie.set('edit_query', true);
