@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from django.core.context_processors import csrf
 from django.template import RequestContext
-from sqlshare.models import UserFile, Dataset, DatasetEmailAccess, CredentialsModel, FlowModel
+from sqlshare.models import UserFile, DatasetEmailAccess, CredentialsModel, FlowModel
 from sqlshare.utils import _send_request, get_or_create_user, OAuthNeededException
 from oauth2client.django_orm import Storage
 from oauth2client.client import OAuth2WebServerFlow
