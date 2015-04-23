@@ -87,8 +87,7 @@ Query.prototype._postSaveAs = function(o) {
     var name = o.data.name;
     var url = o.data.url;
 
-    console.trace("REST.svc");
-    url = url.replace(/^\/REST.svc\/v2\/db\/dataset/, 'query');
+    url = url.replace(/^\/v3\/db\/dataset/, 'query');
     $.History.go("s="+decodeURI(url));
 
     $("#save_query_dialog").dialog("close");
