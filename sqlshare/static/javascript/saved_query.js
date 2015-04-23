@@ -223,17 +223,7 @@ SavedQuery.prototype._downloadQuery = function() {
 };
 
 SavedQuery.prototype._getDownloadURL = function(query) {
-    var url;
-    if (this._query_in_queue) {
-        sql = this._editor.getCode();
-        console.trace("REST.svc");
-        url = this._getRestRoot()+"/proxy/REST.svc/v1/db/file?SQL="+encodeURIComponent(sql);
-        url += "&solstice_xsrf_token="+solstice_xsrf_token;
-    }
-    else {
-        url = this._getRestRoot()+"/proxy/v3/db/dataset/"+this.query_id+"/result";
-    }
-    return url;
+    return this._getRestRoot()+"/proxy/v3/db/dataset/"+this.query_id+"/result";
 };
 
 SavedQuery.prototype._confirmDelete = function() {
@@ -612,8 +602,7 @@ SavedQuery.prototype._postSaveStatement = function(o) {
         var name = this._model.name;
 
         var url = this._model.url;
-        console.trace("REST.svc");
-        url = url.replace(/^\/REST.svc\/v1\/db\//, '');
+        url = url.replace(/^\/v3\/db\/dataset/, 'query');
         var test_id = "#s="+url;
 
         if (decodeURIComponent(test_id) == decodeURIComponent(window.location.hash)) {
