@@ -226,6 +226,7 @@ SavedQuery.prototype._getDownloadURL = function(query) {
     var url;
     if (this._query_in_queue) {
         sql = this._editor.getCode();
+        console.trace("REST.svc");
         url = this._getRestRoot()+"/proxy/REST.svc/v1/db/file?SQL="+encodeURIComponent(sql);
         url += "&solstice_xsrf_token="+solstice_xsrf_token;
     }
@@ -574,6 +575,7 @@ SavedQuery.prototype._postSaveAs = function(o) {
     var name = o.data.name;
     var url = o.data.url;
 
+    console.trace("REST.svc");
     url = url.replace(/^\/REST.svc\/v1\/db\//, '');
     var test_id = "#s="+url;
 
@@ -610,6 +612,7 @@ SavedQuery.prototype._postSaveStatement = function(o) {
         var name = this._model.name;
 
         var url = this._model.url;
+        console.trace("REST.svc");
         url = url.replace(/^\/REST.svc\/v1\/db\//, '');
         var test_id = "#s="+url;
 

@@ -14,6 +14,7 @@ SQLShare.View.SavedQuery.Edit.prototype.generateParams = function() {
 
     var url = query.url;
     if (url) {
+        console.trace("REST.svc");
         url = url.replace(/^\/REST.svc\/v1\/db\//, '');
         this.setParam('url', url);
         this.setParam('id', query.container_id);

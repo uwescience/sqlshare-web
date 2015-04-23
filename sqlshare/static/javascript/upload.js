@@ -422,11 +422,10 @@ Uploader.prototype._postGetFileStatus = function(o) {
 
         var tags = this._options.tags;
         if (tags) {
-            this.AsyncPUT(this._getRestRoot()+"/proxy/REST.svc/v2/db/dataset/"+solstice_user.sqlshare_user+"/"+this._options.table_name+"/tags", [{"name":solstice_user.sqlshare_user, "tags":tags }], this._postSaveTags, destination);
+            this.AsyncPUT(this._getRestRoot()+"/proxy/v3/db/dataset/"+solstice_user.sqlshare_user+"/"+this._options.table_name+"/tags", [{"name":solstice_user.sqlshare_user, "tags":tags }], this._postSaveTags, destination);
         }
         else {
-            var url = destination.replace(/^\/REST.svc\/v1\/db\//, '');
-            $.History.go("s="+decodeURI(url));
+            $.History.go("s="+decodeURI(destination));
         }
         return;
     }
@@ -437,8 +436,7 @@ Uploader.prototype._postGetFileStatus = function(o) {
 };
 
 Uploader.prototype._postSaveTags = function(o, destination) {
-    var url = destination.replace(/^\/REST.svc\/v1\/db\//, '');
-    $.History.go("s="+decodeURI(url));
+    $.History.go("s="+decodeURI(destination));
 };
 
 Uploader.prototype._cancel = function() {
