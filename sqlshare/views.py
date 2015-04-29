@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, redirect
 from django.conf import settings
 from django.core.urlresolvers import reverse
@@ -37,6 +37,32 @@ def home(request):
     c = {"user": user["username"], "schema": user["schema"] }
     c.update(csrf(request))
     return render_to_response('home.html', c, RequestContext(request))
+
+def add_dataset_by_token(request, token):
+    try:
+        content, code = get_or_create_user(request)
+        user = json.loads(content.decode("utf-8"))
+    except OAuthNeededException as ex:
+        return ex.redirect
+
+    ss_response = _send_request(request, "POST", "/v3/db/token/%s" % token,
+                {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                }, body="", user=UserService().get_user())
+
+    if ss_response.status == 200:
+        data = json.loads(ss_response.read())
+
+        redirect_uri = "%s/sqlshare/#s=query/%s/%s" % (
+                                                        settings.SQLSHARE_WEB_HOST,
+                                                        data["owner"],
+                                                        data["name"],
+                                                        )
+
+        return HttpResponseRedirect(redirect_uri)
+    else:
+        return HttpResponseRedirect("%s/sqlshare/" % settings.SQLSHARE_WEB_HOST)
 
 
 @csrf_protect
