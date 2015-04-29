@@ -111,6 +111,9 @@ def oauth_access_token(request):
     request.session['sqlshare_access_token'] = c.access_token
     request.session['sqlshare_refresh_access_token'] = c.refresh_token
 
-    response = HttpResponseRedirect("%s/sqlshare" % settings.SQLSHARE_WEB_HOST)
+    if 'sqlshare_post_oauth_redirect' in request.session:
+        response = HttpResponseRedirect(request.session['sqlshare_post_oauth_redirect'])
+    else:
+        response = HttpResponseRedirect("%s/sqlshare" % settings.SQLSHARE_WEB_HOST)
 
     return response

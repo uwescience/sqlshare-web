@@ -43,6 +43,7 @@ def add_dataset_by_token(request, token):
         content, code = get_or_create_user(request)
         user = json.loads(content.decode("utf-8"))
     except OAuthNeededException as ex:
+        request.session['sqlshare_post_oauth_redirect'] = request.get_full_path()
         return ex.redirect
 
     ss_response = _send_request(request, "POST", "/v3/db/token/%s" % token,
