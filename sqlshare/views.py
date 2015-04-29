@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from django.core.context_processors import csrf
 from django.template import RequestContext
-from sqlshare.models import UserFile, DatasetEmailAccess, CredentialsModel, FlowModel
+from sqlshare.models import UserFile, CredentialsModel, FlowModel
 from sqlshare.utils import _send_request, get_or_create_user, OAuthNeededException
 from oauth2client.django_orm import Storage
 from oauth2client.client import OAuth2WebServerFlow
@@ -154,41 +154,11 @@ def parser(request, ss_id, sol_id):
     return HttpResponse(json_response, content_type="application/json; charset=utf-8")
 
 
-def accept_dataset(request, token):
-    email_access = DatasetEmailAccess.get_email_access_for_token(token)
-
-    get_or_create_user(request)
-
-    accounts = email_access.dataset.get_server_access(request)
-
-    existing_account = False
-    for login in accounts['authorized_viewers']:
-        if login == UserService().get_user():
-            existing_account = True
-
-    if not existing_account:
-        accounts['authorized_viewers'].append(UserService().get_user())
-        email_access.dataset.set_server_access(request, accounts)
-
-    return redirect(email_access.dataset.get_url())
-
 def oauth_return(request):
     from sqlshare.utils import oauth_access_token
 
     return oauth_access_token(request)
 
-def email_access(request, token):
-    email_access = DatasetEmailAccess.get_email_access_for_token(token)
-
-    person = User.objects.get_or_create(username = email_access.dataset.schema)[0]
-
-    return render_to_response('accept_dataset.html', {
-        'dataset_name': email_access.dataset.name,
-        'name': person.get_full_name(),
-        'login': person.username,
-        'accept_url': email_access.get_accept_url(),
-    }, RequestContext(request))
-    return HttpResponse("")
 
 @csrf_protect
 def send_file(request):
