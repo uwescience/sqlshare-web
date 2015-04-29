@@ -32,7 +32,7 @@ class OAuthNeededException(Exception):
     def __init__(self, redirect):
         self.redirect = redirect
 
-def _send_request(request, method, url, headers, body=None, user=None):
+def _send_request(request, method, url, headers, body=None, user=None, is_reauth_attempt=False):
     # If we don't have an access token in our session, we need to get the
     # user to auth through the backend server
     if not request.session.get("sqlshare_access_token", None):
@@ -51,6 +51,21 @@ def _send_request(request, method, url, headers, body=None, user=None):
     except HTTPError as e:
         resp = e
 
+    body = resp.read()
+    if resp.getcode() == 403:
+        if body.find("SQLShare: Access Denied") < 0:
+            # Without the SQLShare error, assume an oauth issue.
+            if not is_reauth_attempt:
+                c = get_oauth_client()
+                refresh_token =  request.session["sqlshare_refresh_access_token"]
+
+                c.request_token(grant_type='refresh_token',
+                                refresh_token=refresh_token)
+
+                request.session["sqlshare_access_token"] = c.access_token
+                request.session["sqlshare_refresh_access_token"] = c.refresh_token
+                return _send_request(request, method, url, headers, body, user, is_reauth_attempt=True)
+
     headers = {}
     all_headers = resp.info()
     for header in all_headers:
@@ -63,7 +78,7 @@ def _send_request(request, method, url, headers, body=None, user=None):
 
         headers[header] = all_headers[header]
 
-    return MockResponse(resp.getcode(), resp.read(), headers)
+    return MockResponse(resp.getcode(), body, headers)
 
 
 def get_or_create_user(request):
