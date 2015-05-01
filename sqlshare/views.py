@@ -22,7 +22,6 @@ import math
 import sys
 import os
 import re
-from userservice.user import UserService
 
 import httplib
 
@@ -50,7 +49,7 @@ def add_dataset_by_token(request, token):
                 {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
-                }, body="", user=UserService().get_user())
+                }, body="")
 
     if ss_response.status == 200:
         data = json.loads(ss_response.read())
@@ -83,7 +82,7 @@ def proxy(request, path):
                 {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
-                }, body=body, user=UserService().get_user())
+                }, body=body)
 
 
     headers = ss_response.getheaders()
@@ -162,14 +161,14 @@ def parser(request, ss_id, sol_id):
             {
                     "Accept": "application/json",
                     "Content-type": "application/json",
-            }, body=json.dumps(json_data), user=UserService().get_user())
+            }, body=json.dumps(json_data))
 
     else:
         ## This is the old File::Parser bit
         parser_response = _send_request(request, 'GET', '/v3/db/file/%s/parser' % ss_id,
                 {
                     "Accept": "application/json",
-                }, user=UserService().get_user())
+                })
 
     parser_data = parser_response.read()
     json_values = json.loads(parser_data)
@@ -191,7 +190,7 @@ def oauth_return(request):
 def send_file(request):
     # The user needs to be pulled here, because the middleware that
     # handles the response is called before stream_upload finishes
-    return HttpResponse(stream_upload(request, UserService().get_user()))
+    return HttpResponse(stream_upload(request))
 
 def require_uw_login(request):
     login = request.META['REMOTE_USER']
@@ -256,7 +255,7 @@ def google_return(request):
     return redirect(google_login_url)
 
 
-def stream_upload(request, user):
+def stream_upload(request):
     body = request.read()
     body_json = json.loads(body)
 
@@ -318,7 +317,7 @@ def stream_upload(request, user):
                     {
                         "Accept": "application/json",
                         "Content-Type": "application/json",
-                    }, body=json.dumps(put_json), user=user)
+                    }, body=json.dumps(put_json))
 
         if put_response.status != 202:
             body = put_response.read()

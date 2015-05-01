@@ -32,7 +32,7 @@ class OAuthNeededException(Exception):
     def __init__(self, redirect):
         self.redirect = redirect
 
-def _send_request(request, method, url, headers, body=None, user=None, is_reauth_attempt=False):
+def _send_request(request, method, url, headers, body=None, is_reauth_attempt=False):
     # If we don't have an access token in our session, we need to get the
     # user to auth through the backend server
     if not request.session.get("sqlshare_access_token", None):
@@ -64,7 +64,7 @@ def _send_request(request, method, url, headers, body=None, user=None, is_reauth
 
                 request.session["sqlshare_access_token"] = c.access_token
                 request.session["sqlshare_refresh_access_token"] = c.refresh_token
-                return _send_request(request, method, url, headers, body, user, is_reauth_attempt=True)
+                return _send_request(request, method, url, headers, body, is_reauth_attempt=True)
 
     headers = {}
     all_headers = resp.info()
