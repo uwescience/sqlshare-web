@@ -5,7 +5,6 @@ from django.conf.urls import patterns, include, url
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
     url(r'^/*$', 'sqlshare.views.home', name='home'),
     url(r'^/*proxy/?(?P<path>.*)$', 'sqlshare.views.proxy'),
     url(r'^upload/?$', 'sqlshare.views.upload'),
@@ -13,8 +12,5 @@ urlpatterns = patterns('',
     url(r'^/*file/upload?$', 'sqlshare.views.send_file'),
     url(r'^dataset/(?P<token>.*)', 'sqlshare.views.add_dataset_by_token'),
 
-    url(r'^google_return', 'sqlshare.views.google_return'),
-    url(r'^google', 'sqlshare.views.require_google_login'),
-    url(r'^uw/', 'sqlshare.views.require_uw_login'),
     url(r'^oauth/', 'sqlshare.views.oauth_return'),
 )

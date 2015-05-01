@@ -1,18 +1,11 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render_to_response, redirect
+from django.shortcuts import render_to_response
 from django.conf import settings
-from django.core.urlresolvers import reverse
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from django.core.context_processors import csrf
 from django.template import RequestContext
-from sqlshare.models import UserFile, CredentialsModel, FlowModel
+from sqlshare.models import UserFile
 from sqlshare.utils import _send_request, get_or_create_user, OAuthNeededException
-from oauth2client.django_orm import Storage
-from oauth2client.client import OAuth2WebServerFlow
-from apiclient.discovery import build
-import httplib2
 import hashlib
 import random
 import urllib
@@ -23,7 +16,6 @@ import sys
 import os
 import re
 
-import httplib
 
 @csrf_protect
 def home(request):
@@ -191,68 +183,6 @@ def send_file(request):
     # The user needs to be pulled here, because the middleware that
     # handles the response is called before stream_upload finishes
     return HttpResponse(stream_upload(request))
-
-def require_uw_login(request):
-    login = request.META['REMOTE_USER']
-    name = request.META.get('givenName', '')
-    last_name = request.META.get('sn', '')
-    email = request.META.get('mail', '')
-
-    return _login_user(request, login, name, last_name, email)
-
-def require_google_login(request):
-    storage = Storage(CredentialsModel, 'id', request.session.session_key, 'credential')
-    credential = storage.get()
-    if credential is None or credential.invalid == True:
-        flow = OAuth2WebServerFlow(client_id=settings.GOOGLE_OAUTH_KEY,
-                                   client_secret=settings.GOOGLE_OAUTH_SECRET,
-                                   scope='https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email',
-                                   user_agent='plus-django-sample/1.0',
-                                   state=request.GET['next'])
-
-        authorize_url = flow.step1_get_authorize_url(settings.GOOGLE_RETURN_URL)
-
-        f = FlowModel(id=request.session.session_key, flow=flow)
-        f.save()
-
-        return redirect(authorize_url)
-
-    http = httplib2.Http()
-    plus = build('plus', 'v1', http=http)
-    credential.authorize(http)
-    name_data = plus.people().get(userId='me').execute()
-
-    name = name_data["name"]["givenName"]
-    last_name = name_data["name"]["familyName"]
-
-    plus = build('oauth2', 'v2', http=http)
-    credential.authorize(http)
-    email_data = plus.userinfo().get().execute()
-    email = email_data["email"]
-
-    return _login_user(request, email, name, last_name, email)
-
-def _login_user(request, login_name, name, last_name, email):
-    user = authenticate(username=login_name, password=None)
-    user.first_name = name
-    user.last_name = last_name
-    user.email = email
-    user.save()
-
-    login(request, user)
-
-    return redirect(request.GET['next'])
-
-def google_return(request):
-    f = FlowModel.objects.get(id=request.session.session_key)
-    credential = f.flow.step2_exchange(request.REQUEST)
-    storage = Storage(CredentialsModel, 'id', request.session.session_key, 'credential')
-    storage.put(credential)
-
-    google_login_url = reverse('sqlshare.views.require_google_login')
-    google_login_url = "%s?next=%s" % (google_login_url, request.GET['state'])
-
-    return redirect(google_login_url)
 
 
 def stream_upload(request):

@@ -5,7 +5,6 @@ from django.core.mail import EmailMultiAlternatives
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.template.loader import render_to_string
-from oauth2client.django_orm import CredentialsField, FlowField
 import re
 import json
 import urllib
@@ -25,13 +24,4 @@ class Dataset(models.Model):
         base_url = reverse('sqlshare.views.home')
 
         return "%s#s=query/%s/%s" % (base_url, urllib.quote(self.schema), urllib.quote(self.name))
-
-
-class CredentialsModel(models.Model):
-  id = models.CharField(max_length=50, primary_key=True)
-  credential = CredentialsField()
-
-class FlowModel(models.Model):
-    id = models.CharField(max_length=50, primary_key=True)
-    flow = FlowField()
 
